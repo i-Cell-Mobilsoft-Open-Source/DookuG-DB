@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <include file="01.00.00/DKG-207/0032_change_hugo_to_project_in_saxon_template.xml" relativeToChangelogFile="true"/>
+    <include file="01.00.00/DKG-228/0033_load_xid9_to_template.xml" relativeToChangelogFile="true"/>
+    <include file="01.00.00/DKG-228/0034_load_xid9_to_template_part.xml" relativeToChangelogFile="true"/>
+    <include file="01.00.00/DKG-228/0035_load_xid9_to_template_part_content.xml" relativeToChangelogFile="true"/>
+    <include file="01.00.00/DKG-228/0036_load_xid9_to_template_template_part.xml" relativeToChangelogFile="true"/>
+    <include file="01.00.00/DKG-217/0037_document_mod_date_types.xml" relativeToChangelogFile="true"/>
+    <include file="01.00.00/DKG-217/0038_document_content_mod_date_types.xml" relativeToChangelogFile="true"/>
+    <include file="01.00.00/DKG-217/0039_template_mod_date_types.xml" relativeToChangelogFile="true"/>
+    <include file="01.00.00/DKG-217/0040_template_part_mod_date_types.xml" relativeToChangelogFile="true"/>
+    <include file="01.00.00/DKG-217/0041_template_part_content_mod_date_types.xml" relativeToChangelogFile="true"/>
+    <include file="01.00.00/DKG-217/0042_template_template_part_mod_date_types.xml" relativeToChangelogFile="true"/>
+    <include file="01.00.00/DKG-238/0043_delete_default_templates.xml" relativeToChangelogFile="true"/>
+    
+</databaseChangeLog>

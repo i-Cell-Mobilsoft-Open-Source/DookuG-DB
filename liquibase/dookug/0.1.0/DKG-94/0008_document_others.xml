@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE defaultProperties SYSTEM "common/params.dtd">
+    <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <!-- include the default properties -->
+    &propertiesAll;
+
+    <changeSet id="0008" author="jozsef.holczer" labels="0.1.0">
+        <comment>DKG-94 document table, creation of comments and other table objects.</comment>
+    
+        <setTableRemarks remarks = "document data." schemaName = "${schema_name}" tableName = "document"/>
+    
+        <setColumnRemarks columnName = "x__id" remarks = "Primary key" tableName = "document" schemaName = "${schema_name}"/>
+        <setColumnRemarks columnName = "template_id" remarks = "TEMPLATE identifier." tableName = "document" schemaName = "${schema_name}"/>
+        <setColumnRemarks columnName = "status" remarks = "Document status" tableName = "document" schemaName = "${schema_name}"/>
+        <setColumnRemarks columnName = "format" remarks = "Document format" tableName = "document" schemaName = "${schema_name}"/>
+        <setColumnRemarks columnName = "filename" remarks = "Document file name" tableName = "document" schemaName = "${schema_name}"/>
+        <setColumnRemarks columnName = "error_message" remarks = "Error message occurring during the process" tableName = "document" schemaName = "${schema_name}"/>
+        <setColumnRemarks columnName = "storage_type" remarks = "Storage type" tableName = "document" schemaName = "${schema_name}"/>
+        <setColumnRemarks columnName = "storage_id" remarks = "Storage identifier" tableName = "document" schemaName = "${schema_name}"/>
+        <setColumnRemarks columnName = "parameters" remarks = "Parameter key-value pairs json" tableName = "document" schemaName = "${schema_name}"/>
+        <setColumnRemarks columnName = "parameter_data" remarks = "Parameter data structure json" tableName = "document" schemaName = "${schema_name}"/>
+        <setColumnRemarks columnName = "config" remarks = "Configuration" tableName = "document" schemaName = "${schema_name}"/>
+        <setColumnRemarks columnName = "x__insdate" remarks = "Date of record creation" tableName = "document" schemaName = "${schema_name}"/>
+        <setColumnRemarks columnName = "x__insuser" remarks = "User creating the record" tableName = "document" schemaName = "${schema_name}"/>
+        <setColumnRemarks columnName = "x__moddate" remarks = "Date of record modification" tableName = "document" schemaName = "${schema_name}"/>
+        <setColumnRemarks columnName = "x__moduser" remarks = "User modifying the record" tableName = "document" schemaName = "${schema_name}"/>
+        <setColumnRemarks columnName = "x__version" remarks = "Number of record modifications" tableName = "document" schemaName = "${schema_name}"/>
+
+        <sql> alter table ${schema_name}.document add constraint pk_document PRIMARY KEY ( x__id );</sql>
+            
+    </changeSet>
+</databaseChangeLog>

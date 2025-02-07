@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE defaultProperties SYSTEM "common/params.dtd">
+ <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+   <!-- include the default properties -->
+    &propertiesAll;
+
+   <changeSet id="0039" author="jozsef.holczer" labels="01.00.00">
+      <comment>DKG-217 Change Template Date Types to Business Standard.</comment>
+
+      <modifyDataType  
+         columnName="validity_start"  
+         newDataType="${datetime}"  
+         schemaName="${schema_name}"  
+         tableName="template"/>
+
+      <modifyDataType  
+         columnName="validity_end"  
+         newDataType="${datetime}"  
+         schemaName="${schema_name}"  
+         tableName="template"/>   
+
+      <modifyDataType  
+         columnName="x__insdate"  
+         newDataType="${datetime}"  
+         schemaName="${schema_name}"  
+         tableName="template"/>   
+
+      <modifyDataType  
+         columnName="x__moddate"  
+         newDataType="${datetime}"  
+         schemaName="${schema_name}"  
+         tableName="template"/>      
+ 
+   </changeSet>
+</databaseChangeLog>

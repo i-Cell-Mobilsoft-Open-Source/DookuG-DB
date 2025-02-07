@@ -1,0 +1,45 @@
+version: "3.8"
+
+# build
+# docker-compose --env-file <PATH>/.env -f <PATH>/etc/release/docker-compose.yml build --no-cache
+# -----------------------------------------------------------------------------
+# Run the generated docker image in case of localhost.
+# postgresql:
+# docker run --rm --network dookug-local-network -e AUTO_INSTALL=postgresql dockerhub.icellmobilsoft.hu/liquibase/modules/module-dookug-db:0.1.0-SNAPSHOT
+# oracle:
+# docker run --rm --network dookug-local-network -e AUTO_INSTALL=oracle dockerhub.icellmobilsoft.hu/liquibase/module-dookug-db:1.10.0
+#
+# with env parameters:
+# AUTO_INSTALL postgresql(default)/oracle (default)
+# INSTALL_HOST localhost(default)
+# INSTALL_PORT 5432(default)
+# INSTALL_DATABASE postgres(default)
+# INSTALL_URL "jdbc:postgresql://$INSTALL_HOST:$INSTALL_PORT/$INSTALL_DATABASE"(default)
+# INSTALL_USERNAME postgres(default)
+# INSTALL_PASSWORD postgres(default)
+# INSTALL_CHANGELOGFILE liquibase-install-default.xml
+# docker run -it --rm /
+#   --network dookug-local-network /
+#   -e AUTO_INSTALL=postgresql /
+#   -e INSTALL_HOST=module-dookug-postgredb /
+#   dockerhub.icellmobilsoft.hu/liquibase/module-dookug-db:1.10.0
+#
+# or with classic liquibase parameters:
+# docker run -it --rm \
+#  --network dookug-local-network \
+#  dockerhub.icellmobilsoft.hu/liquibase/module-dookug-db:1.10.0 \
+#    --url=jdbc:postgresql://module-dookug-postgredb:5432/postgres \
+#    --username=postgres \
+#    --password=postgres \
+#    --changeLogFile=liquibase-install-db1-step-01.xml \
+#    update
+services:
+  liquibase-release:
+    build:
+      context: ../../
+      dockerfile: ./etc/release/Dockerfile
+      args:
+        LIQUIBASE_BASE_IMAGE: 'icellmobilsoft/db-dwh/liquibase:${DBDWH_IMAGE_VERSION}'
+        LIQUIBASE_INSTALL_DIR: '/liquibase/dookug'
+        LIQUIBASE_INSTALL_COMMON_DIR: '/liquibase/common'
+    image: "$DOCKER_LIQUIBASE_DOOKUG:$VERSION"

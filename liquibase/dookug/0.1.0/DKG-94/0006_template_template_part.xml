@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE defaultProperties SYSTEM "common/params.dtd">
+    <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <!-- include the default properties -->
+    &propertiesAll;
+
+    <changeSet id="0006" author="jozsef.holczer" labels="0.1.0">
+        <comment>DKG-94 Creation of template_template_part table.</comment>
+
+        <createTable tableName = "template_template_part" remarks = "template_template_part data" schemaName = "${schema_name}">
+            <column name = "x__id" type = "varchar2(30 ${char})"  remarks = "Primary key"><constraints nullable = "false" /></column>
+            <column name = "template_id" type = "varchar2(30 ${char})"  remarks = "TEMPLATE unique identifier"><constraints nullable = "false" /></column>
+            <column name = "template_part_id" type = "varchar2(30 ${char})"  remarks = "TEMPLATE_PART unique identifier"><constraints nullable = "false" /></column>
+            <column name = "x__insdate" type = "${datetime}" defaultValueComputed = "${sysdate}"  remarks = "Record creation date"><constraints nullable = "false" /></column>
+            <column name = "x__insuser" type = "varchar2(30 ${char})" defaultValue = "0"  remarks = "User creating the record"><constraints nullable = "false" /></column>
+            <column name = "x__moddate" type = "${datetime}"  remarks = "Record modification date"></column>
+            <column name = "x__moduser" type = "varchar2(30 ${char})"  remarks = "User modifying the record"></column>
+            <column name = "x__version" type = "${versionDataType}" defaultValueNumeric = "0"  remarks = "Number of record modifications"><constraints nullable = "false" /></column>
+        </createTable>
+        
+        <sql> alter table ${schema_name}.template_template_part add constraint pk_template_template_part PRIMARY KEY ( x__id );</sql>
+        
+        <sql> alter table ${schema_name}.template_template_part add constraint fk_template_template_part_template FOREIGN KEY ( template_id ) REFERENCES ${schema_name}.template(x__id);</sql>
+        
+        <sql> alter table ${schema_name}.template_template_part add constraint fk_template_template_part_template_part FOREIGN KEY ( template_part_id ) REFERENCES ${schema_name}.template_part(x__id);</sql>
+        
+        <createIndex indexName = "ix_template_template_part_template_id" tableName = "template_template_part" schemaName = "${schema_name}">
+            <column name = "template_id"/>
+        </createIndex>
+        
+        <createIndex indexName = "ix_template_template_part_template_part_id" tableName = "template_template_part" schemaName = "${schema_name}">
+            <column name = "template_part_id"/>
+        </createIndex>
+            
+    </changeSet>
+</databaseChangeLog>

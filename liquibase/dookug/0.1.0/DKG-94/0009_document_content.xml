@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE defaultProperties SYSTEM "common/params.dtd">
+    <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <!-- include the default properties -->
+    &propertiesAll;
+
+    <changeSet id="0009" author="jozsef.holczer" labels="0.1.0">
+        <comment>DKG-94-Creating Document_Content Table.</comment>
+    
+        <createTable tableName = "document_content" schemaName = "${schema_name}">
+            <column name = "x__id" type = "varchar2(30 ${char})" ><constraints nullable = "false" /></column>
+            <column name = "document_id" type = "varchar2(30 ${char})" ><constraints nullable = "false" /></column>
+            <column name = "content" type = "${blob}" ><constraints nullable = "false" /></column>
+            <column name = "expiry" type = "${datetime}" ></column>
+            <column name = "x__insdate" type = "${datetime}" defaultValueComputed = "${sysdate}" ><constraints nullable = "false" /></column>
+            <column name = "x__insuser" type = "varchar2(30 ${char})" defaultValue = "0" ><constraints nullable = "false" /></column>
+            <column name = "x__moddate" type = "${datetime}" ></column>
+            <column name = "x__moduser" type = "varchar2(30 ${char})" ></column>
+            <column name = "x__version" type = "${versionDataType}" defaultValueNumeric = "0" ><constraints nullable = "false" /></column>
+        </createTable>
+    
+        <modifySql dbms = "oracle">
+            <append value = "lob(content) store as securefile "/>          
+        </modifySql>
+    
+   </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE defaultProperties SYSTEM "common/params.dtd">
+    <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <!-- include the default properties -->
+    &propertiesAll;
+
+    <changeSet id="0005" author="jozsef.holczer" labels="0.1.0">
+        <comment>DKG-94 Template_part_content Table, Foreign Key Index Create.</comment>
+
+        <createIndex indexName = "ix_template_part_content_template_part_id" tableName = "template_part_content" schemaName = "${schema_name}">
+            <column name = "template_part_id"/>
+        </createIndex>    
+
+    </changeSet>
+</databaseChangeLog>

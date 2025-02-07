@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE defaultProperties SYSTEM "common/params.dtd">
+    <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <!-- include the default properties -->
+    &propertiesAll;
+
+    <changeSet id="0021" author="jozsef.holczer" labels="00.02.00">
+        <comment>DKG-123 Load template_part table with plain text samples.</comment>
+
+        <insert schemaName="${schema_name}"  
+                tableName="template_part">  
+            <column name="x__id"               value="TEMPLATEPARTXID1"/>  
+            <column name="key"                 value="TEST_TEMPLATE_SUBJECT_MAIN"/>  
+            <column name="description"         value="Sample template for developments - email subject"/>  
+            <column name="template_engine"     value="HANDLEBARS"/>  
+            <column name="generator_engine"    value="NONE"/>  
+            <column name="template_part_type"  value="MAIN" />  
+        </insert>
+        
+        <insert schemaName="${schema_name}"  
+                tableName="template_part">  
+            <column name="x__id"               value="TEMPLATEPARTXID2"/>  
+            <column name="key"                 value="TEST_TEMPLATE_BODY_WELCOME"/>  
+            <column name="description"         value="Sample template for developments - email welcome subtemplate"/>  
+            <column name="template_engine"     value="HANDLEBARS"/>  
+            <column name="generator_engine"    value="NONE"/>  
+            <column name="template_part_type"  value="HEADER" />  
+        </insert>
+
+        <insert schemaName="${schema_name}"  
+                tableName="template_part">  
+            <column name="x__id"               value="TEMPLATEPARTXID3"/>  
+            <column name="key"                 value="TEST_TEMPLATE_BODY_MAIN"/>  
+            <column name="description"         value="Sample template for developments - email body main entry"/>  
+            <column name="template_engine"     value="HANDLEBARS"/>  
+            <column name="generator_engine"    value="NONE"/>  
+            <column name="template_part_type"  value="MAIN" />  
+        </insert>
+
+        <insert schemaName="${schema_name}"  
+                tableName="template_part">  
+            <column name="x__id"               value="TEMPLATEPARTXID4"/>  
+            <column name="key"                 value="TEST_TEMPLATE_BODY_CLOSING"/>  
+            <column name="description"         value="Sample template for developments - email greeting subtemplate"/>  
+            <column name="template_engine"     value="HANDLEBARS"/>  
+            <column name="generator_engine"    value="NONE"/>  
+            <column name="template_part_type"  value="FOOTER" />  
+        </insert>
+        
+        <insert schemaName="${schema_name}"  
+                tableName="template_part">  
+            <column name="x__id"               value="TEMPLATEPARTXID5"/>  
+            <column name="key"                 value="TEST_TEMPLATE_SUBJECT_WITHOUT_PARAMS"/>  
+            <column name="description"         value="Sample template for developments - email subject without parameter"/>  
+            <column name="template_engine"     value="HANDLEBARS"/>  
+            <column name="generator_engine"    value="NONE"/>  
+            <column name="template_part_type"  value="MAIN" />  
+        </insert>
+
+        <insert schemaName="${schema_name}"  
+                tableName="template_part">  
+            <column name="x__id"               value="TEMPLATEPARTXID6"/>  
+            <column name="key"                 value="TEST_TEMPLATE_BODY_WITHOUT_PARAMS"/>  
+            <column name="description"         value="Sample template for developments - email body without parameter"/>  
+            <column name="template_engine"     value="HANDLEBARS"/>  
+            <column name="generator_engine"    value="NONE"/>  
+            <column name="template_part_type"  value="MAIN" />  
+        </insert>
+                                  
+    </changeSet>
+</databaseChangeLog>    

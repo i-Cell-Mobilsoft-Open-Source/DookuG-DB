@@ -1,0 +1,276 @@
+= Installation, Release, Deployment
+
+.Local Postgres (_click here_)
+[%collapsible]
+==========
+[source,console]
+#=====================
+#Full install
+#=====================
+docker run -it --rm \
+  --network=dookug-local-network \
+  -e AUTO_INSTALL=postgresql \
+  icellmobilsoft/liquibase/modules/dookug_db:1.1.0-SNAPSHOT
+
+[source,console]  
+#=====================
+#Step by step:
+#=====================
+#---------------------  
+#STEP1 DB init
+#---------------------
+docker run -it --rm \
+  --network=dookug-local-network \
+  -e AUTO_INSTALL=postgresql \
+  -e INSTALL_STEP=STEP_1 \
+  icellmobilsoft/liquibase/modules/dookug_db:1.0.5 && \
+#---------------------  
+#PG Tools (partman) install:
+#---------------------  
+docker run -it --rm \
+  --network dookug-local-network \
+  -e AUTO_INSTALL=postgresql \
+  -e INSTALL_URL_S1=jdbc:postgresql://module-dookug-postgredb:port_num/postgres \
+  -e INSTALL_URL_S2=jdbc:postgresql://module-dookug-postgredb:port_num/dookug_db \
+  --name module-dookug-pg_tools-step-01B \
+  icellmobilsoft/db-dwh/pg_tools:0.9.0 && \ 
+#---------------------  
+#STEP2 - Liqui install:
+#---------------------  
+docker run -it --rm \
+  --network=dookug-local-network \
+  -e AUTO_INSTALL=postgresql \
+  -e INSTALL_STEP=STEP_2 \
+  icellmobilsoft/liquibase/modules/dookug_db:1.0.5 && \
+#---------------------  
+#STEP3 - register in CRON scheduler:
+#---------------------  
+docker run -it --rm \
+  --network=dookug-local-network \
+  -e AUTO_INSTALL=postgresql \
+  -e INSTALL_STEP=STEP_3 \
+  icellmobilsoft/liquibase/modules/dookug_db:1.0.5 && \
+#---------------------  
+#STEP4 - Load default (test/dev) templates:
+#---------------------  
+docker run -it --rm \
+  --network=dookug-local-network \
+  -e AUTO_INSTALL=postgresql \
+  -e INSTALL_STEP=STEP_4 \
+  icellmobilsoft/liquibase/modules/dookug_db:1.0.5
+==========
+
+** How "embed" Dookug DB into other "host" DB (_install Dookug-db dookug schema into other DB_):    
+
+.Embed Postgres in to other DB locally (_click here_)
+[%collapsible]
+==========
+[source,bash]
+#---------------------  
+#Postgres and Linux:
+#---------------------  
+# The Step4 in DookuG DB contains loading of default templates, therefore the "embedding" installer script format is different for this DB. 
+# For all host (parent) DBs, the corresponding environment variables need to be rewritten accordingly.
+# If you don't need default templates, then STEP_4 can be omitted.
+#---------------------
+    docker run -it --rm \
+      --network=host-local-network \
+      -e AUTO_INSTALL=postgresql \
+      -e DATABASE_NAME=host_db \
+      -e INSTALL_URL_S1=jdbc:postgresql://local_host_db-postgredb:port_num/postgres \
+      -e CREATE_DATABASE=false \
+      -e INSTALL_STEP=STEP_1 \
+      -e INSTALL_SCHEMA=dookug \
+    icellmobilsoft/liquibase/modules/dookug_db:1.0.5 && \
+    docker run -it --rm \
+      --network=host-local-network \
+      -e AUTO_INSTALL=postgresql \
+      -e DATABASE_NAME=host_db \
+      -e INSTALL_URL_S1=jdbc:postgresql://local_host_db-postgredb:port_num/postgres \
+      -e CREATE_DATABASE=false \
+      -e INSTALL_URL_S2=jdbc:postgresql://local_host_db-postgredb:port_num/host_db \
+      -e INSTALL_SCHEMA=dookug \
+      --name module-dookug-pg_tools-step-01B \
+    icellmobilsoft/db-dwh/pg_tools:0.9.0 && \   
+    docker run -it --rm \
+      --network=host-local-network \
+      -e AUTO_INSTALL=postgresql \
+      -e DATABASE_NAME=host_db \
+      -e INSTALL_URL_S2=jdbc:postgresql://local_host_db-postgredb:port_num/host_db \
+      -e CREATE_DATABASE=false \
+      -e INSTALL_STEP=STEP_2 \
+      -e INSTALL_SCHEMA=dookug \
+      icellmobilsoft/liquibase/modules/dookug_db:1.0.5  && \
+    docker run -it --rm \
+      --network=host-local-network \
+      -e AUTO_INSTALL=postgresql \
+      -e DATABASE_NAME=host_db \
+      -e INSTALL_URL_S3=jdbc:postgresql://local_host_db-postgredb:port_num/postgres \
+      -e CREATE_DATABASE=false \
+      -e INSTALL_STEP=STEP_3 \
+      -e INSTALL_SCHEMA=dookug \
+      icellmobilsoft/liquibase/modules/dookug_db:1.0.5
+#--------------------------
+#This 4th step is needed because the Step4 in Dookug DB contains loading of default templates.
+#If you don't need default templates, then STEP_4 can be omitted.
+#--------------------------      
+    docker run -it --rm \
+      --network=host-local-network \
+      -e AUTO_INSTALL=postgresql \
+      -e DATABASE_NAME=host_db \
+      -e INSTALL_URL_S4=jdbc:postgresql://local_host_db-postgredb:port_num/host_db \
+      -e CREATE_DATABASE=false \
+      -e INSTALL_STEP=STEP_4 \
+      -e INSTALL_SCHEMA=dookug \
+      icellmobilsoft/liquibase/modules/dookug_db:1.0.5
+==========      
+
+.Local Oracle (_click here_)
+[%collapsible]
+==========
+- Locale Oracle install:
+[source,console]
+#=====================
+#Full local install
+#=====================
+docker run --rm \
+  --network dookug-local-network \
+  -e AUTO_INSTALL=oracle \
+  icellmobilsoft/liquibase/modules/dookug_db:1.1.0-SNAPSHOT
+
+[source,console]  
+#=====================
+#Step by step:
+#=====================
+#---------------------  
+#STEP1 DB init
+#---------------------
+docker run --rm \
+  --network dookug-local-network \
+  -e AUTO_INSTALL=oracle \
+  -e INSTALL_STEP=STEP_1 \
+  icellmobilsoft/liquibase/modules/dookug_db:1.0.5
+#---------------------  
+#STEP2 - Liqui install:
+#---------------------    
+docker run --rm \
+  --network dookug-local-network \
+  -e AUTO_INSTALL=oracle \
+  -e INSTALL_STEP=STEP_2 \
+  icellmobilsoft/liquibase/modules/dookug_db:1.0.5
+#---------------------  
+#STEP4 - Load Default (test/dev) templates - optional:
+#---------------------    
+docker run --rm \
+  --network dookug-local-network \
+  -e AUTO_INSTALL=oracle \
+  -e INSTALL_STEP=STEP_4 \
+  icellmobilsoft/liquibase/modules/dookug_db:1.0.5
+==========
+
+.Embed Oracle into other Oracle DB locally (_click here_)
+[%collapsible]
+==========
+[source,console]
+#---------------------        
+#Oracle and Linux:
+#---------------------  
+    docker run --rm \
+      --network host-local-network \
+      -e AUTO_INSTALL=oracle \
+      -e INSTALL_URL=jdbc:oracle:thin:@local_host_db-oracle:port_num/xepdb1 \
+      icellmobilsoft/liquibase/modules/dookug_db:1.0.5
+==========      
+
+.Server install (_click here_)
+[%collapsible]
+==========
+* The installation process is the same as the local one, however,
+- if the DB is already installed on the server, then STEP1 and/or pg_tools are probably not needed.
+- some environment variables need to be set with different values:
+  *** USERNAME=user_name
+  *** PASSWORD=passw
+  *** INSTALL_URL_S1=jdbc:postgresql://host:port_num/postgres
+  *** INSTALL_URL_S2=jdbc:postgresql://host:port_num/schema_name
+  *** INSTALL_URL_S3=jdbc:postgresql://host:port_num/postgres
+  *** INSTALL_URL_S4=jdbc:postgresql://host:port_num/schema_name
+  *** There is a possibility to change the password of the Service User from outside: e.g.: -e
+  DB_SERVICE_USER_PASSWORD=new_service_passw, this can only be changed externally on the new installation, so it is only in step 1!
+- Other environment variables are explained in the Configuration section.
+
+[source,console]
+docker run -it --rm \
+  -e AUTO_INSTALL=postgresql \
+  -e INSTALL_URL_S1=jdbc:postgresql://host:port_num/postgres \
+  -e INSTALL_STEP=STEP_1 \
+  -e USERNAME=postgres \
+  -e PASSWORD=postgres \
+  icellmobilsoft/liquibase/modules/dookug_db:1.0.5 && \
+docker run -it --rm \
+  -e AUTO_INSTALL=postgresql \
+  -e INSTALL_URL_S1=jdbc:postgresql://host:port_num/postgres \
+  -e INSTALL_URL_S2=jdbc:postgresql://host:port_num/dookug_db \
+  --name module-dookug-pg_tools-step-01B \
+  icellmobilsoft/db-dwh/pg_tools:0.9.0 && \  
+docker run -it --rm \
+  -e AUTO_INSTALL=postgresql \
+  -e INSTALL_URL_S2=jdbc:postgresql://host:port_num/dookug_db \
+  -e INSTALL_STEP=STEP_2 \
+  icellmobilsoft/liquibase/modules/dookug_db:1.0.5
+docker run -it --rm \
+  -e AUTO_INSTALL=postgresql \
+  -e INSTALL_URL_S3=jdbc:postgresql://host:port_num/postgres \
+  -e INSTALL_STEP=STEP_3 \
+  icellmobilsoft/liquibase/modules/dookug_db:1.0.5  
+docker run -it --rm \
+  -e AUTO_INSTALL=postgresql \
+  -e INSTALL_URL_S4=jdbc:postgresql://host:port_num/dookug_db \
+  -e INSTALL_STEP=STEP_4 \
+  icellmobilsoft/liquibase/modules/dookug_db:1.0.5      
+#---------------------
+#ORACLE server run - in default schema:
+#---------------------
+docker run --rm \
+  -e AUTO_INSTALL=oracle \
+  -e INSTALL_URL_S2=jdbc:oracle:thin:@host:port_num/db_name \
+  -e CREATE_DATABASE=false \
+  -e INSTALL_STEP=STEP_2 \
+  -e INSTALL_USERNAME=vdr_dookug \
+  -e INSTALL_PASSWORD=passw \
+  icellmobilsoft/liquibase/modules/dookug_db:1.0.5  
+#---------------------
+#ORACLE server run - in NOT default schema:
+#---------------------
+docker run --rm \
+  -e AUTO_INSTALL=oracle \
+  -e INSTALL_URL_S2=jdbc:oracle:thin:@host:port_num/db_name \
+  -e CREATE_DATABASE=false \
+  -e INSTALL_SCHEMA=vdr_dookug \
+  -e INSTALL_STEP=STEP_2 \
+  -e INSTALL_USERNAME=vdr_dookug \
+  -e INSTALL_PASSWORD=passw \
+  icellmobilsoft/liquibase/modules/dookug_db:1.0.5 
+#---------------------
+#If the DookuG DB is already installed on the server, then only the 2. step, liquibase install is needed.
+#---------------------
+  docker run --rm \
+    -e AUTO_INSTALL=oracle \
+    -e INSTALL_URL=jdbc:oracle:thin:@host:port/db_name \
+    -e INSTALL_STEP=2 \
+    icellmobilsoft/liquibase/modules/dookug_db:1.0.5
+
+#on windows: the "\" needs to be changed to "`"!
+
+ifndef::imagesdir[:imagesdir: ./docs/images]
+ifdef::imagesdir[:imagesdir: ./generated/images]
+
+:embedded_dookug_db_into_taxi_db: embedded_dookug_db_into_taxi_db.png
+:embedded_dookug_db_in_cron_jobs: embedded_dookug_db_in_cron_jobs.png
+
+image::{embedded_dookug_db_into_taxi_db}[DookuG is embedded in to Taxi,link="{imagesdir}/{embedded_dookug_db_into_taxi_db}",window=_blank]
+image::{embedded_dookug_db_in_cron_jobs}[DookuG Service register in CRON,link="{imagesdir}/{embedded_dookug_db_in_cron_jobs}",window=_blank]
+
+** optional environment variable, only needed during password change:
+[source,bash]
+  -e DB_SERVICE_USER_PASSWORD=<service user passw> \  
+==========

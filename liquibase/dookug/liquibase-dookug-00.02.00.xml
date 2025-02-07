@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <include file="00.02.00/DKG-123/0020_load_template.xml" relativeToChangelogFile="true"/>    
+    <include file="00.02.00/DKG-123/0021_load_template_part.xml" relativeToChangelogFile="true"/>    
+    <include file="00.02.00/DKG-123/0022_load_template_part_content.xml" relativeToChangelogFile="true"/>    
+    <include file="00.02.00/DKG-123/0023_load_template_template_part.xml" relativeToChangelogFile="true"/>    
+    
+</databaseChangeLog>

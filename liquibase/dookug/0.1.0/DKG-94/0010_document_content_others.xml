@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE defaultProperties SYSTEM "common/params.dtd">
+    <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <!-- include the default properties -->
+    &propertiesAll;
+
+    <changeSet id="0010" author="jozsef.holczer" labels="0.1.0">
+        <comment>DKG-94 Document_content Table, Comments and Other Table Objects.</comment>
+    
+        <setTableRemarks remarks = "document_content data." schemaName = "${schema_name}" tableName = "document_content"/>
+
+        <setColumnRemarks columnName = "x__id" remarks = "Primary key" tableName = "document_content" schemaName = "${schema_name}"/>
+        <setColumnRemarks columnName = "document_id" remarks = "DOCUMENT unique identifier." tableName = "document_content" schemaName = "${schema_name}"/>
+        <setColumnRemarks columnName = "content" remarks = "Document content (gzip)" tableName = "document_content" schemaName = "${schema_name}"/>
+        <setColumnRemarks columnName = "expiry" remarks = "Expiration date" tableName = "document_content" schemaName = "${schema_name}"/>
+        <setColumnRemarks columnName = "x__insdate" remarks = "Record creation date" tableName = "document_content" schemaName = "${schema_name}"/>
+        <setColumnRemarks columnName = "x__insuser" remarks = "User who created the record" tableName = "document_content" schemaName = "${schema_name}"/>
+        <setColumnRemarks columnName = "x__moddate" remarks = "Record modification date" tableName = "document_content" schemaName = "${schema_name}"/>
+        <setColumnRemarks columnName = "x__moduser" remarks = "User who modified the record" tableName = "document_content" schemaName = "${schema_name}"/>
+        <setColumnRemarks columnName = "x__version" remarks = "Number of record modifications" tableName = "document_content" schemaName = "${schema_name}"/>
+
+        <sql> alter table ${schema_name}.document_content add constraint pk_document_content PRIMARY KEY ( x__id );</sql>
+        
+        <sql> alter table ${schema_name}.document_content add constraint fk_document_content_document FOREIGN KEY ( document_id ) REFERENCES ${schema_name}.document(x__id);</sql>
+            
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,26 @@
+= Access to databases
+
+.Local Oracle DB (clock here)
+[%collapsible]
+======
+. Since we use XEPDB1 in the local Oracle XE database and not the XE itself, we need to connect to it as follows:
+. Pl. Oracle SQL Developer:
+    - Connection Type: Custom JDBC
+    - Custom JDBC URL: dbc:oracle:thin:@localhost:1521/xepdb1
+
+ifndef::imagesdir[:imagesdir: ./docs/images]
+:oracle_sql_developer_connect_to_xepdb1: oracle_sql_developer_connect_to_xepdb1.png
+
+image::{oracle_sql_developer_connect_to_xepdb1}[Local ORA DB connection in SQL Developer,link="{imagesdir}/{oracle_sql_developer_connect_to_xepdb1}",window=_blank]
+
+. Other type (pl. Oracle Developer Tools extension a VSCode-ban):
+    - Connection Type: Basic
+    - Hostname: localhost
+    - Post Number: 1521
+    - Service Name: xepdb1  
+
+ifndef::imagesdir[:imagesdir: ./docs/images]
+:vscode_oracle_developer_tools_connect_to_xepdb1: vscode_oracle_developer_tools_connect_to_xepdb1.png
+
+image::{vscode_oracle_developer_tools_connect_to_xepdb1}[Local ORA DB connection in VS CODE SQL Developer extension,link="{imagesdir}/{vscode_oracle_developer_tools_connect_to_xepdb1}",window=_blank]
+======       

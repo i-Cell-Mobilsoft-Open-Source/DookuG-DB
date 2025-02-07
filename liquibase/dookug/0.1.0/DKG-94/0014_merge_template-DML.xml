@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE defaultProperties SYSTEM "common/params.dtd">
+    <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <!-- include the default properties -->
+    &propertiesAll;
+
+    <changeSet id="0014" author="jozsef.holczer" labels="0.1.0">
+        <comment>DKG-94-set template records.</comment>
+        
+        <insert dbms="oracle, postgresql" 
+            schemaName="${schema_name}"
+            tableName="template">
+            <column name="x__id" value="DEV_TEMPLATE_HANDLEBARS" />
+            <column name="name" value="DEV_TEMPLATE_HANDLEBARS" />
+            <column name="description" value="Sample template for developments" />            
+            <column name="template_engine" value="HANDLEBARS" />
+            <column name="generator_engine" value="PDF_BOX" />
+            <column name="language" value="HU" />
+        </insert>
+        <insert dbms="oracle, postgresql" 
+            schemaName="${schema_name}"
+            tableName="template">
+            <column name="x__id" value="DEV_TEMPLATE_ERROR_HANDLEBARS" />
+            <column name="name" value="DEV_TEMPLATE_ERROR_HANDLEBARS" />
+            <column name="description" value="Failed sample template for developments" />            
+            <column name="template_engine" value="HANDLEBARS" />
+            <column name="generator_engine" value="PDF_BOX" />
+            <column name="language" value="HU" />
+        </insert>
+
+    </changeSet>
+</databaseChangeLog>

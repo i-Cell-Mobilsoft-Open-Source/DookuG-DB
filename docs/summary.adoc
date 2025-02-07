@@ -1,0 +1,8 @@
+* Brief overview:
+
+  ** Document generation module based on templates, which 
+  - can handle templates in different formats and inject parameter lists into them, then generate the finished document.
+  - The module is designed to generate output documents (PDF, XLSX, HTML, TXT, ...) from various template formats with identifiers (TXT, HTML, object, JRXML, ...) by inserting the received parameter(s) into the received template.
+  - The solution is based on a microservice architecture.
+
+

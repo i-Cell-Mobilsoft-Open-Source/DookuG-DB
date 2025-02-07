@@ -1,0 +1,15 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <include file="install-parameters.xml" relativeToChangelogFile="true"/>
+   
+    <include file="01.00.00/DKG-238/0044_load_all_default_templates.xml" relativeToChangelogFile="true"/>
+    <include file="01.00.00/DKG-238/0045_load_all_default_template_parts.xml" relativeToChangelogFile="true"/>
+    <include file="01.00.00/DKG-238/0046_load_all_default_template_template_parts.xml" relativeToChangelogFile="true"/>
+    <include file="01.00.00/DKG-238/0047_load_all_default_template_part_contents.xml" relativeToChangelogFile="true"/>
+    <include file="01.00.01/DKG-244/0048_load_eng_title_template_part_content.xml" relativeToChangelogFile="true"/>
+    <include file="01.00.03/DKG-246/0049_template_part_content_fix-DML.xml" relativeToChangelogFile="true"/>
+
+</databaseChangeLog>

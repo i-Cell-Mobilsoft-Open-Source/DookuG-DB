@@ -1,0 +1,28 @@
+version: "3.8"
+
+# Run
+# docker-compose -f <PATH>/etc/docker-compose/oracle/docker-compose.liquibase.install.step-01.yml up --build --force-recreate
+#
+# docker exec -it module-dookug-oracle-step-01 /bin/bash
+# network create: docker network create dookug-local-network
+# This is for the first step, and is used to init and start the Oracle DB.
+# details are in "liquibase-install-step-01.xml"
+services:
+  module-dookug-oracle-step-01:
+    container_name: module-dookug-oracle-step-01
+    image: icellmobilsoft/db-dwh/liquibase:${DBDWH_IMAGE_VERSION}
+    volumes:
+      # to find the files were copied in dockerfile
+      - ./../../../liquibase/dookug:/home/icellmobilsoft/liquibase/changelog
+      - ./../../../liquibase/common:/home/icellmobilsoft/liquibase/changelog/common
+      # to access the liquibase-install-step-01
+      - ./../../../etc/release/oracle/defaults-step-01.properties:/home/icellmobilsoft/liquibase/oracle/defaults-step-01.properties
+      # to access the before-liquibase.sh
+      - ./../../../etc/release/before-liquibase.sh:/home/icellmobilsoft/liquibase/bash/before-liquibase.sh
+    environment:
+      AUTO_INSTALL: oracle
+      INSTALL_STEP: STEP_1
+networks:
+  default:
+    external:
+      name: dookug-local-network

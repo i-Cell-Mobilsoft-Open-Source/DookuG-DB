@@ -1,0 +1,35 @@
+= Configurations
+
+* ENV variables:
+  - **DOCKER_REPOSITORY**: Root location of images (_default value: DOCKER_REPOSITORY__).
+  - **DOCKER_LIQUIBASE_DOOKUG**: Indicates the image location (_schema1 default value: ${DOCKER_REPOSITORY}/liquibase/modules/dookug_db_).
+  - **DBDWH_IMAGE_VERSION**: used version of liquibase, postgres, partman images (_default value: 0.9.0_)
+  - **VERSION**: Project version, this is set automatically.
+* Compose variables:
+  - **LIQUIBASE_BASE_IMAGE**: central, corporate base liquibase image with version, used by dockerfile (_default value: DOCKER_REPOSITORY/db-dwh/liquibase:${DBDWH_IMAGE_VERSION}_).
+  - **liquibase-release/LIQUIBASE_INSTALL_DIR**: local liquibase directory, used by dockerfile (_schema1 default value: ./liquibase/dookug_).
+  - **LIQUIBASE_INSTALL_COMMON_DIR**: local liquibase/common directory, used by dockerfile (_default value: ./liquibase/common_).
+* Before Liquibase variables:  
+  - **S2_SCHEMA_NAME**: Step 2 schema name, with default value, can be overridden externally (_default value: dookug_).
+  - **CREATE_DATABASE**: PostgreSQL DB. If the current DB needs to be embedded in another DB (_under a specific schema_), this variable prevents an empty DB from being created. Default value is TRUE in the before-liquibase file, can be overridden externally.
+* Properties variables:
+  - Properties file: File belonging to the given DB that provides data for local db access and maps the liquibase changelog file to the given step compose file.
+  - **URL**: URL of the DB to be installed, by default local DB access is specified, can be overridden externally. 
+  ** Oracle DB: (default value: _jdbc:oracle:thin:@module-dookug-oracle:1521/xepdb1_).
+  ** Postgres DB/step1: (default value: _jdbc:postgresql://module-dookug-postgredb:5432/postgres_).
+  ** Postgres DB/step2: (default value: _jdbc:postgresql://module-dookug-postgredb:5432/dookug_db).
+  ** Postgres DB/step3: (default value: _jdbc:postgresql://module-dookug-postgredb:5432/postgres_).
+  ** Postgres DB/step4: (default value: _jdbc:postgresql://module-dookug-postgredb:5432/dookug_db).
+  - **USERNAME**: Username for the DB to be installed, by default local DB access is specified, can be overridden externally.
+  ** Oracle DB/step1: (default value: _system_).
+  ** Oracle DB/step2: (schema2 default value: dookug).
+  ** Oracle DB/step4: (schema4 default value: dookug).
+  ** Postgres DB: (default value: _postgres_).
+  - **PASSWORD**: Password for the DB to be installed, by default local DB access is specified, can be overridden externally. 
+  ** Oracle DB: (default value: _developer_).
+  ** Postgres DB: (default value: _postgres_).
+  - **CHANGELOGFILE**: Name of the liquibase changelog file, by default local changelog file access for the given DB step is specified.
+  ** step1: DB installation, users, permissions, etc. (default value: _liquibase-install-step-01.xml_).
+  ** step2: Liquibase installation, DB objects (default value: _liquibase-install-step-02.xml_).
+  ** step3: ONLY PostgreSQL - CRON scheduler entry (default value: _liquibase-install-step-03.xml_).
+  ** step4: Optional! Default (test/dev) template loading (default value: _liquibase-install-step-04.xml_).

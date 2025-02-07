@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE defaultProperties SYSTEM "common/params.dtd">
+    <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <!-- include the default properties -->
+    &propertiesAll;
+
+      <changeSet id="0016" author="jozsef.holczer" labels="0.1.0">
+            <comment>DKG-94 Project template feltoltes</comment>
+    
+            <sql>alter table ${schema_name}.template drop constraint ck_template_generator_engine;</sql>
+            <sql>alter table ${schema_name}.template_part drop constraint ck_template_part_generator_engine;</sql>
+      
+            <sql>alter table ${schema_name}.template add constraint ck_template_generator_engine check ( generator_engine IN ('PDF_BOX', 'NONE', 'SAXON') );</sql>
+            <sql>alter table ${schema_name}.template_part add constraint ck_template_part_generator_engine check ( generator_engine IN ('PDF_BOX', 'NONE', 'SAXON') );</sql>
+
+            <insert dbms="oracle, postgresql" 
+                  schemaName="${schema_name}"
+                  tableName="template">
+                  <column name="x__id" value="48SJ6QJDLKG3CL01"/>
+                  <column name="name" value="PROJECT_INVOICE_TEMPLATE"/>
+                  <column name="description" value="Project számla sablon A4"/>
+                  <column name="template_engine" value="NONE"/>
+                  <column name="generator_engine" value="SAXON"/>
+                  <column name="language" value="HU"/>
+                  <column name="validity_start" valueDate="2023-07-01T00:00:00"/>
+            </insert>
+            <insert dbms="oracle, postgresql" 
+                  schemaName="${schema_name}"
+                  tableName="template">
+                  <column name="x__id" value="48SJ6QJDLKG3CL02"/>
+                  <column name="name" value="PROJECT_INVOICE_TEMPLATE"/>
+                  <column name="description" value="Project számla sablon A4"/>
+                  <column name="template_engine" value="NONE"/>
+                  <column name="generator_engine" value="SAXON"/>
+                  <column name="language" value="HU"/>
+                  <column name="validity_start" valueDate="2023-07-01T00:00:00"/>
+            </insert>
+            <insert dbms="oracle, postgresql" 
+                  schemaName="${schema_name}"
+                  tableName="template">
+                  <column name="x__id" value="48SJ6QJDLKG3CL03"/>
+                  <column name="name" value="PROJECT_INVOICE_TEMPLATE"/>
+                  <column name="description" value="Project számla sablon A4"/>
+                  <column name="template_engine" value="NONE"/>
+                  <column name="generator_engine" value="SAXON"/>
+                  <column name="language" value="HU"/>
+                  <column name="validity_start" valueDate="2023-07-01T00:00:00"/>
+            </insert>
+
+            <insert dbms="oracle, postgresql" 
+                  schemaName="${schema_name}"
+                  tableName="template_part">
+                  <column name="x__id" value="48SJ6QJDLKG3CM01"/>
+                  <column name="key" value="PROJECT_INVOICE_TEMPLATE_FULL"/>
+                  <column name="description" value="Project számla sablon A4"/>
+                  <column name="template_engine" value="NONE"/>
+                  <column name="generator_engine" value="SAXON"/>
+                  <column name="template_part_type" value="MAIN"/>
+            </insert>
+
+            <insert dbms="oracle, postgresql" 
+                  schemaName="${schema_name}"
+                  tableName="template_part_content">
+                  <column name="x__id" value="48SJ6QJDLKG3CN01"/>
+                  <column name="template_part_id" value="48SJ6QJDLKG3CM01"/>
+                  <column name="content" valueBlobFile="InvoiceDataTemplate_XSLT_HTML.xslt"/>
+                  <column name="compressed" valueNumeric="0"/>
+                  <column name="validity_start" valueDate="2023-07-01T00:00:00"/>
+            </insert>
+
+            <insert dbms="oracle, postgresql" 
+                  schemaName="${schema_name}"
+                  tableName="template_template_part">
+                  <column name="x__id" value="48SJ6QJDLKG3CT01"/>
+                  <column name="template_id" value="48SJ6QJDLKG3CL01"/>
+                  <column name="template_part_id" value="48SJ6QJDLKG3CM01"/>
+            </insert>
+            <insert dbms="oracle, postgresql" 
+                  schemaName="${schema_name}"
+                  tableName="template_template_part">
+                  <column name="x__id" value="48SJ6QJDLKG3CT02"/>
+                  <column name="template_id" value="48SJ6QJDLKG3CL02"/>
+                  <column name="template_part_id" value="48SJ6QJDLKG3CM01"/>
+            </insert>
+            <insert dbms="oracle, postgresql" 
+                  schemaName="${schema_name}"
+                  tableName="template_template_part">
+                  <column name="x__id" value="48SJ6QJDLKG3CT03"/>
+                  <column name="template_id" value="48SJ6QJDLKG3CL03"/>
+                  <column name="template_part_id" value="48SJ6QJDLKG3CM01"/>
+            </insert>
+      </changeSet>
+
+</databaseChangeLog>

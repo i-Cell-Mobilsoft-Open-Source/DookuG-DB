@@ -1,0 +1,245 @@
+= Using Compose Commands
+
+You need to use these compose commands during development. You can develop and test the installation process step by step.
+====
+.First command: docker-compose up with build (click here)
+[%collapsible]
+======
+.Postgresql (_click here_)
+[%collapsible]
+========
+[source,shell]
+docker compose --env-file .env -f etc/docker-compose/postgresql/docker-compose.local.postgredb.yml up --build --force-recreate --remove-orphans
+
+* This command is based on "docker-compose.local.postgredb.yml" file located in etc/docker-compose folder (_under the related database_).
+*** This command downloads and builds PostgreSQL and Liquibase images, then starts the database.
+**** The Postgres image is our corporate image (contains PG 14 and already includes PG_CRON extension needed for partitioning), located in Github: https://github.com/i-Cell-Mobilsoft-Open-Source/docker-db-dwh/tree/main/dockerfile/postgres_14[GitHub-Postgres_14]
+**** The Liquibase image is our corporate image (_contains some predefined settings and installation steps, including OJDBC_), located in Github: https://github.com/i-Cell-Mobilsoft-Open-Source/docker-db-dwh/tree/main/dockerfile/liquibase[GitHub-liquibase]
+
+.The possible result of the command execution (_click here_)
+[%collapsible]
+==========
+[source,console]
+jholczer@jholczer-Latitude-5520:~/git/modul/dookug-db$ docker compose --env-file .env -f etc/docker-compose/postgresql/docker-compose.local.postgredb.yml up --build --force-recreate --remove-orphans
+WARN[0000] network default: network.external.name is deprecated. Please set network.name with external: true 
+[+] Running 2/0
+ ✔ Volume "module-dookug-postgredb-data"  Created                                                              0.0s 
+ ✔ Container module-dookug-postgredb      Created                                                              0.0s 
+Attaching to module-dookug-postgredb
+module-dookug-postgredb  | The files belonging to this database system will be owned by user "postgres".
+module-dookug-postgredb  | This user must also own the server process.
+module-dookug-postgredb  | 
+module-dookug-postgredb  | The database cluster will be initialized with locale "en_US.utf8".
+module-dookug-postgredb  | The default database encoding has accordingly been set to "UTF8".
+module-dookug-postgredb  | The default text search configuration will be set to "english".
+module-dookug-postgredb  | 
+module-dookug-postgredb  | Data page checksums are disabled.
+module-dookug-postgredb  | 
+module-dookug-postgredb  | fixing permissions on existing directory /var/lib/postgresql/data ... ok
+module-dookug-postgredb  | creating subdirectories ... ok
+module-dookug-postgredb  | selecting dynamic shared memory implementation ... posix
+module-dookug-postgredb  | selecting default max_connections ... 100
+module-dookug-postgredb  | selecting default shared_buffers ... 128MB
+module-dookug-postgredb  | selecting default time zone ... Etc/UTC
+module-dookug-postgredb  | creating configuration files ... ok
+module-dookug-postgredb  | running bootstrap script ... ok
+module-dookug-postgredb  | performing post-bootstrap initialization ... ok
+module-dookug-postgredb  | syncing data to disk ... ok
+module-dookug-postgredb  | 
+module-dookug-postgredb  | 
+module-dookug-postgredb  | Success. You can now start the database server using:
+module-dookug-postgredb  | 
+module-dookug-postgredb  |     pg_ctl -D /var/lib/postgresql/data -l logfile start
+module-dookug-postgredb  | 
+module-dookug-postgredb  | initdb: warning: enabling "trust" authentication for local connections
+module-dookug-postgredb  | You can change this by editing pg_hba.conf or using the option -A, or
+module-dookug-postgredb  | --auth-local and --auth-host, the next time you run initdb.
+module-dookug-postgredb  | waiting for server to start....2024-01-05 09:31:06.546 UTC [35] LOG:  starting PostgreSQL 14.8 (Debian 14.8-1.pgdg110+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 10.2.1-6) 10.2.1 20210110, 64-bit
+module-dookug-postgredb  | 2024-01-05 09:31:06.548 UTC [35] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+module-dookug-postgredb  | 2024-01-05 09:31:06.554 UTC [36] LOG:  database system was shut down at 2024-01-05 09:31:06 UTC
+module-dookug-postgredb  | 2024-01-05 09:31:06.558 UTC [35] LOG:  database system is ready to accept connections
+module-dookug-postgredb  |  done
+module-dookug-postgredb  | server started
+module-dookug-postgredb  | 
+module-dookug-postgredb  | /usr/local/bin/docker-entrypoint.sh: running /docker-entrypoint-initdb.d/pg-cron.sh
+module-dookug-postgredb  | 
+module-dookug-postgredb  | waiting for server to shut down...2024-01-05 09:31:06.659 UTC [35] LOG:  received fast shutdown request
+module-dookug-postgredb  | .2024-01-05 09:31:06.662 UTC [35] LOG:  aborting any active transactions
+module-dookug-postgredb  | 2024-01-05 09:31:06.663 UTC [35] LOG:  background worker "logical replication launcher" (PID 42) exited with exit code 1
+module-dookug-postgredb  | 2024-01-05 09:31:06.663 UTC [37] LOG:  shutting down
+module-dookug-postgredb  | 2024-01-05 09:31:06.680 UTC [35] LOG:  database system is shut down
+module-dookug-postgredb  |  done
+module-dookug-postgredb  | server stopped
+module-dookug-postgredb  | 
+module-dookug-postgredb  | PostgreSQL init process complete; ready for start up.
+module-dookug-postgredb  | 
+module-dookug-postgredb  | 2024-01-05 09:31:06.780 UTC [1] LOG:  starting PostgreSQL 14.8 (Debian 14.8-1.pgdg110+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 10.2.1-6) 10.2.1 20210110, 64-bit
+module-dookug-postgredb  | 2024-01-05 09:31:06.780 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+module-dookug-postgredb  | 2024-01-05 09:31:06.780 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+module-dookug-postgredb  | 2024-01-05 09:31:06.784 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+module-dookug-postgredb  | 2024-01-05 09:31:06.789 UTC [52] LOG:  database system was shut down at 2024-01-05 09:31:06 UTC
+module-dookug-postgredb  | 2024-01-05 09:31:06.794 UTC [1] LOG:  database system is ready to accept connections
+module-dookug-postgredb  | 2024-01-05 09:31:06.797 UTC [58] LOG:  pg_cron scheduler started
+
+==========
+
+If you need to reset the DB to its initial state:
+[source,bash]
+docker compose --env-file .env -f ./etc/docker-compose/postgresql/docker-compose.liquibase.install.step-01.yml down -v
+
+** This command will delete the created DB - t
+
+.The possible result of the command execution (_click here_)
+[%collapsible]
+==========
+[source,console]
+PS C:\Users\jozsef.holczer\Documents\SourceTree\modul\dookug-db> docker-compose -f etc/docker-compose/postgresql/docker-compose.local.postgredb.yml down -v
+time="2023-08-16T14:52:23+02:00" level=warning msg="network default: network.external.name is deprecated. Please set network.name with external: true"
+[+] Running 1/0
+ ✔ Volume module-dookug-postgredb-data  Removed                                                                                                                  0.0s
+PS C:\Users\jozsef.holczer\Documents\SourceTree\modul\dookug-db>
+==========
+
+========
+
+.Oracle (_click here_)
+[%collapsible]
+========
+[source,shell]
+docker-compose -f etc/docker-compose/oracle/docker-compose.local.oracle.yml up --build --force-recreate --remove-orphans
+
+** This command is based on the "docker-compose.local.oracle.yml" file located in the etc/docker-compose folder (_under the relevant database_).
+*** This command downloads and builds the Oracle and Liquibase images.
+**** The Oracle image is the standard Oracle XE image, which can be downloaded from here: https://github.com/oracle/docker-images/tree/main/OracleDatabase/SingleInstance[container-registry.oracle.com/database/express:21.3.0-xe]
+**** The Liquibase image is our own image (which contains OJDBC and some predefined settings and the installation steps) and can be found in Github: https://github.com/i-Cell-Mobilsoft-Open-Source/docker-db-dwh/tree/main/dockerfile/liquibase[GitHub-liquibase]
+
+. The posssible result of the command execution (_click here_)
+[%collapsible]
+==========
+[source,console]
+PS C:\Users\jozsef.holczer\Documents\SourceTree\modul\dookug-db> docker compose --env-file .env -f etc/docker-compose/oracle/docker-compose.local.oracle.yml up --build --force-recreate --remove-orphans
+time="2023-08-16T14:54:53+02:00" level=warning msg="network default: network.external.name is deprecated. Please set network.name with external: true"
+[+] Running 4/4
+ ✔ Volume "dookug-db-oracle-data"            Created                                                                                                             0.0s
+ ✔ Container module-document-oracle-step-01  Removed                                                                                                             0.0s
+ ✔ Container module-document-oracle-step-02  Removed                                                                                                             0.0s
+ ✔ Container module-dookug-oracle            Created                                                                                                            37.2s
+Attaching to module-dookug-oracle
+module-dookug-oracle  | Starting Oracle Net Listener.
+module-dookug-oracle  | Oracle Net Listener started.
+module-dookug-oracle  | Starting Oracle Database instance XE.
+module-dookug-oracle  | Oracle Database instance XE started.
+module-dookug-oracle  |
+module-dookug-oracle  |
+module-dookug-oracle  | The Oracle base remains unchanged with value /opt/oracle
+module-dookug-oracle  |
+module-dookug-oracle  | SQL*Plus: Release 21.0.0.0.0 - Production on Wed Aug 16 12:55:36 2023
+module-dookug-oracle  | Version 21.3.0.0.0
+module-dookug-oracle  |
+module-dookug-oracle  | Copyright (c) 1982, 2021, Oracle.  All rights reserved.
+module-dookug-oracle  |
+module-dookug-oracle  |
+module-dookug-oracle  |
+module-dookug-oracle  | Connected to:
+module-dookug-oracle  | Oracle Database 21c Express Edition Release 21.0.0.0.0 - Production
+module-dookug-oracle  | Version 21.3.0.0.0
+module-dookug-oracle  |
+module-dookug-oracle  | SQL>
+module-dookug-oracle  |
+module-dookug-oracle  | User altered.
+module-dookug-oracle  |
+module-dookug-oracle  | SQL>
+module-dookug-oracle  |
+module-dookug-oracle  | User altered.
+module-dookug-oracle  |
+module-dookug-oracle  | SQL>
+module-dookug-oracle  |
+module-dookug-oracle  | Session altered.
+module-dookug-oracle  |
+module-dookug-oracle  | SQL>
+module-dookug-oracle  |
+module-dookug-oracle  | User altered.
+module-dookug-oracle  |
+module-dookug-oracle  | SQL>
+module-dookug-oracle  | Disconnected from Oracle Database 21c Express Edition Release 21.0.0.0.0 - Production
+module-dookug-oracle  | Version 21.3.0.0.0
+module-dookug-oracle  | The Oracle base remains unchanged with value /opt/oracle
+module-dookug-oracle  | #########################
+module-dookug-oracle  | DATABASE IS READY TO USE!
+module-dookug-oracle  | #########################
+module-dookug-oracle  | The following output is now a tail of the alert.log:
+module-dookug-oracle  | Pluggable database XEPDB1 opened read write
+module-dookug-oracle  | Starting background process CJQ0
+module-dookug-oracle  | 2023-08-16T12:55:36.441712+00:00
+module-dookug-oracle  | CJQ0 started with pid=52, OS id=167
+module-dookug-oracle  | Completed: ALTER DATABASE OPEN
+module-dookug-oracle  | 2023-08-16T12:55:36.584647+00:00
+module-dookug-oracle  | Using default pga_aggregate_limit of 2048 MB
+module-dookug-oracle  | 2023-08-16T12:55:36.674010+00:00
+module-dookug-oracle  | TABLE AUDSYS.AUD$UNIFIED: ADDED INTERVAL PARTITION SYS_P328 (3334) VALUES LESS THAN (TIMESTAMP' 2023-08-17 00:00:00')
+module-dookug-oracle  | XEPDB1(3):TABLE AUDSYS.AUD$UNIFIED: ADDED INTERVAL PARTITION SYS_P348 (3334) VALUES LESS THAN (TIMESTAMP' 2023-08-17 00:00:00')
+module-dookug-oracle  | 2023-08-16T12:55:38.956693+00:00
+module-dookug-oracle  | Shared IO Pool defaulting to 80MB. Trying to get it from Buffer Cache for process 124.
+module-dookug-oracle  | ===========================================================
+module-dookug-oracle  | Dumping current patch information
+module-dookug-oracle  | ===========================================================
+module-dookug-oracle  | No patches have been applied
+module-dookug-oracle  | ===========================================================
+module-dookug-oracle  | 2023-08-16T12:55:39.212445+00:00
+module-dookug-oracle  | XEPDB1(3):Resize operation completed for file# 10, fname /opt/oracle/oradata/XE/XEPDB1/sysaux01.dbf, old size 337920K, new size 358400K
+
+==========
+
+If you need to reset the DB to its initial state:
+[source,bash]
+docker compose --env-file .env -f etc/docker-compose/oracle/docker-compose.local.oracle.yml down -v
+
+** This command deletes
+
+.The possible result of the command execution (_click here_)
+[%collapsible]
+==========
+[source,console]
+PS C:\Users\jozsef.holczer\Documents\SourceTree\modul\dookug-db> docker compose --env-file .env -f etc/docker-compose/oracle/docker-compose.local.oracle.yml down -v
+time="2023-08-16T14:54:19+02:00" level=warning msg="network default: network.external.name is deprecated. Please set network.name with external: true"
+[+] Running 1/0
+ ✔ Volume dookug-db-oracle-data  Removed                                                                                                                         0.0s
+PS C:\Users\jozsef.holczer\Documents\SourceTree\modul\dookug-db>
+==========
+
+========
+
+======
+====
+
+====
+.Second command: docker-compose steps (_click here_)
+[%collapsible]
+======
+The "compose up" command contains 2 steps (_in case of multiple schemas, you may need as many steps as schemas_).
+
+[source,bash]
+docker compose --env-file .env -f ./etc/docker-compose/postgresql/docker-compose.liquibase.install.step-01.yml up --build --force-recreate
+
+** This command is based on "docker-compose.liquibase.install.step-01.yml" file located in etc/docker-compose folder (_under the related database_). 
+** It creates and initializes the database, schema(s), roles and other system objects. 
+** In this step, configuration files are used from additional folders: etc/release and liquibase.
+
+[source,bash]
+docker compose --env-file .env -f ./etc/docker-compose/postgresql/docker-compose.liquibase.install.step-02.yml up --build --force-recreate
+
+** This command is based on "docker-compose.liquibase.install.step-02.yml" file located in etc/docker-compose folder (_under the related database_).
+** We use configuration files from additional folders here: etc/release and liquibase.
+** We use the Liquibase change log files (_changelog_) to run the DDL/DML commands.
+
+[source,bash]
+docker compose --env-file .env -f ./etc/docker-compose/postgresql/docker-compose.liquibase.install.step-03.yml up --build --force-recreate
+
+** This file calls the "liquibase-install-step-03.xml" file indirectly, which only inserts the "dookug_service" command into the CRON.job table so that the CRON scheduler can work with it later.
+
+[source,bash]
+docker compose --env-file .env -f ./etc/docker-compose/postgresql/docker-compose.liquibase.install.step-04.yml up --build --force-recreate
+
+** This file calls the "liquibase-install-step-04.xml" file indirectly, which only installs the default (dev/test) templates.
+======
+====

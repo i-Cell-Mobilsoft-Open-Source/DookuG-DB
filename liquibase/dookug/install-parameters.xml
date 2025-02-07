@@ -1,0 +1,17 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <property name="dba_user_name"      value="postgres" dbms="postgresql"/>
+    <property name="dba_user_name"      value="system"   dbms="oracle"/>
+
+    <!-- postgresql -->
+    <property name="database_name"      value="dookug_db"/>
+    
+    <property name="schema_name"        value="${S2_SCHEMA_NAME}"/>
+    <property name="schema_password"    value="developer"/>
+    
+    <property name="service_name"       value="${S2_SCHEMA_NAME}_service"/>
+
+</databaseChangeLog>

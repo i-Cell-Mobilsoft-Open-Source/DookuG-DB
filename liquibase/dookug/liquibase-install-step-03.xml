@@ -1,0 +1,11 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <include file="install-parameters.xml" relativeToChangelogFile="true"/>
+   
+    <!-- postgresql -->
+    <include file="common/cron_jobs/add_other_schema_to_cron_jobs.sql" relativeToChangelogFile="true"/>
+
+</databaseChangeLog>

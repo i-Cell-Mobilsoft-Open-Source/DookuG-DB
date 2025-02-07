@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE defaultProperties SYSTEM "common/params.dtd">
+    <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <!-- include the default properties -->
+    &propertiesAll;
+
+    <changeSet id="0023" author="jozsef.holczer" labels="00.02.00">
+        <comment>DKG-123 Load template_template_part table with plain text samples.</comment>
+
+        <insert schemaName="${schema_name}"  
+                tableName="template_template_part">  
+            <column name="x__id"            value="XID1"/>  
+            <column name="template_id"      value="TEMPLATEXID1"/>  
+            <column name="template_part_id" value="TEMPLATEPARTXID1"/>  
+        </insert>
+        
+        <insert schemaName="${schema_name}"  
+                tableName="template_template_part">  
+            <column name="x__id"            value="XID2"/>  
+            <column name="template_id"      value="TEMPLATEXID2"/>  
+            <column name="template_part_id" value="TEMPLATEPARTXID2"/>  
+        </insert>
+
+        <insert schemaName="${schema_name}"  
+                tableName="template_template_part">  
+            <column name="x__id"            value="XID3"/>  
+            <column name="template_id"      value="TEMPLATEXID2"/>  
+            <column name="template_part_id" value="TEMPLATEPARTXID3"/>  
+        </insert>
+        
+        <insert schemaName="${schema_name}"  
+                tableName="template_template_part">  
+            <column name="x__id"            value="XID4"/>  
+            <column name="template_id"      value="TEMPLATEXID2"/>  
+            <column name="template_part_id" value="TEMPLATEPARTXID4"/>  
+        </insert>
+        
+        <insert schemaName="${schema_name}"  
+                tableName="template_template_part">  
+            <column name="x__id"            value="XID5"/>  
+            <column name="template_id"      value="TEMPLATEXID3"/>  
+            <column name="template_part_id" value="TEMPLATEPARTXID5"/>  
+        </insert>
+        
+        <insert schemaName="${schema_name}"  
+                tableName="template_template_part">  
+            <column name="x__id"            value="XID6"/>  
+            <column name="template_id"      value="TEMPLATEXID4"/>  
+            <column name="template_part_id" value="TEMPLATEPARTXID6"/>  
+        </insert>
+                  
+    </changeSet>
+</databaseChangeLog>    
