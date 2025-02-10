@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -x
+set -ex
 
 # import .env file (resolves inner values as well)
 . .env
