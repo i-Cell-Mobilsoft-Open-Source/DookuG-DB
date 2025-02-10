@@ -10,7 +10,7 @@
 docker run -it --rm \
   --network=dookug-local-network \
   -e AUTO_INSTALL=postgresql \
-  icellmobilsoft/liquibase/modules/dookug_db:1.1.0-SNAPSHOT
+  icellmobilsoft/dookug_db:1.1.0
 
 [source,console]  
 #=====================
@@ -23,7 +23,7 @@ docker run -it --rm \
   --network=dookug-local-network \
   -e AUTO_INSTALL=postgresql \
   -e INSTALL_STEP=STEP_1 \
-  icellmobilsoft/liquibase/modules/dookug_db:1.0.5 && \
+  icellmobilsoft/dookug_db:1.1.0 && \
 #---------------------  
 #PG Tools (partman) install:
 #---------------------  
@@ -33,7 +33,7 @@ docker run -it --rm \
   -e INSTALL_URL_S1=jdbc:postgresql://module-dookug-postgredb:port_num/postgres \
   -e INSTALL_URL_S2=jdbc:postgresql://module-dookug-postgredb:port_num/dookug_db \
   --name module-dookug-pg_tools-step-01B \
-  icellmobilsoft/db-dwh/pg_tools:0.9.0 && \ 
+  icellmobilsoft/pg_tools:0.10.0 && \ 
 #---------------------  
 #STEP2 - Liqui install:
 #---------------------  
@@ -41,7 +41,7 @@ docker run -it --rm \
   --network=dookug-local-network \
   -e AUTO_INSTALL=postgresql \
   -e INSTALL_STEP=STEP_2 \
-  icellmobilsoft/liquibase/modules/dookug_db:1.0.5 && \
+  icellmobilsoft/dookug_db:1.1.0 && \
 #---------------------  
 #STEP3 - register in CRON scheduler:
 #---------------------  
@@ -49,7 +49,7 @@ docker run -it --rm \
   --network=dookug-local-network \
   -e AUTO_INSTALL=postgresql \
   -e INSTALL_STEP=STEP_3 \
-  icellmobilsoft/liquibase/modules/dookug_db:1.0.5 && \
+  icellmobilsoft/dookug_db:1.1.0 && \
 #---------------------  
 #STEP4 - Load default (test/dev) templates:
 #---------------------  
@@ -57,7 +57,7 @@ docker run -it --rm \
   --network=dookug-local-network \
   -e AUTO_INSTALL=postgresql \
   -e INSTALL_STEP=STEP_4 \
-  icellmobilsoft/liquibase/modules/dookug_db:1.0.5
+  icellmobilsoft/dookug_db:1.1.0
 ==========
 
 ** How "embed" Dookug DB into other "host" DB (_install Dookug-db dookug schema into other DB_):    
@@ -81,7 +81,7 @@ docker run -it --rm \
       -e CREATE_DATABASE=false \
       -e INSTALL_STEP=STEP_1 \
       -e INSTALL_SCHEMA=dookug \
-    icellmobilsoft/liquibase/modules/dookug_db:1.0.5 && \
+    icellmobilsoft/dookug_db:1.1.0 && \
     docker run -it --rm \
       --network=host-local-network \
       -e AUTO_INSTALL=postgresql \
@@ -91,7 +91,7 @@ docker run -it --rm \
       -e INSTALL_URL_S2=jdbc:postgresql://local_host_db-postgredb:port_num/host_db \
       -e INSTALL_SCHEMA=dookug \
       --name module-dookug-pg_tools-step-01B \
-    icellmobilsoft/db-dwh/pg_tools:0.9.0 && \   
+    icellmobilsoft/pg_tools:0.10.0 && \   
     docker run -it --rm \
       --network=host-local-network \
       -e AUTO_INSTALL=postgresql \
@@ -100,7 +100,7 @@ docker run -it --rm \
       -e CREATE_DATABASE=false \
       -e INSTALL_STEP=STEP_2 \
       -e INSTALL_SCHEMA=dookug \
-      icellmobilsoft/liquibase/modules/dookug_db:1.0.5  && \
+      icellmobilsoft/dookug_db:1.1.0  && \
     docker run -it --rm \
       --network=host-local-network \
       -e AUTO_INSTALL=postgresql \
@@ -109,7 +109,7 @@ docker run -it --rm \
       -e CREATE_DATABASE=false \
       -e INSTALL_STEP=STEP_3 \
       -e INSTALL_SCHEMA=dookug \
-      icellmobilsoft/liquibase/modules/dookug_db:1.0.5
+      icellmobilsoft/dookug_db:1.1.0
 #--------------------------
 #This 4th step is needed because the Step4 in Dookug DB contains loading of default templates.
 #If you don't need default templates, then STEP_4 can be omitted.
@@ -122,7 +122,7 @@ docker run -it --rm \
       -e CREATE_DATABASE=false \
       -e INSTALL_STEP=STEP_4 \
       -e INSTALL_SCHEMA=dookug \
-      icellmobilsoft/liquibase/modules/dookug_db:1.0.5
+      icellmobilsoft/dookug_db:1.1.0
 ==========      
 
 .Local Oracle (_click here_)
@@ -136,7 +136,7 @@ docker run -it --rm \
 docker run --rm \
   --network dookug-local-network \
   -e AUTO_INSTALL=oracle \
-  icellmobilsoft/liquibase/modules/dookug_db:1.1.0-SNAPSHOT
+  icellmobilsoft/dookug_db:1.1.0
 
 [source,console]  
 #=====================
@@ -149,7 +149,7 @@ docker run --rm \
   --network dookug-local-network \
   -e AUTO_INSTALL=oracle \
   -e INSTALL_STEP=STEP_1 \
-  icellmobilsoft/liquibase/modules/dookug_db:1.0.5
+  icellmobilsoft/dookug_db:1.1.0
 #---------------------  
 #STEP2 - Liqui install:
 #---------------------    
@@ -157,7 +157,7 @@ docker run --rm \
   --network dookug-local-network \
   -e AUTO_INSTALL=oracle \
   -e INSTALL_STEP=STEP_2 \
-  icellmobilsoft/liquibase/modules/dookug_db:1.0.5
+  icellmobilsoft/dookug_db:1.1.0
 #---------------------  
 #STEP4 - Load Default (test/dev) templates - optional:
 #---------------------    
@@ -165,7 +165,7 @@ docker run --rm \
   --network dookug-local-network \
   -e AUTO_INSTALL=oracle \
   -e INSTALL_STEP=STEP_4 \
-  icellmobilsoft/liquibase/modules/dookug_db:1.0.5
+  icellmobilsoft/dookug_db:1.1.0
 ==========
 
 .Embed Oracle into other Oracle DB locally (_click here_)
@@ -179,7 +179,7 @@ docker run --rm \
       --network host-local-network \
       -e AUTO_INSTALL=oracle \
       -e INSTALL_URL=jdbc:oracle:thin:@local_host_db-oracle:port_num/xepdb1 \
-      icellmobilsoft/liquibase/modules/dookug_db:1.0.5
+      icellmobilsoft/dookug_db:1.1.0
 ==========      
 
 .Server install (_click here_)
@@ -205,28 +205,28 @@ docker run -it --rm \
   -e INSTALL_STEP=STEP_1 \
   -e USERNAME=postgres \
   -e PASSWORD=postgres \
-  icellmobilsoft/liquibase/modules/dookug_db:1.0.5 && \
+  icellmobilsoft/dookug_db:1.1.0 && \
 docker run -it --rm \
   -e AUTO_INSTALL=postgresql \
   -e INSTALL_URL_S1=jdbc:postgresql://host:port_num/postgres \
   -e INSTALL_URL_S2=jdbc:postgresql://host:port_num/dookug_db \
   --name module-dookug-pg_tools-step-01B \
-  icellmobilsoft/db-dwh/pg_tools:0.9.0 && \  
+  icellmobilsoft/pg_tools:0.10.0 && \  
 docker run -it --rm \
   -e AUTO_INSTALL=postgresql \
   -e INSTALL_URL_S2=jdbc:postgresql://host:port_num/dookug_db \
   -e INSTALL_STEP=STEP_2 \
-  icellmobilsoft/liquibase/modules/dookug_db:1.0.5
+  icellmobilsoft/dookug_db:1.1.0
 docker run -it --rm \
   -e AUTO_INSTALL=postgresql \
   -e INSTALL_URL_S3=jdbc:postgresql://host:port_num/postgres \
   -e INSTALL_STEP=STEP_3 \
-  icellmobilsoft/liquibase/modules/dookug_db:1.0.5  
+  icellmobilsoft/dookug_db:1.1.0  
 docker run -it --rm \
   -e AUTO_INSTALL=postgresql \
   -e INSTALL_URL_S4=jdbc:postgresql://host:port_num/dookug_db \
   -e INSTALL_STEP=STEP_4 \
-  icellmobilsoft/liquibase/modules/dookug_db:1.0.5      
+  icellmobilsoft/dookug_db:1.1.0      
 #---------------------
 #ORACLE server run - in default schema:
 #---------------------
@@ -237,7 +237,7 @@ docker run --rm \
   -e INSTALL_STEP=STEP_2 \
   -e INSTALL_USERNAME=vdr_dookug \
   -e INSTALL_PASSWORD=passw \
-  icellmobilsoft/liquibase/modules/dookug_db:1.0.5  
+  icellmobilsoft/dookug_db:1.1.0  
 #---------------------
 #ORACLE server run - in NOT default schema:
 #---------------------
@@ -249,7 +249,7 @@ docker run --rm \
   -e INSTALL_STEP=STEP_2 \
   -e INSTALL_USERNAME=vdr_dookug \
   -e INSTALL_PASSWORD=passw \
-  icellmobilsoft/liquibase/modules/dookug_db:1.0.5 
+  icellmobilsoft/dookug_db:1.1.0 
 #---------------------
 #If the DookuG DB is already installed on the server, then only the 2. step, liquibase install is needed.
 #---------------------
@@ -257,7 +257,7 @@ docker run --rm \
     -e AUTO_INSTALL=oracle \
     -e INSTALL_URL=jdbc:oracle:thin:@host:port/db_name \
     -e INSTALL_STEP=2 \
-    icellmobilsoft/liquibase/modules/dookug_db:1.0.5
+    icellmobilsoft/dookug_db:1.1.0
 
 #on windows: the "\" needs to be changed to "`"!
 

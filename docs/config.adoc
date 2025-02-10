@@ -3,10 +3,10 @@
 * ENV variables:
   - **DOCKER_REPOSITORY**: Root location of images (_default value: DOCKER_REPOSITORY__).
   - **DOCKER_LIQUIBASE_DOOKUG**: Indicates the image location (_schema1 default value: ${DOCKER_REPOSITORY}/liquibase/modules/dookug_db_).
-  - **DBDWH_IMAGE_VERSION**: used version of liquibase, postgres, partman images (_default value: 0.9.0_)
+  - **DBDWH_IMAGE_VERSION**: used version of liquibase, postgres, partman images (_default value: 0.10.0_)
   - **VERSION**: Project version, this is set automatically.
 * Compose variables:
-  - **LIQUIBASE_BASE_IMAGE**: central, corporate base liquibase image with version, used by dockerfile (_default value: DOCKER_REPOSITORY/db-dwh/liquibase:${DBDWH_IMAGE_VERSION}_).
+  - **LIQUIBASE_BASE_IMAGE**: central, corporate base liquibase image with version, used by dockerfile (_default value: DOCKER_REPOSITORY/db-base-liquibase:${DBDWH_IMAGE_VERSION}_).
   - **liquibase-release/LIQUIBASE_INSTALL_DIR**: local liquibase directory, used by dockerfile (_schema1 default value: ./liquibase/dookug_).
   - **LIQUIBASE_INSTALL_COMMON_DIR**: local liquibase/common directory, used by dockerfile (_default value: ./liquibase/common_).
 * Before Liquibase variables:  

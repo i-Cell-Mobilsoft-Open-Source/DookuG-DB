@@ -10,7 +10,7 @@ services:
   module-dookug-postgredb:
     container_name: module-dookug-postgredb
     #customized Postgres image with installed pg_cron
-    image: 'icellmobilsoft/db-dwh/postgres_148:${DBDWH_IMAGE_VERSION}'
+    image: 'icellmobilsoft/db-base-postgres_148:${DBDWH_IMAGE_VERSION}'
     environment:
       #the pg_cron connects to the default postgres db
       - CRON_DB_NAME=postgres
@@ -22,8 +22,8 @@ services:
       - module-dookug-postgredb-data:/var/lib/postgresql/data
 networks: 
   default: 
-    external: 
-      name: dookug-local-network
+    external: true
+    name: dookug-local-network
 volumes:
   module-dookug-postgredb-data:
     name: module-dookug-postgredb-data

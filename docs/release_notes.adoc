@@ -15,3 +15,5 @@
 - DKG-246 - Template Content Fix
 - DKG-261 - Repair of Readme adoc.
 - DKG-261 - Repair of Install.adoc.
+* 1.1.0 Changes:
+- DKG-265 - open source changes

@@ -22,8 +22,8 @@ services:
       - dookug-db-oracle-data:/opt/oracle/oradata
 networks: 
   default: 
-    external: 
-      name: dookug-local-network
+    external: true
+    name: dookug-local-network
 volumes:
   dookug-db-oracle-data:
     name: dookug-db-oracle-data

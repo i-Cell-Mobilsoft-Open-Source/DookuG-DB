@@ -9,7 +9,7 @@ version: "3.8"
 services:
   module-dookug-postgredb-step-04:
     container_name: module-dookug-postgredb-step-04
-    image: icellmobilsoft/db-dwh/liquibase:${DBDWH_IMAGE_VERSION}
+    image: icellmobilsoft/db-base-liquibase:${DBDWH_IMAGE_VERSION}
     volumes:
       # to find the files were copied in dockerfile
       - ./../../../liquibase/dookug:/home/icellmobilsoft/liquibase/changelog
@@ -23,5 +23,5 @@ services:
       INSTALL_STEP: STEP_4
 networks:
   default:
-    external:
-      name: dookug-local-network
+    external: true
+    name: dookug-local-network
