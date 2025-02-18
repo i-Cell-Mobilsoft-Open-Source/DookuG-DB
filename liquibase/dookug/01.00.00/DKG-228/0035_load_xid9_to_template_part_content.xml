@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE defaultProperties SYSTEM "common/params.dtd">
+    <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <!-- include the default properties -->
+    &propertiesAll;
+
+    <changeSet id="0035" author="jozsef.holczer" labels="01.00.00">
+        <comment>DKG-196 Template_part_content Table load with XID9 Template.</comment>
+
+        <insert  dbms="postgresql"
+                schemaName="${schema_name}"  
+                tableName="template_part_content">  
+            <column name="x__id"            value="XID11"/>  
+            <column name="template_part_id" value="TEMPLATEPARTXID11"/>  
+            <column name="content"          value="{{message}}"/>  
+            <column name="compressed"       valueNumeric="0"/>  
+            <column name="validity_start"   valueDate="2024-04-01T00:00:00"/>  
+        </insert>
+        
+        <sql dbms="oracle"
+            endDelimiter="/"
+            splitStatements="true"
+            stripComments="true">
+            
+            <![CDATA[
+            DECLARE
+                temp_blob BLOB := EMPTY_BLOB;            
+            BEGIN            
+                dbms_lob.createtemporary(temp_blob, TRUE);
+                dbms_lob.open(temp_blob, dbms_lob.lob_readwrite);               
+                dbms_lob.append(temp_blob, utl_raw.cast_to_raw('{{message}}'));              
+                dbms_lob.close(temp_blob);     
+                
+                MERGE INTO ${schema_name}.template_part_content t
+                USING (SELECT 'XID11' as x__id, 
+                        'TEMPLATEPARTXID11' as template_part_id, 
+                        temp_blob as content
+                        FROM DUAL
+                      ) x
+                ON (t.x__id = x.x__id)
+                WHEN MATCHED THEN
+                    UPDATE SET t.template_part_id = x.template_part_id, t.content = x.content, t.compressed = 0, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM',  
+                        t.x__version = t.x__version + 1
+                WHEN NOT MATCHED THEN
+                    INSERT (x__id, template_part_id, content, compressed, validity_start)                     
+                    VALUES (x.x__id, x.template_part_id, x.content, 0, TO_DATE('2024.04.01.','YYYY.MM.DD.'));
+            END;
+            ]]>
+            /
+        </sql>
+                
+    </changeSet>
+</databaseChangeLog>

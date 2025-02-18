@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE defaultProperties SYSTEM "common/params.dtd">
+ <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+   <!-- include the default properties -->
+    &propertiesAll;
+
+   <changeSet id="0038" author="jozsef.holczer" labels="01.00.00">
+      <comment>DKG-217 Document_content Date Types Change to the Business Standard.</comment>
+
+      <modifyDataType  
+         columnName="expiry"  
+         newDataType="${datetime}"  
+         schemaName="${schema_name}"  
+         tableName="document_content"/>
+
+      <modifyDataType  
+         columnName="x__insdate"  
+         newDataType="${datetime}"  
+         schemaName="${schema_name}"  
+         tableName="document_content"/>   
+
+      <modifyDataType  
+         columnName="x__moddate"  
+         newDataType="${datetime}"  
+         schemaName="${schema_name}"  
+         tableName="document_content"/>      
+ 
+   </changeSet>
+</databaseChangeLog>

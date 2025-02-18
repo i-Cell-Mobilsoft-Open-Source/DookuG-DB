@@ -1,0 +1,26 @@
+version: "3.8"
+
+# run
+# docker-compose -f <PATH>/etc/docker-compose/postgresql/docker-compose.liquibase.install.step-03.yml up --build --force-recreate
+# 
+# docker exec -it module-dookug-postgredb-step-03 /bin/bash
+# this 3rd step is used to add current schema to postgres cron scheduler
+services:
+  module-dookug-postgredb-step-03:
+    container_name: module-dookug-postgredb-step-03
+    image: icellmobilsoft/db-base-liquibase:${DBDWH_IMAGE_VERSION}
+    volumes:
+      # to find the files were copied in dockerfile
+      - ./../../../liquibase/dookug:/home/icellmobilsoft/liquibase/changelog
+      - ./../../../liquibase/common:/home/icellmobilsoft/liquibase/changelog/common
+      # to access the liquibase-install-step-03
+      - ./../../../etc/release/postgresql/defaults-step-03.properties:/home/icellmobilsoft/liquibase/postgresql/defaults-step-03.properties
+      # to access the before-liquibase.sh
+      - ./../../../etc/release/before-liquibase.sh:/home/icellmobilsoft/liquibase/bash/before-liquibase.sh    
+    environment:
+      AUTO_INSTALL: postgresql
+      INSTALL_STEP: STEP_3
+networks:
+  default:
+    external: true
+    name: dookug-local-network

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE defaultProperties SYSTEM "common/params.dtd">
+    <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <!-- include the default properties -->
+    &propertiesAll;
+
+    <changeSet id="0004" author="jozsef.holczer" labels="0.1.0">
+        <comment>DKG-94 Template_part_content table, comments and other table objects.</comment>
+
+        <setTableRemarks remarks = "template_part_content data." schemaName = "${schema_name}" tableName = "template_part_content"/>
+    
+        <setColumnRemarks columnName = "x__id" remarks = "Primary key" tableName = "template_part_content" schemaName = "${schema_name}"/>
+        <setColumnRemarks columnName = "template_part_id" remarks = "Unique identifier for TEMPLATE." tableName = "template_part_content" schemaName = "${schema_name}"/>
+        <setColumnRemarks columnName = "content" remarks = "Content of the template" tableName = "template_part_content" schemaName = "${schema_name}"/>
+        <setColumnRemarks columnName = "compressed" remarks = "Is the content of the template compressed?" tableName = "template_part_content" schemaName = "${schema_name}"/>
+        <setColumnRemarks columnName = "validity_start" remarks = "Start of validity" tableName = "template_part_content" schemaName = "${schema_name}"/>
+        <setColumnRemarks columnName = "validity_end" remarks = "End of validity" tableName = "template_part_content" schemaName = "${schema_name}"/>
+        <setColumnRemarks columnName = "x__insdate" remarks = "Date of record creation" tableName = "template_part_content" schemaName = "${schema_name}"/>
+        <setColumnRemarks columnName = "x__insuser" remarks = "User who created the record" tableName = "template_part_content" schemaName = "${schema_name}"/>
+        <setColumnRemarks columnName = "x__moddate" remarks = "Date of record modification" tableName = "template_part_content" schemaName = "${schema_name}"/>
+        <setColumnRemarks columnName = "x__moduser" remarks = "User who modified the record" tableName = "template_part_content" schemaName = "${schema_name}"/>
+        <setColumnRemarks columnName = "x__version" remarks = "Number of modifications to the record" tableName = "template_part_content" schemaName = "${schema_name}"/>
+    
+        <sql> alter table ${schema_name}.template_part_content add constraint pk_template_part_content PRIMARY KEY ( x__id );</sql>
+    
+        <sql> alter table ${schema_name}.template_part_content add constraint fk_template_part_content_template_part FOREIGN KEY ( template_part_id ) REFERENCES ${schema_name}.template_part(x__id);</sql>
+
+    </changeSet>
+</databaseChangeLog>

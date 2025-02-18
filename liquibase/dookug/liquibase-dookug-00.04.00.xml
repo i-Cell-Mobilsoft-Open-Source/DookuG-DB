@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <include file="00.04.00/DKG-168/0024_add_postgres_grants.sql" relativeToChangelogFile="true"/>    
+    <include file="00.04.00/DKG-174/0025_template_part_content_fix-DML.xml" relativeToChangelogFile="true"/>    
+    <include file="00.04.00/DKG-175/0026_template_part_content_fix_xslt-DML.xml" relativeToChangelogFile="true"/>    
+    
+</databaseChangeLog>

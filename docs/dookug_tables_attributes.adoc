@@ -1,0 +1,422 @@
+
+.document
+[cols=5,header-background=gray] 
+|=== 
+| Field | Type | Default Value | Required? | Description
+
+| x__id | Oracle: VARCHAR2(30 CHAR) 
+
+Postgres: VARCHAR(30) | | Yes | PK → unique identifier
+
+| template_id | Oracle: VARCHAR2(30 CHAR) 
+
+Postgres: VARCHAR(30) | | No | TEMPLATE identifier
+
+| status | Oracle: VARCHAR2(30 CHAR) 
+
+Postgres: VARCHAR(30) | | Yes | Document status
+
+| format | Oracle: VARCHAR2(30 CHAR) 
+
+Postgres: VARCHAR(30) | | Yes | Document format
+
+| filename | Oracle: VARCHAR2(100 CHAR) 
+
+Postgres: VARCHAR(100) | | No | Document filename
+
+| error_message | Oracle: VARCHAR2(512 CHAR) 
+
+Postgres: VARCHAR(512) | | No | Error message during process
+
+| storage_type | Oracle: VARCHAR2(30 CHAR) 
+
+Postgres: VARCHAR(30) | | Yes | Storage type
+
+| storage_id | Oracle: VARCHAR2(128 CHAR) 
+
+Postgres: VARCHAR(128) | | No | Unique invoice identifier in the calling system
+
+| parameters | Oracle: BLOB 
+
+Postgres: BYTEA | | No | Parameter key-value pairs json
+
+| parameter_data | Oracle: BLOB 
+
+Postgres: BYTEA | | No | Parameter data structure json
+
+| config | Oracle: CLOB 
+
+Postgres: TEXT | | No | Configuration
+
+| x__insdate | TIMESTAMP(6) | Oracle: sysdate 
+
+Postgres: now() | Yes | Insertion timestamp
+
+| x__insuser | Oracle: VARCHAR2(30 CHAR) 
+
+Postgres: VARCHAR(30) | '0' | Yes | Not used, default value 0
+
+| x__moddate | TIMESTAMP(6) | | No | Modification timestamp, null at insertion
+
+| x__moduser | Oracle: VARCHAR2(30 CHAR) 
+
+Postgres: VARCHAR(30) | '0' | No | Not used, default value 0
+
+| x__version | Oracle: NUMBER 
+
+Postgres: INT | 0 | Yes | Change versioning
+
+|===
+
+.document constraints and indexes 
+|=== 
+| Field | Type | Value | Related Field | Referenced Field
+
+| pk_document | primary key | | x__id |
+
+| pk_document | unique index | | x__id |
+
+|===
+
+.document_content
+|=== 
+| Field | Type | Default Value | Required? | Description
+
+| x__id | Oracle: VARCHAR2(30 CHAR) 
+
+Postgres: VARCHAR(30) | | Yes | Generated primary key (PK)
+
+| document_id | Oracle: VARCHAR2(30 CHAR) 
+
+Postgres: VARCHAR(30) | | Yes | DOCUMENT unique identifier
+
+| content | Oracle: BLOB 
+
+Postgres: BYTEA | | Yes | Document content (gzip)
+
+| expiry | Oracle: TIMESTAMP(6) 
+
+Postgres: TIMESTAMP(6) | | No | Expiration date
+
+| x__insdate | timestamp(6) | Oracle: sysdate 
+
+Postgres: now() | Yes | Insertion timestamp
+
+| x__insuser | Oracle: VARCHAR2(30 CHAR) 
+
+Postgres: VARCHAR(30) | '0' | Yes | Not used, default value 0
+
+| x__moddate | timestamp(6) | | No | Modification timestamp, null at insertion
+
+| x__moduser | Oracle: VARCHAR2(30 CHAR) 
+
+Postgres: VARCHAR(30) | '0' | No | Not used, default value 0
+
+| x__version | Oracle: number 
+
+Postgres: int | 0 | Yes | Change versioning
+
+|===
+
+.document_content constraints and indexes
+|=== 
+| Field | Type | Value | Related Field | Referenced Field
+
+| pk_document_content | primary key | | x__id |
+
+| fk_document_content_document | foreign key constraint | | document_id | document.x__id
+
+| ix_document_content_document_id | index | | document_id |
+
+| pk_document_content | unique index | | x__id |
+
+|===
+
+.template 
+|=== 
+| Field | Type | Default Value | Required? | Description
+
+| x__id | Oracle: VARCHAR2(30 CHAR) 
+
+Postgres: VARCHAR(30) | | Yes | Generated primary key (PK)
+
+| name | Oracle: VARCHAR2(255 CHAR) 
+
+Postgres: VARCHAR(255) | | Yes | Template name
+
+| description | Oracle: VARCHAR2(1024 CHAR) 
+
+Postgres: VARCHAR(1024) | | Yes | Description
+
+| template_engine | Oracle: VARCHAR2(30 CHAR) 
+
+Postgres: VARCHAR(30) | | Yes | Template engine. Possible values: HANDLEBARS, NONE
+
+| generator_engine | Oracle: VARCHAR2(30 CHAR) 
+
+Postgres: VARCHAR(30) | | Yes | Document generation engine. Possible values: PDF_BOX, NONE
+
+| language | Oracle: VARCHAR2(30 CHAR) 
+
+Postgres: varchar(30) | | No | Template language
+
+| validity_start | Oracle: TIMESTAMP(6) 
+
+Postgres: TIMESTAMP(6) | Oracle: sysdate 
+
+Postgres: now() | Yes | Validity start
+
+| validity_end | Oracle: TIMESTAMP(6) 
+
+Postgres: TIMESTAMP(6) | | No | Validity end
+
+| x__insdate | timestamp(6) | Oracle: sysdate 
+
+Postgres: now() | Yes | Insertion timestamp
+
+| x__insuser | Oracle: VARCHAR2(30 CHAR) 
+
+Postgres: VARCHAR(30) | '0' | Yes | Not used, default value 0
+
+| x__moddate | timestamp(6) | | No | Modification timestamp, null at insertion
+
+| x__moduser | Oracle: VARCHAR2(30 CHAR) 
+
+Postgres: VARCHAR(30) | '0' | No | Not used, default value 0
+
+| x__version | Oracle: number 
+
+Postgres: int | 0 | Yes | Change versioning
+
+|===
+
+.template constraints and indexes
+|=== 
+| Field | Type | Value | Related Field | Referenced Field
+
+| ck_template_generator_engine | check constraint | PDF_BOX, NONE, SAXON | generator_engine |
+
+| ck_template_template_engine | check constraint | HANDLEBARS, NONE | template_engine |
+
+| pk_template | primary key | | x__id |
+
+| pk_template | unique index | | x__id |
+
+|===
+
+.template_part
+|=== 
+| Field | Type | Default Value | Required? | Description
+
+| x__id | Oracle: VARCHAR2(30 CHAR) 
+
+Postgres: VARCHAR(30) | | Yes | Generated primary key (PK)
+
+| key | Oracle: VARCHAR2(255 CHAR) 
+
+Postgres: VARCHAR(255) | | Yes | Template key. For template engine.
+
+| description | Oracle: VARCHAR2(1024 CHAR) 
+
+Postgres: VARCHAR(1024) | | Yes | Description
+
+| template_engine | Oracle: VARCHAR2(30 CHAR) 
+
+Postgres: VARCHAR(30) | | Yes | Template engine. Possible values: HANDLEBARS, NONE
+
+| generator_engine | Oracle: VARCHAR2(30 CHAR) 
+
+Postgres: VARCHAR(30) | | Yes | Document generation engine. Possible values: PDF_BOX, NONE
+
+| template_part_type | Oracle: VARCHAR2(30 CHAR) 
+
+Postgres: VARCHAR(30) | | Yes | Template type. Possible values: HEADER, CONTENT, FOOTER, MAIN, OTHER
+
+| x__insdate | timestamp(6) | Oracle: sysdate 
+
+Postgres: now() | Yes | Insertion timestamp
+
+| x__insuser | Oracle: VARCHAR2(30 CHAR) 
+
+Postgres: VARCHAR(30) | '0' | Yes | Not used, default value 0
+
+| x__moddate | timestamp(6) | | No | Modification timestamp, null at insertion
+
+| x__moduser | Oracle: VARCHAR2(30 CHAR) 
+
+Postgres: VARCHAR(30) | '0' | No | Not used, default value 0
+
+| x__version | Oracle: number 
+
+Postgres: int | 0 | Yes | Change versioning
+
+|===
+
+.template_part constraints and indexes
+|=== 
+| Field | Type | Value | Related Field | Referenced Field
+
+| ck_template_part_generator_engine | check constraint | PDF_BOX, NONE | generator_engine |
+
+| ck_template_part_template_engine | check constraint | HANDLEBARS, NONE | template_engine |
+
+| ck_template_part_template_part_type | check constraint | HEADER, CONTENT, FOOTER, MAIN, OTHER | template_part_type |
+
+| pk_template_part | primary key | | x__id |
+
+| pk_template_part | unique index | | x__id |
+
+|===
+
+.template_part_content
+|=== 
+| Field | Type | Default Value | Required? | Description
+
+| x__id | Oracle: VARCHAR2(30 CHAR) 
+
+Postgres: VARCHAR(30) | | Yes | Generated primary key (PK)
+
+| template_part_id | Oracle: VARCHAR2(30 CHAR) 
+
+Postgres: VARCHAR(30) | | Yes | TEMPLATE unique identifier
+
+| content | Oracle: BLOB 
+
+Postgres: BYTEA | | Yes | Template content
+
+| compressed | Oracle: NUMBER 
+
+Postgres: INT | | Yes | Is template content compressed
+
+| validity_start | Oracle: TIMESTAMP(6) 
+
+Postgres: TIMESTAMP(6) | Oracle: sysdate 
+
+Postgres: now() | Yes | Validity start
+
+| validity_end | Oracle: TIMESTAMP(6) 
+
+Postgres: TIMESTAMP(6) | | No | Validity end
+
+| x__insdate | timestamp(6) | Oracle: sysdate 
+
+Postgres: now() | Yes | Insertion timestamp
+
+| x__insuser | Oracle: VARCHAR2(30 CHAR) 
+
+Postgres: VARCHAR(30) | '0' | Yes | Not used, default value 0
+
+| x__moddate | timestamp(6) | | No | Modification timestamp, null at insertion
+
+| x__moduser | Oracle: VARCHAR2(30 CHAR) 
+
+Postgres: VARCHAR(30) | '0' | No | Not used, default value 0
+
+| x__version | Oracle: number 
+
+Postgres: int | 0 | Yes | Change versioning
+
+|===
+
+.template_part_content constraints and indexes
+|=== 
+| Field | Type | Value | Related Field | Referenced Field
+
+| pk_template_part_content | primary key | | x__id |
+
+| ix_template_part_content_template_part_id | index | | template_part_id |
+
+| fk_template_part_content_template_part | Foreign key constraint| | template_part_id | template_part.x__id 
+
+| pk_template_part_content | unique index | | x__id |
+
+|===
+
+.template_template_part 
+|=== 
+| Field | Type | Default Value | Required? | Description
+
+| x__id | Oracle: VARCHAR2(30 CHAR) 
+
+Postgres: VARCHAR(30) | | Yes | Generated primary key (PK)
+
+| template_id | Oracle: VARCHAR2(30 CHAR) 
+
+Postgres: VARCHAR(30) | | Yes | TEMPLATE unique identifier
+
+| template_part_id | Oracle: VARCHAR2(30 CHAR) 
+
+Postgres: VARCHAR(30) | | Yes | TEMPLATE_PART unique identifier
+
+| x__insdate | timestamp(6) | Oracle: sysdate 
+
+Postgres: now() | Yes | Insertion timestamp
+
+| x__insuser | Oracle: VARCHAR2(30 CHAR) 
+
+Postgres: VARCHAR(30) | '0' | Yes | Not used, default value 0
+
+| x__moddate | timestamp(6) | | No | Modification timestamp, null at insertion
+
+| x__moduser | Oracle: VARCHAR2(30 CHAR) 
+
+Postgres: VARCHAR(30) | '0' | No | Not used, default value 0
+
+| x__version | Oracle: number 
+
+Postgres: int | 0 | Yes | Change versioning
+
+|===
+
+.template_template_part constraints and indexes
+|=== 
+
+| Field | Type | Value | Related Field | Referenced Field
+
+| pk_template_template_part | primary key | | x__id |
+
+| fk_template_template_part_template | foreign key constraint | | template_id | template.x__id
+
+| fk_template_template_part_template_part | foreign key constraint | | template_part_id | template_part.x__id
+
+| ix_template_template_part_template_id | index | | template_id |
+
+| ix_template_template_part_template_part_id | index | | template_part_id |
+
+| pk_template_template_part | unique index | | x__id |
+
+|===
+
+=== Permissions
+
+.Postgres permissions
+
+|=== 
+| Users | Permissions
+
+| dookug | SELECT, INSERT, UPDATE, DELETE
+
+| dookug_del | DELETE, TRUNCATE
+
+| dookug_mod | INSERT, UPDATE
+
+| dookug_sel | SELECT
+
+| dookug_full | SELECT, INSERT, UPDATE, DELETE
+
+| dookug_service | SELECT, INSERT, UPDATE, DELETE
+
+|===
+
+.Oracle permissions
+
+|=== 
+| Users | Permissions
+
+| DOOKUG_WRITE | INSERT, UPDATE, DELETE
+
+| DOOKUG_READ | SELECT
+
+| DOOKUG_EXEC | NOTEEFLY_READ, NOTEEFLY_WRITE
+
+|===

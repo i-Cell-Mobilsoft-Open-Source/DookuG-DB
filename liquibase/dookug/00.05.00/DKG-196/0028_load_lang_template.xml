@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE defaultProperties SYSTEM "common/params.dtd">
+    <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <!-- include the default properties -->
+    &propertiesAll;
+
+    <changeSet id="0028" author="jozsef.holczer" labels="00.05.00">
+        <comment>DKG-196 Load template table with plain text samples.</comment>
+
+        <insert schemaName="${schema_name}"  
+                tableName="template">  
+            <column  name="x__id"               value="TEMPLATEXID5"/>  
+            <column  name="name"                value="TEST_TEMPLATE_TITLE_ENG"/>  
+            <column  name="description"         value="English language email subject"/>  
+            <column  name="template_engine"     value="HANDLEBARS"/>  
+            <column  name="generator_engine"    value="NONE"/>  
+            <column  name="language"            value="EN"/>  
+            <column  name="VALIDITY_START"      valueDate="2023-07-01T00:00:00"/>  
+        </insert>
+
+        <insert schemaName="${schema_name}"  
+                tableName="template">  
+            <column  name="x__id"               value="TEMPLATEXID6"/>  
+            <column  name="name"                value="TEST_TEMPLATE_BODY_ENG"/>  
+            <column  name="description"         value="English language email body"/>  
+            <column  name="template_engine"     value="HANDLEBARS"/>  
+            <column  name="generator_engine"    value="NONE"/>  
+            <column  name="language"            value="EN"/>  
+            <column  name="VALIDITY_START"      valueDate="2023-07-01T00:00:00"/>  
+        </insert>
+
+        <insert schemaName="${schema_name}"  
+                tableName="template">  
+            <column  name="x__id"               value="TEMPLATEXID7"/>  
+            <column  name="name"                value="TEST_TEMPLATE_TITLE_GER"/>  
+            <column  name="description"         value="German language email subject"/>  
+            <column  name="template_engine"     value="HANDLEBARS"/>  
+            <column  name="generator_engine"    value="NONE"/>  
+            <column  name="language"            value="DE"/>  
+            <column  name="VALIDITY_START"      valueDate="2023-07-01T00:00:00"/>  
+        </insert>
+        
+        <insert schemaName="${schema_name}"  
+                tableName="template">  
+            <column  name="x__id"               value="TEMPLATEXID8"/>  
+            <column  name="name"                value="TEST_TEMPLATE_BODY_FRA"/>  
+            <column  name="description"         value="French language email body"/>  
+            <column  name="template_engine"     value="HANDLEBARS"/>  
+            <column  name="generator_engine"    value="NONE"/>  
+            <column  name="language"            value="FR"/>  
+            <column  name="VALIDITY_START"      valueDate="2023-07-01T00:00:00"/>  
+        </insert>
+                  
+    </changeSet>
+</databaseChangeLog>    

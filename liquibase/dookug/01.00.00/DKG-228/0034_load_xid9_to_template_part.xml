@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE defaultProperties SYSTEM "common/params.dtd">
+    <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <!-- include the default properties -->
+    &propertiesAll;
+
+    <changeSet id="0034" author="jozsef.holczer" labels="01.00.00">
+        <comment>DKG-196 Template_part Table load with xid9 Template.</comment>
+
+        <insert schemaName="${schema_name}"  
+                tableName="template_part">  
+            <column name="x__id"               value="TEMPLATEPARTXID11"/>  
+            <column name="key"                 value="CUSTOM_MESSAGE_TEMPLATE"/>  
+            <column name="description"         value="Sample Template to rendering a unique message."/>  
+            <column name="template_engine"     value="HANDLEBARS"/>  
+            <column name="generator_engine"    value="NONE"/>  
+            <column name="template_part_type"  value="MAIN" />  
+        </insert>
+        
+    </changeSet>
+</databaseChangeLog>    

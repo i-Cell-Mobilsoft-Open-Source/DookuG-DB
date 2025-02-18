@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE defaultProperties SYSTEM "common/params.dtd">
+    <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <!-- include the default properties -->
+    &propertiesAll;
+
+    <changeSet id="0012" author="jozsef.holczer" labels="0.1.0">
+        <comment>DKG-94-Set template_part records.</comment>
+
+        <sql dbms="oracle"
+            endDelimiter=";"
+            splitStatements="true"
+            stripComments="true">
+            MERGE INTO ${schema_name}.template_part t
+                USING ( SELECT 'DEV_TEMPLATE_HANDLEBARS_MAIN'       as x__id,
+                        'DEV_TEMPLATE_HANDLEBARS_MAIN'              as key,
+                        'Sample template for development - main page' as description,
+                        'HANDLEBARS'                                as template_engine,
+                        'PDF_BOX'                                   as generator_engine,
+                        'MAIN'                                      as template_part_type
+                        FROM DUAL) x
+                    ON (t.x__id = x.x__id)
+                    WHEN MATCHED THEN
+                        UPDATE SET t.key = x.key, t.description = x.description, t.template_engine = x.template_engine, t.generator_engine = x.generator_engine, 
+                                   t.template_part_type = x.template_part_type, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM', t.x__version = t.x__version + 1
+                    WHEN NOT MATCHED THEN
+                        INSERT (x__id, key, description, template_engine, generator_engine, template_part_type, x__insdate, x__insuser, x__moddate, x__moduser, x__version)
+                        VALUES (x.x__id, x.key, x.description, x.template_engine, x.generator_engine, x.template_part_type, SYSDATE, 'SYSTEM', NULL, NULL, 1);
+        </sql>
+        <!-- Postgresql 14 does not support MERGE INTO, so we simulate the behavior. (Postgresql 15 will have it.) -->
+        <sql dbms="postgresql"
+            endDelimiter=";"
+            splitStatements="true"
+            stripComments="true">
+            INSERT INTO ${schema_name}.template_part (x__id, key, description, template_engine, generator_engine, template_part_type, x__insdate, x__insuser, x__moddate, x__moduser, x__version)
+                SELECT x__id, key, description, template_engine, generator_engine, template_part_type, x__insdate, x__insuser, x__moddate, x__moduser, x__version
+                  FROM (SELECT 'DEV_TEMPLATE_HANDLEBARS_MAIN'               as x__id,
+                               'DEV_TEMPLATE_HANDLEBARS_MAIN'               as key,
+                               'Sample template for development - main page' as description,
+                               'HANDLEBARS'                                 as template_engine,
+                               'PDF_BOX'                                    as generator_engine,
+                               'MAIN'                                       as template_part_type,
+                               now()                                        as x__insdate, 
+                               'SYSTEM'                                     as x__insuser, 
+                               NULLIF(NULL,NULL)::date                      as x__moddate, 
+                               NULLIF(NULL,NULL)::text                      as x__moduser, 
+                               1                                            as x__version
+                       ) x        
+                
+                ON CONFLICT(x__id)                
+                    DO UPDATE
+                        SET key = excluded.key, description = excluded.description, template_engine = excluded.template_engine, generator_engine = excluded.generator_engine, 
+                                template_part_type = excluded.template_part_type,  x__moddate = now(), x__moduser= 'SYSTEM', x__version = excluded.x__version + 1;
+        </sql>
+        <!-- ************************************************** -->
+        <sql dbms="oracle"
+            endDelimiter=";"
+            splitStatements="true"
+            stripComments="true">
+            
+            MERGE INTO ${schema_name}.template_part t
+                USING (SELECT 'DEV_TEMPLATE_HANDLEBARS_HEADER'      as x__id,
+                        'DEV_TEMPLATE_HANDLEBARS_HEADER'            as key,
+                        'Sample template for development - header' as description,
+                        'HANDLEBARS'                                as template_engine,
+                        'PDF_BOX'                                   as generator_engine,
+                        'HEADER'                                    as template_part_type
+                        FROM DUAL) x
+                    ON (t.x__id = x.x__id)
+                    WHEN MATCHED THEN
+                        UPDATE SET t.key = x.key, t.description = x.description, t.template_engine = x.template_engine, t.generator_engine = x.generator_engine, 
+                                   t.template_part_type = x.template_part_type, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM', t.x__version = t.x__version + 1
+                    WHEN NOT MATCHED THEN
+                        INSERT (x__id, key, description, template_engine, generator_engine, template_part_type, x__insdate, x__insuser, x__moddate, x__moduser, x__version)                         VALUES (x.x__id, x.key, x.description, x.template_engine, x.generator_engine, x.template_part_type, SYSDATE, 'SYSTEM', NULL, NULL, 1);
+        
+        </sql>  
+        <sql dbms="postgresql"
+            endDelimiter=";"
+            splitStatements="true"
+            stripComments="true">
+            INSERT INTO ${schema_name}.template_part (x__id, key, description, template_engine, generator_engine, template_part_type, x__insdate, x__insuser, x__moddate, x__moduser, x__version)
+                SELECT x__id, key, description, template_engine, generator_engine, template_part_type, x__insdate, x__insuser, x__moddate, x__moduser, x__version
+                  FROM (SELECT 'DEV_TEMPLATE_HANDLEBARS_HEADER'             as x__id,
+                               'DEV_TEMPLATE_HANDLEBARS_HEADER'             as key,
+                               'Sample template for development - header' as description,
+                               'HANDLEBARS'                                 as template_engine,
+                               'PDF_BOX'                                    as generator_engine,
+                               'HEADER'                                     as template_part_type,
+                               now()                                        as x__insdate, 
+                               'SYSTEM'                                     as x__insuser, 
+                               NULLIF(NULL,NULL)::date                      as x__moddate, 
+                               NULLIF(NULL,NULL)::text                      as x__moduser, 
+                               1                                            as x__version
+                       ) x        
+                
+                ON CONFLICT(x__id)                
+                    DO UPDATE
+                        SET key = excluded.key, description = excluded.description, template_engine = excluded.template_engine, generator_engine = excluded.generator_engine, 
+                                template_part_type = excluded.template_part_type,  x__moddate = now(), x__moduser= 'SYSTEM', x__version = excluded.x__version + 1;
+        </sql>    
+        <!-- ************************************************** -->
+        <sql dbms="oracle"
+            endDelimiter=";"
+            splitStatements="true"
+            stripComments="true">
+            
+            MERGE INTO ${schema_name}.template_part t
+                USING (SELECT 'DEV_TEMPLATE_HANDLEBARS_ROW'  as x__id,
+                        'DEV_TEMPLATE_HANDLEBARS_ROW'        as key,
+                        'Sample template for development - row'  as description,
+                        'HANDLEBARS'                         as template_engine,
+                        'PDF_BOX'                            as generator_engine,
+                        'OTHER'                              as template_part_type
+                        FROM DUAL) x
+                    ON (t.x__id = x.x__id)
+                    WHEN MATCHED THEN
+                        UPDATE SET t.key = x.key, t.description = x.description, t.template_engine = x.template_engine, t.generator_engine = x.generator_engine, 
+                                   t.template_part_type = x.template_part_type, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM', t.x__version = t.x__version + 1
+                    WHEN NOT MATCHED THEN
+                        INSERT (x__id, key, description, template_engine, generator_engine, template_part_type, x__insdate, x__insuser, x__moddate, x__moduser, x__version)                         VALUES (x.x__id, x.key, x.description, x.template_engine, x.generator_engine, x.template_part_type, SYSDATE, 'SYSTEM', NULL, NULL, 1);
+        
+        </sql>
+        <sql dbms="postgresql"
+            endDelimiter=";"
+            splitStatements="true"
+            stripComments="true">
+            INSERT INTO ${schema_name}.template_part (x__id, key, description, template_engine, generator_engine, template_part_type, x__insdate, x__insuser, x__moddate, x__moduser, x__version)
+                SELECT x__id, key, description, template_engine, generator_engine, template_part_type, x__insdate, x__insuser, x__moddate, x__moduser, x__version
+                  FROM (SELECT 'DEV_TEMPLATE_HANDLEBARS_ROW'                    as x__id,
+                               'DEV_TEMPLATE_HANDLEBARS_ROW'                    as key,
+                               'Sample template for development - row'              as description,
+                               'HANDLEBARS'                                     as template_engine,
+                               'PDF_BOX'                                        as generator_engine,
+                               'OTHER'                                          as template_part_type,
+                               now()                                            as x__insdate, 
+                               'SYSTEM'                                         as x__insuser, 
+                               NULLIF(NULL,NULL)::date                          as x__moddate, 
+                               NULLIF(NULL,NULL)::text                          as x__moduser, 
+                               1                                                as x__version
+                       ) x        
+                
+                ON CONFLICT(x__id)                
+                    DO UPDATE
+                        SET key = excluded.key, description = excluded.description, template_engine = excluded.template_engine, generator_engine = excluded.generator_engine, 
+                                template_part_type = excluded.template_part_type,  x__moddate = now(), x__moduser= 'SYSTEM', x__version = excluded.x__version + 1;
+        </sql>
+        <!-- ************************************************** -->
+        <sql dbms="oracle"
+            endDelimiter=";"
+            splitStatements="true"
+            stripComments="true">
+            
+            MERGE INTO ${schema_name}.template_part t
+                USING (SELECT 'DEV_TEMPLATE_HANDLEBARS_FOOTER'      as x__id,
+                        'DEV_TEMPLATE_HANDLEBARS_FOOTER'            as key,
+                        'Sample template for development - footer' as description,
+                        'HANDLEBARS'                                as template_engine,
+                        'PDF_BOX'                                   as generator_engine,
+                        'FOOTER'                                    as template_part_type
+                        FROM DUAL) x
+                    ON (t.x__id = x.x__id)
+                    WHEN MATCHED THEN
+                        UPDATE SET t.key = x.key, t.description = x.description, t.template_engine = x.template_engine, t.generator_engine = x.generator_engine, 
+                                   t.template_part_type = x.template_part_type, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM', t.x__version = t.x__version + 1
+                    WHEN NOT MATCHED THEN
+                        INSERT (x__id, key, description, template_engine, generator_engine, template_part_type, x__insdate, x__insuser, x__moddate, x__moduser, x__version)                         VALUES (x.x__id, x.key, x.description, x.template_engine, x.generator_engine, x.template_part_type, SYSDATE, 'SYSTEM', NULL, NULL, 1);
+        
+        </sql>
+        <sql dbms="postgresql"
+            endDelimiter=";"
+            splitStatements="true"
+            stripComments="true">
+            INSERT INTO ${schema_name}.template_part (x__id, key, description, template_engine, generator_engine, template_part_type, x__insdate, x__insuser, x__moddate, x__moduser, x__version)
+                SELECT x__id, key, description, template_engine, generator_engine, template_part_type, x__insdate, x__insuser, x__moddate, x__moduser, x__version
+                  FROM (SELECT 'DEV_TEMPLATE_HANDLEBARS_FOOTER'             as x__id,
+                               'DEV_TEMPLATE_HANDLEBARS_FOOTER'             as key,
+                               'Sample template for development - footer'       as description,
+                               'HANDLEBARS'                                 as template_engine,
+                               'PDF_BOX'                                    as generator_engine,
+                               'FOOTER'                                     as template_part_type,
+                               now()                                        as x__insdate, 
+                               'SYSTEM'                                     as x__insuser, 
+                               NULLIF(NULL,NULL)::date                      as x__moddate, 
+                               NULLIF(NULL,NULL)::text                      as x__moduser, 
+                               1                                            as x__version
+                       ) x        
+                
+                ON CONFLICT(x__id)                
+                    DO UPDATE
+                        SET key = excluded.key, description = excluded.description, template_engine = excluded.template_engine, generator_engine = excluded.generator_engine, 
+                                template_part_type = excluded.template_part_type,  x__moddate = now(), x__moduser= 'SYSTEM', x__version = excluded.x__version + 1;
+        </sql>
+        <!-- ************************************************** -->
+        <sql dbms="oracle"
+            endDelimiter=";"
+            splitStatements="true"
+            stripComments="true">
+            
+            MERGE INTO ${schema_name}.template_part t
+                USING (SELECT 'DEV_TEMPLATE_ERROR_MAIN'                 as x__id,
+                        'DEV_TEMPLATE_ERROR_MAIN'                       as key,
+                        'Failed Sample template for development - footer' as description,
+                        'HANDLEBARS'                                    as template_engine,
+                        'PDF_BOX'                                       as generator_engine,
+                        'MAIN'                                          as template_part_type
+                        FROM DUAL) x
+                    ON (t.x__id = x.x__id)
+                    WHEN MATCHED THEN
+                        UPDATE SET t.key = x.key, t.description = x.description, t.template_engine = x.template_engine, t.generator_engine = x.generator_engine, 
+                                   t.template_part_type = x.template_part_type, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM', t.x__version = t.x__version + 1
+                    WHEN NOT MATCHED THEN
+                        INSERT (x__id, key, description, template_engine, generator_engine, template_part_type, x__insdate, x__insuser, x__moddate, x__moduser, x__version)                         VALUES (x.x__id, x.key, x.description, x.template_engine, x.generator_engine, x.template_part_type, SYSDATE, 'SYSTEM', NULL, NULL, 1);        
+        </sql>   
+        <sql dbms="postgresql"
+            endDelimiter=";"
+            splitStatements="true"
+            stripComments="true">
+            INSERT INTO ${schema_name}.template_part (x__id, key, description, template_engine, generator_engine, template_part_type, x__insdate, x__insuser, x__moddate, x__moduser, x__version)
+                SELECT x__id, key, description, template_engine, generator_engine, template_part_type, x__insdate, x__insuser, x__moddate, x__moduser, x__version
+                  FROM (SELECT 'DEV_TEMPLATE_ERROR_MAIN'               as x__id,
+                               'DEV_TEMPLATE_ERROR_MAIN'               as key,
+                               'Sample template for development - footer' as description,
+                               'HANDLEBARS'                                 as template_engine,
+                               'PDF_BOX'                                    as generator_engine,
+                               'MAIN'                                       as template_part_type,
+                               now()                                        as x__insdate, 
+                               'SYSTEM'                                     as x__insuser, 
+                               NULLIF(NULL,NULL)::date                      as x__moddate, 
+                               NULLIF(NULL,NULL)::text                      as x__moduser, 
+                               1                                            as x__version
+                       ) x        
+                
+                ON CONFLICT(x__id)                
+                    DO UPDATE
+                        SET key = excluded.key, description = excluded.description, template_engine = excluded.template_engine, generator_engine = excluded.generator_engine, 
+                                template_part_type = excluded.template_part_type,  x__moddate = now(), x__moduser= 'SYSTEM', x__version = excluded.x__version + 1;
+        </sql>    
+        <!-- ************************************************** -->
+    </changeSet>
+</databaseChangeLog>

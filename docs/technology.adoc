@@ -1,0 +1,7 @@
+* Technologies:
+
+  ** Components and their versions:
+  - Included local Postgres: 14.8-bullseye
+  - Included local Oracle: 21.3.0-xe
+  - Liquibase: 4.21
+  - The latest final PGTools version: 0.10.0

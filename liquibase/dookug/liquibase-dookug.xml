@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <includeAll path="./common/_all-modules/schema/procedures" relativeToChangelogFile="true"/>
+    <includeAll path="./common/_all-modules/db/functions" relativeToChangelogFile="true"/>
+    
+    <include file="liquibase-dookug-0.1.0.xml" relativeToChangelogFile="true"/>
+    <include file="liquibase-dookug-00.02.00.xml" relativeToChangelogFile="true"/>
+    <include file="liquibase-dookug-00.04.00.xml" relativeToChangelogFile="true"/>
+    <include file="liquibase-dookug-00.05.00.xml" relativeToChangelogFile="true"/>
+    <include file="liquibase-dookug-01.00.00.xml" relativeToChangelogFile="true"/>
+    
+    <!-- Postgres post operations -->
+    <include file="./common/post_install/postgresql/refresh_table_roles.sql" relativeToChangelogFile="true"/>
+
+    <!-- Oracle post operations -->
+    <include file="./common/post_install/oracle/set_char_semantics.sql" relativeToChangelogFile="true"/>
+    <include file="./common/post_install/oracle/grant_schema_roles.sql" relativeToChangelogFile="true"/>
+    <include file="./common/post_install/oracle/recompile_invalids.sql" relativeToChangelogFile="true"/>
+
+</databaseChangeLog>

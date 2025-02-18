@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE defaultProperties SYSTEM "common/params.dtd">
+    <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <!-- include the default properties -->
+    &propertiesAll;
+
+   <changeSet id="0032" author="jozsef.holczer" labels="1.0.0" >
+      <comment>DKG-207 Fix in saxon template.</comment>
+    
+      <update 
+          schemaName="${schema_name}"
+          tableName="template_part">
+          <column name="key" value="PROJECT_INVOICE_TEMPLATE_FULL"/>
+          <column name="description" value="PROJECT invoice template A4"/>
+          <where>x__id = '48SJ6QJDLKG3CM01'</where>
+      </update>
+
+      <update 
+          schemaName="${schema_name}"
+          tableName="template">
+          <column name="name" value="PROJECT_INVOICE_TEMPLATE"/>
+          <column name="description" value="PROJECT invoice template A4"/>
+          <where>x__id = '48SJ6QJDLKG3CL01'</where>
+      </update>
+      
+   </changeSet>
+
+</databaseChangeLog>

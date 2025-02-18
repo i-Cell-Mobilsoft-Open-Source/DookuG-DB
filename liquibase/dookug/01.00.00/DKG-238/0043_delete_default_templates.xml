@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE defaultProperties SYSTEM "common/params.dtd">
+    <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <!-- include the default properties -->
+    &propertiesAll;
+
+    <changeSet id="0043" author="jozsef.holczer" labels="01.00.00">
+        <comment>DKG-238 Deleting Default Templates.</comment>
+
+        <delete  
+            schemaName="${schema_name}"  
+            tableName="template_part_content">  
+            <where>x__id IN ('DEV_TEMPLATE_HANDLEBARS_MAIN',
+                             'DEV_TEMPLATE_HANDLEBARS_HEADER',
+                             'DEV_TEMPLATE_HANDLEBARS_ROW',
+                             'DEV_TEMPLATE_HANDLEBARS_FOOTER',
+                             'DEV_TEMPLATE_ERROR_MAIN',
+                             'XID1','XID2','XID3','XID4','XID5','XID6','XID7','XID8','XID9','XID10','XID11',
+                             '48SJ6QJDLKG3CN01')
+            </where>  
+        </delete>
+        
+        <delete  
+            schemaName="${schema_name}"  
+            tableName="template_template_part">  
+            <where>x__id IN ('DEV_TEMPLATE_HANDLEBARS_MAIN',
+                             'DEV_TEMPLATE_HANDLEBARS_HEADER',
+                             'DEV_TEMPLATE_HANDLEBARS_ROW',
+                             'DEV_TEMPLATE_HANDLEBARS_FOOTER',
+                             'DEV_TEMPLATE_ERROR_MAIN',
+                             'XID1','XID2','XID3','XID4','XID5','XID6','XID7','XID8','XID9','XID10','XID11',
+                             '48SJ6QJDLKG3CT01')
+            </where>  
+        </delete>
+
+        <delete  
+            schemaName="${schema_name}"  
+            tableName="template_part">  
+            <where>x__id IN ('DEV_TEMPLATE_HANDLEBARS_MAIN',
+                             'DEV_TEMPLATE_HANDLEBARS_HEADER',
+                             'DEV_TEMPLATE_HANDLEBARS_ROW',
+                             'DEV_TEMPLATE_HANDLEBARS_FOOTER',
+                             'DEV_TEMPLATE_ERROR_MAIN',
+                             'TEMPLATEPARTXID1','TEMPLATEPARTXID2','TEMPLATEPARTXID3','TEMPLATEPARTXID4','TEMPLATEPARTXID5',
+                             'TEMPLATEPARTXID6','TEMPLATEPARTXID7','TEMPLATEPARTXID8','TEMPLATEPARTXID9','TEMPLATEPARTXID10','TEMPLATEPARTXID11',
+                             '48SJ6QJDLKG3CM01')
+            </where>  
+        </delete>
+
+        <delete  
+            schemaName="${schema_name}"  
+            tableName="template">  
+            <where>x__id IN ('DEV_TEMPLATE_HANDLEBARS',
+                             'DEV_TEMPLATE_ERROR_HANDLEBARS',
+                             'TEMPLATEXID1','TEMPLATEXID2','TEMPLATEXID3','TEMPLATEXID4','TEMPLATEXID5','TEMPLATEXID6',
+                             'TEMPLATEXID7','TEMPLATEXID8','TEMPLATEXID9','48SJ6QJDLKG3CL01')
+            </where>  
+        </delete>
+                  
+    </changeSet>
+</databaseChangeLog>    

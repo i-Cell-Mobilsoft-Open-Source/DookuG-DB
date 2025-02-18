@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE defaultProperties SYSTEM "common/params.dtd">
+    <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <!-- include the default properties -->
+    &propertiesAll;
+
+    <changeSet id="0030" author="jozsef.holczer" labels="00.05.00">
+        <comment>DKG-196 Load template_part_content table with plain text samples.</comment>
+
+        <insert  dbms="postgresql"
+                schemaName="${schema_name}"  
+                tableName="template_part_content">  
+            <column name="x__id"            value="XID7"/>  
+            <column name="template_part_id" value="TEMPLATEPARTXID7"/>  
+            <column name="content"          value="Welcome message!"/>  
+            <column name="compressed"       valueNumeric="0"/>  
+            <column name="validity_start"   valueDate="2023-07-01T00:00:00"/>  
+        </insert>
+        
+        <insert  dbms="postgresql"
+                schemaName="${schema_name}"  
+                tableName="template_part_content">  
+            <column name="x__id"            value="XID8"/>  
+            <column name="template_part_id" value="TEMPLATEPARTXID8"/>  
+            <column name="content"          value="This is an example of a text body in English that can be used as an email message."/>  
+            <column name="compressed"       valueNumeric="0"/>  
+            <column name="validity_start"   valueDate="2023-07-01T00:00:00"/>  
+        </insert>
+        
+        <insert  dbms="postgresql"
+                schemaName="${schema_name}"  
+                tableName="template_part_content">  
+            <column name="x__id"            value="XID9"/>  
+            <column name="template_part_id" value="TEMPLATEPARTXID9"/>  
+            <column name="content"          value="Willkommenstext auf Deutsch!"/>  
+            <column name="compressed"       valueNumeric="0"/>  
+            <column name="validity_start"   valueDate="2023-07-01T00:00:00"/>  
+        </insert>
+        
+        <insert  dbms="postgresql"
+                schemaName="${schema_name}"  
+                tableName="template_part_content">  
+            <column name="x__id"            value="XID10"/>  
+            <column name="template_part_id" value="TEMPLATEPARTXID10"/>  
+            <column name="content"          value="Il s'agit d'une tige de texte en français pour tester les fonctionnalités du module spécifiques à la langue."/>  
+            <column name="compressed"       valueNumeric="0"/>  
+            <column name="validity_start"   valueDate="2023-07-01T00:00:00"/>  
+        </insert>
+        
+        <sql dbms="oracle"
+            endDelimiter="/"
+            splitStatements="true"
+            stripComments="true">
+            
+            <![CDATA[
+            DECLARE
+                temp_blob BLOB := EMPTY_BLOB;            
+            BEGIN            
+                dbms_lob.createtemporary(temp_blob, TRUE);
+                dbms_lob.open(temp_blob, dbms_lob.lob_readwrite);               
+                dbms_lob.append(temp_blob, utl_raw.cast_to_raw('Welcome message!'));              
+                dbms_lob.close(temp_blob);     
+                
+                MERGE INTO ${schema_name}.template_part_content t
+                USING (SELECT 'XID7' as x__id, 
+                        'TEMPLATEPARTXID7' as template_part_id, 
+                        temp_blob as content
+                        FROM DUAL
+                      ) x
+                ON (t.x__id = x.x__id)
+                WHEN MATCHED THEN
+                    UPDATE SET t.template_part_id = x.template_part_id, t.content = x.content, t.compressed = 0, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM',  
+                        t.x__version = t.x__version + 1
+                WHEN NOT MATCHED THEN
+                    INSERT (x__id, template_part_id, content, compressed, validity_start)                     
+                    VALUES (x.x__id, x.template_part_id, x.content, 0, TO_DATE('2023.07.01.','YYYY.MM.DD.'));
+            END;
+            ]]>
+            /
+        </sql>
+
+        <sql dbms="oracle"
+            endDelimiter="/"
+            splitStatements="true"
+            stripComments="true">
+            <![CDATA[
+            DECLARE
+                temp_blob BLOB := EMPTY_BLOB;            
+            BEGIN            
+                dbms_lob.createtemporary(temp_blob, TRUE);
+                dbms_lob.open(temp_blob, dbms_lob.lob_readwrite);               
+                dbms_lob.append(temp_blob, utl_raw.cast_to_raw('This is an example of a text body in English that can be used as an email message.'));              
+                dbms_lob.close(temp_blob);     
+                
+                MERGE INTO ${schema_name}.template_part_content t
+                USING (SELECT 'XID8' as x__id, 
+                        'TEMPLATEPARTXID8' as template_part_id, 
+                        temp_blob as content
+                        FROM DUAL
+                      ) x
+                ON (t.x__id = x.x__id)
+                WHEN MATCHED THEN
+                    UPDATE SET t.template_part_id = x.template_part_id, t.content = x.content, t.compressed = 0, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM',  
+                        t.x__version = t.x__version + 1
+                WHEN NOT MATCHED THEN
+                    INSERT (x__id, template_part_id, content, compressed, validity_start)                     
+                    VALUES (x.x__id, x.template_part_id, x.content, 0, TO_DATE('2023.07.01.','YYYY.MM.DD.'));
+            END;
+            ]]>
+            /
+        </sql>
+
+        <sql dbms="oracle"
+            endDelimiter="/"
+            splitStatements="true"
+            stripComments="true">
+            <![CDATA[
+            DECLARE
+                temp_blob BLOB := EMPTY_BLOB;            
+            BEGIN            
+                dbms_lob.createtemporary(temp_blob, TRUE);
+                dbms_lob.open(temp_blob, dbms_lob.lob_readwrite);               
+                dbms_lob.append(temp_blob, utl_raw.cast_to_raw('Willkommenstext auf Deutsch!'));              
+                dbms_lob.close(temp_blob);     
+                
+                MERGE INTO ${schema_name}.template_part_content t
+                USING (SELECT 'XID9' as x__id, 
+                        'TEMPLATEPARTXID9' as template_part_id, 
+                        temp_blob as content
+                        FROM DUAL
+                      ) x
+                ON (t.x__id = x.x__id)
+                WHEN MATCHED THEN
+                    UPDATE SET t.template_part_id = x.template_part_id, t.content = x.content, t.compressed = 0, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM',  
+                        t.x__version = t.x__version + 1
+                WHEN NOT MATCHED THEN
+                    INSERT (x__id, template_part_id, content, compressed, validity_start)                     
+                    VALUES (x.x__id, x.template_part_id, x.content, 0, TO_DATE('2023.07.01.','YYYY.MM.DD.'));
+            END;
+            ]]>
+            /
+        </sql>
+
+        <sql dbms="oracle"
+            endDelimiter="/"
+            splitStatements="true"
+            stripComments="true">
+            <![CDATA[
+            DECLARE
+                temp_blob BLOB := EMPTY_BLOB;            
+            BEGIN            
+                dbms_lob.createtemporary(temp_blob, TRUE);
+                dbms_lob.open(temp_blob, dbms_lob.lob_readwrite);               
+                dbms_lob.append(temp_blob, utl_raw.cast_to_raw('Il s&apos;agit d&apos;une tige de texte en français pour tester les fonctionnalités du module spécifiques à la langue.'));              
+                dbms_lob.close(temp_blob);     
+                
+                MERGE INTO ${schema_name}.template_part_content t
+                USING (SELECT 'XID10' as x__id, 
+                        'TEMPLATEPARTXID10' as template_part_id, 
+                        temp_blob as content
+                        FROM DUAL
+                      ) x
+                ON (t.x__id = x.x__id)
+                WHEN MATCHED THEN
+                    UPDATE SET t.template_part_id = x.template_part_id, t.content = x.content, t.compressed = 0, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM',  
+                        t.x__version = t.x__version + 1
+                WHEN NOT MATCHED THEN
+                    INSERT (x__id, template_part_id, content, compressed, validity_start)                     
+                    VALUES (x.x__id, x.template_part_id, x.content, 0, TO_DATE('2023.07.01.','YYYY.MM.DD.'));
+            END;
+            ]]>
+            /
+        </sql>
+                
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,14 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <include file="install-parameters.xml" relativeToChangelogFile="true"/>
+    
+    <!-- postgresql only -->
+    <include file="common/__init_dbs/schema/create-schema.sql" relativeToChangelogFile="true"/>
+    <include file="common/__init_dbs/users/schema_role.sql" relativeToChangelogFile="true"/>  
+    <!-- ... -->
+    <include file="liquibase-dookug.xml" relativeToChangelogFile="true"/>
+    
+</databaseChangeLog>

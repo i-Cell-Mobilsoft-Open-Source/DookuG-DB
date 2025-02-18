@@ -1,0 +1,27 @@
+version: "3.8"
+
+# run
+# docker-compose -f <PATH>/etc/docker-compose/oracle/docker-compose.liquibase.install.step-04.yml up --build --force-recreate
+#
+# docker exec -it module-dookug-postgredb-step-04 /bin/bash
+# The step #4 is used to load templates for test or development. This is optional.
+# details are in "liquibase-install-step-04.xml"
+services:
+  module-dookug-oracle-step-04:
+    container_name: module-dookug-oracle-step-04
+    image: icellmobilsoft/db-base-liquibase:${DBDWH_IMAGE_VERSION}
+    volumes:
+      # to find the files were copied in dockerfile
+      - ./../../../liquibase/dookug:/home/icellmobilsoft/liquibase/changelog
+      - ./../../../liquibase/common:/home/icellmobilsoft/liquibase/changelog/common
+      # to access the liquibase-install-step-04
+      - ./../../../etc/release/oracle/defaults-step-04.properties:/home/icellmobilsoft/liquibase/oracle/defaults-step-04.properties
+      # to access the before-liquibase.sh
+      - ./../../../etc/release/before-liquibase.sh:/home/icellmobilsoft/liquibase/bash/before-liquibase.sh
+    environment:
+      AUTO_INSTALL: oracle
+      INSTALL_STEP: STEP_4
+networks:
+  default:
+    external: true
+    name: dookug-local-network

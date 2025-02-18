@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE defaultProperties SYSTEM "common/params.dtd">
+    <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <!-- include the default properties -->
+    &propertiesAll;
+
+    <changeSet id="0026" author="jozsef.holczer" labels="00.04.00">
+        <comment>DKG-175-template_part_content xslt content fix.</comment>
+
+        <update 
+            schemaName="${schema_name}"
+            tableName="template_part_content">
+            <column name="content" valueBlobFile="InvoiceDataTemplate_XSLT_FO.xslt"/>            
+            <where>x__id = '48SJ6QJDLKG3CN01'</where>
+        </update>    
+    </changeSet>
+</databaseChangeLog>

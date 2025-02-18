@@ -1,0 +1,104 @@
+====
+.Local Postgres DB (_click here_)
+[%collapsible]
+======
+[source,console]
+docker volume module-dookug-postgredb-data
+
+TIP: It creates a volume where the Postgres data is stored. This is a separate Docker volume (_volume_), which will persist even after the Docker containers are removed. You only need to use this command once.
+
+[source,console]
+docker network create dookug-local-network
+
+TIP: This creates a network so that the containers can reach each other when the Docker run starts. You only need to use this command once.
+
+[source,console]
+docker compose --env-file .env -f ./etc/docker-compose/postgresql/docker-compose.local.postgredb.yml up --build --force-recreate --remove-orphans
+
+TIP: This command starts the local Postgres database, which will become a daily routine when you want to work with the local database. You need to run this command in a separate command window and leave it running on the taskbar (_or on a separate command window tab_).
+It downloads the whole Postgres image (_which is configured in the configuration files_) during the first run, so it may take a while, because it may need to download several gigabytes.
+If you want to restart (_delete and restart_) this image, you can use this command: docker compose --env-file .env -f ./etc/docker-compose/postgresql/docker-compose.local.postgredb.yml down -v
+
+[source,bash]
+docker compose --env-file .env \
+    -f ./etc/docker-compose/postgresql/docker-compose.liquibase.install.step-01.yml up \
+    --build --force-recreate module-dookug-postgredb-step-01 
+
+TIP: The service name runs the step-01 of DookuG DB after the command.
+This will initialize in the "default" Postgres DB.
+It downloads the standard Liquibase image and initializes the DB.
+If the Error: "no basic auth credentials" error occurs, use the "docker login" DOCKER_REPOSITORY command, then log in. You only need to use this command once.
+
+[source,bash]
+docker compose --env-file .env \
+    -f ./etc/docker-compose/postgresql/docker-compose.liquibase.install.step-02.yml up \
+    --build --force-recreate module-dookug-pg_tools-step-01B
+
+TIP: This is the "sub-step" of the "step-02", which installs the pg_partman partition manager extension in the "partman" schema of the DookuG DB. This is only available in Postgresql.
+
+[source,bash]
+docker compose --env-file .env \
+    -f ./etc/docker-compose/postgresql/docker-compose.liquibase.install.step-02.yml up \
+    --build --force-recreate module-dookug-postgredb-step-02
+
+TIP: This is the "sub-step" of the "step-2", which logs in to the "dookug" schema user and creates the Liquibase objects (_e.g. databasechangelog table_) during the first run, and other object installations.
+
+[source,bash]
+docker compose --env-file .env \
+    -f ./etc/docker-compose/postgresql/docker-compose.liquibase.install.step-03.yml up \
+    --build --force-recreate module-dookug-postgredb-step-03
+
+TIP: This logs in with postgres user and creates the dookug entry in the CRON scheduler table, which is only available in Postgresql.
+
+[source,bash]
+docker compose --env-file .env \
+    -f ./etc/docker-compose/postgresql/docker-compose.liquibase.install.step-04.yml up \
+    --build --force-recreate module-dookug-postgredb-step-04
+
+TIP: This logs in with dookug (_schema_) user and creates the default (dev/test) template objects.
+
+======
+
+.Local Oracle DB (_click here_)
+[%collapsible]
+======
+[source,console]
+docker volume create dookug-db-oracle-data
+
+TIP: It creates a volume where the Oracle data is stored. This is a separate Docker volume (_volume_), which will persist even after the Docker containers are removed. You only need to use this command once.
+
+[source,console]
+docker network create dookug-local-network
+
+TIP: This creates a network so that the containers can reach each other when the Docker run starts. You only need to use this command once.
+
+[source,console]
+docker compose --env-file .env -f ./etc/docker-compose/oracle/docker-compose.local.oracle.yml up --build --force-recreate --remove-orphans
+
+TIP: This command starts the local Oracle database, which will become a daily routine when you want to work with the local database. You need to run this command in a separate command window and leave it running on the taskbar (_or on a separate command window tab_).
+It downloads the whole Oracle image (_which is configured in the configuration files_) during the first run, so it may take a while, because it may need to download several (10 GB) gigabytes.
+If you want to restart (_delete and restart_) this image, you can use this command: docker compose --env-file .env -f ./etc/docker-compose/oracle/docker-compose.local.oracle.yml down -v
+
+[source,console]
+docker compose --env-file .env -f ./etc/docker-compose/oracle/docker-compose.liquibase.install.step-01.yml up --build --force-recreate
+
+TIP: This command downloads the standard Liquibase image and initializes the DB.
+If the Error: "no basic auth credentials" error occurs, use the "docker login" DOCKER_REPOSITORY command, then log in. You only need to use this command once.
+
+[source,console]
+docker compose --env-file .env -f ./etc/docker-compose/oracle/docker-compose.liquibase.install.step-02.yml up --build --force-recreate module-dookug-oracle-step-02
+
+TIP: This command logs in with dookug (_schema_) user and creates the Liquibase objects (_e.g. databasechangelog table_) during the first run.
+
+[source,console]
+docker compose --env-file .env -f ./etc/docker-compose/oracle/docker-compose.liquibase.install.step-03.yml up --build --force-recreate module-dookug-oracle-step-03
+
+TIP: This step-3 does not do anything in the Oracle installation, it is only included to avoid errors. Since there is a step-4, the Liquibase installer does not like "gaps", so it tries to run the Postgres step-3 on the Oracle DB, which of course fails. So this just calls the Postgres step-3, and since it only runs on the Postgres DB, the installer bypasses it on the Oracle side.
+
+[source,console]
+docker compose --env-file .env -f ./etc/docker-compose/oracle/docker-compose.liquibase.install.step-04.yml up --build --force-recreate module-dookug-oracle-step-04
+
+TIP: This logs in with dookug (_schema_) user and creates the default (dev/test) template objects.
+
+======
+====

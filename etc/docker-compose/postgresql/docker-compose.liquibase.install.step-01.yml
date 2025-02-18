@@ -1,0 +1,27 @@
+version: "3.8"
+
+# run
+# docker-compose -f <PATH>/etc/docker-compose/postgresql/docker-compose.liquibase.install.step-01.yml up --build --force-recreate
+#
+# docker exec -it module-dookug-postgredb-step-01 /bin/bash
+# This 1st step is used to init and start the Postgres DB.
+# details are in "liquibase-install-step-01.xml"
+services:
+  module-dookug-postgredb-step-01:
+    container_name: module-dookug-postgredb-step-01
+    image: icellmobilsoft/db-base-liquibase:${DBDWH_IMAGE_VERSION}
+    volumes:
+      # to find the files were copied in dockerfile
+      - ./../../../liquibase/dookug:/home/icellmobilsoft/liquibase/changelog
+      - ./../../../liquibase/common:/home/icellmobilsoft/liquibase/changelog/common
+      # to access the liquibase-install-step-01
+      - ./../../../etc/release/postgresql/defaults-step-01.properties:/home/icellmobilsoft/liquibase/postgresql/defaults-step-01.properties
+      # to access the before-liquibase.sh
+      - ./../../../etc/release/before-liquibase.sh:/home/icellmobilsoft/liquibase/bash/before-liquibase.sh
+    environment:
+      AUTO_INSTALL: postgresql
+      INSTALL_STEP: STEP_1
+networks: 
+  default: 
+    external: true
+    name: dookug-local-network

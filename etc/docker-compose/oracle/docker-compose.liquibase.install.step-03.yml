@@ -1,0 +1,25 @@
+version: "3.8"
+
+# run
+# docker-compose -f <PATH>/etc/docker-compose/oracle/docker-compose.liquibase.install.step-03.yml up --build --force-recreate
+#
+# docker exec -it module-dookug-postgredb-step-03 /bin/bash
+# This 3rd step does nothing with the Oracle, but the Liquibase installer does not like the "wholes" in the sequence of steps.
+# Since this 3rd step is required in case of Postgres DB, we need to have a dummy step here, not to fail.
+services:
+  module-dookug-oracle-step-03:
+    container_name: module-dookug-oracle-step-03
+    image: icellmobilsoft/db-base-liquibase:${DBDWH_IMAGE_VERSION}
+    volumes:
+      # to find the files were copied in dockerfile
+      - ./../../../liquibase/dookug:/home/icellmobilsoft/liquibase/changelog
+      - ./../../../liquibase/common:/home/icellmobilsoft/liquibase/changelog/common
+      # to access the liquibase-install-step-03
+      - ./../../../etc/release/oracle/defaults-step-03.properties:/home/icellmobilsoft/liquibase/oracle/defaults-step-03.properties
+    environment:
+      AUTO_INSTALL: oracle
+      INSTALL_STEP: STEP_3
+networks:
+  default:
+    external: true
+    name: dookug-local-network

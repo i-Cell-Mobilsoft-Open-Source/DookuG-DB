@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE defaultProperties SYSTEM "common/params.dtd">
+    <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <!-- include the default properties -->
+    &propertiesAll;
+
+    <changeSet id="0022" author="jozsef.holczer" labels="00.02.00">
+        <comment>DKG-123 Load template_part_content table with plain text samples.</comment>
+
+        <insert  dbms="postgresql"
+                schemaName="${schema_name}"  
+                tableName="template_part_content">  
+            <column name="x__id"            value="XID1"/>  
+            <column name="template_part_id" value="TEMPLATEPARTXID1"/>  
+            <column name="content"          value="Notification for {{receiverName}}!"/>  
+            <column name="compressed"       valueNumeric="0"/>  
+            <column name="validity_start"   valueDate="2023-07-01T00:00:00"/>  
+        </insert>
+        
+        <insert  dbms="postgresql"
+                schemaName="${schema_name}"  
+                tableName="template_part_content">  
+            <column name="x__id"            value="XID2"/>  
+            <column name="template_part_id" value="TEMPLATEPARTXID2"/>  
+            <column name="content"          value="Dear {{name}}!"/>  
+            <column name="compressed"       valueNumeric="0"/>  
+            <column name="validity_start"   valueDate="2023-07-01T00:00:00"/>  
+        </insert>
+        
+        <insert  dbms="postgresql"
+                schemaName="${schema_name}"  
+                tableName="template_part_content">  
+            <column name="x__id"            value="XID3"/>  
+            <column name="template_part_id" value="TEMPLATEPARTXID3"/>  
+            <column name="content"          value="{{&gt; TEST_TEMPLATE_BODY_WELCOME}}
+
+            The total amount paid in the year {{year}}: {{formatNumber sumAmount &apos;#.###&apos;}} Ft.
+            
+            {{&gt; TEST_TEMPLATE_BODY_CLOSING}}"/>  
+            <column name="compressed"       valueNumeric="0"/>  
+            <column name="validity_start"   valueDate="2023-07-01T00:00:00"/>  
+        </insert>
+        
+        <insert  dbms="postgresql"
+                schemaName="${schema_name}"  
+                tableName="template_part_content">  
+            <column name="x__id"            value="XID4"/>  
+            <column name="template_part_id" value="TEMPLATEPARTXID4"/>  
+            <column name="content"          value="Greetings,
+
+            NAV"/>  
+            <column name="compressed"       valueNumeric="0"/>  
+            <column name="validity_start"   valueDate="2023-07-01T00:00:00"/>  
+        </insert>
+        
+        <insert  dbms="postgresql"
+                schemaName="${schema_name}"  
+                tableName="template_part_content">  
+            <column name="x__id"            value="XID5"/>  
+            <column name="template_part_id" value="TEMPLATEPARTXID5"/>  
+            <column name="content"          value="Notification about the GDPR policy changes"/>  
+            <column name="compressed"       valueNumeric="0"/>  
+            <column name="validity_start"   valueDate="2023-07-01T00:00:00"/>  
+        </insert>
+        
+        <insert  dbms="postgresql"
+                schemaName="${schema_name}"  
+                tableName="template_part_content">  
+            <column name="x__id"            value="XID6"/>  
+            <column name="template_part_id" value="TEMPLATEPARTXID6"/>  
+            <column name="content"          value="Dear Customer,
+We would like to inform you that our GDPR policy has changed, which you can view on our website.
+Best regards!"/>  
+            <column name="compressed"       valueNumeric="0"/>  
+            <column name="validity_start"   valueDate="2023-07-01T00:00:00"/>  
+        </insert>
+
+        <sql dbms="oracle"
+            endDelimiter="/"
+            splitStatements="true"
+            stripComments="true">
+            
+            <![CDATA[
+            DECLARE
+                temp_blob BLOB := EMPTY_BLOB;            
+            BEGIN            
+                dbms_lob.createtemporary(temp_blob, TRUE);
+                dbms_lob.open(temp_blob, dbms_lob.lob_readwrite);               
+                dbms_lob.append(temp_blob, utl_raw.cast_to_raw('Notification for {{receiverName}}!'));              
+                dbms_lob.close(temp_blob);     
+                
+                MERGE INTO ${schema_name}.template_part_content t
+                USING (SELECT 'XID1' as x__id, 
+                        'TEMPLATEPARTXID1' as template_part_id, 
+                        temp_blob as content
+                        FROM DUAL
+                      ) x
+                ON (t.x__id = x.x__id)
+                WHEN MATCHED THEN
+                    UPDATE SET t.template_part_id = x.template_part_id, t.content = x.content, t.compressed = 0, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM',  
+                        t.x__version = t.x__version + 1
+                WHEN NOT MATCHED THEN
+                    INSERT (x__id, template_part_id, content, compressed, validity_start)                     
+                    VALUES (x.x__id, x.template_part_id, x.content, 0, TO_DATE('2023.07.01.','YYYY.MM.DD.'));
+            END;
+            ]]>
+            /
+        </sql>
+
+        <sql dbms="oracle"
+            endDelimiter="/"
+            splitStatements="true"
+            stripComments="true">
+            <![CDATA[
+            DECLARE
+                temp_blob BLOB := EMPTY_BLOB;            
+            BEGIN            
+                dbms_lob.createtemporary(temp_blob, TRUE);
+                dbms_lob.open(temp_blob, dbms_lob.lob_readwrite);               
+                dbms_lob.append(temp_blob, utl_raw.cast_to_raw('Dear {{name}}!'));              
+                dbms_lob.close(temp_blob);     
+                
+                MERGE INTO ${schema_name}.template_part_content t
+                USING (SELECT 'XID2' as x__id, 
+                        'TEMPLATEPARTXID2' as template_part_id, 
+                        temp_blob as content
+                        FROM DUAL
+                      ) x
+                ON (t.x__id = x.x__id)
+                WHEN MATCHED THEN
+                    UPDATE SET t.template_part_id = x.template_part_id, t.content = x.content, t.compressed = 0, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM',  
+                        t.x__version = t.x__version + 1
+                WHEN NOT MATCHED THEN
+                    INSERT (x__id, template_part_id, content, compressed, validity_start)                     
+                    VALUES (x.x__id, x.template_part_id, x.content, 0, TO_DATE('2023.07.01.','YYYY.MM.DD.'));
+            END;
+            ]]>
+            /
+        </sql>
+
+        <sql dbms="oracle"
+            endDelimiter="/"
+            splitStatements="true"
+            stripComments="true">
+            <![CDATA[
+            DECLARE
+                temp_blob BLOB := EMPTY_BLOB;            
+            BEGIN            
+                dbms_lob.createtemporary(temp_blob, TRUE);
+                dbms_lob.open(temp_blob, dbms_lob.lob_readwrite);               
+                dbms_lob.append(temp_blob, utl_raw.cast_to_raw('{{> TEST_TEMPLATE_BODY_WELCOME}}
+
+                The total amount paid in the year {{year}}: {{formatNumber sumAmount ''#.###''}} Ft.
+                
+                {{> TEST_TEMPLATE_BODY_CLOSING}}'));              
+                dbms_lob.close(temp_blob);     
+                
+                MERGE INTO ${schema_name}.template_part_content t
+                USING (SELECT 'XID3' as x__id, 
+                        'TEMPLATEPARTXID3' as template_part_id, 
+                        temp_blob as content
+                        FROM DUAL
+                      ) x
+                ON (t.x__id = x.x__id)
+                WHEN MATCHED THEN
+                    UPDATE SET t.template_part_id = x.template_part_id, t.content = x.content, t.compressed = 0, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM',  
+                        t.x__version = t.x__version + 1
+                WHEN NOT MATCHED THEN
+                    INSERT (x__id, template_part_id, content, compressed, validity_start)                     
+                    VALUES (x.x__id, x.template_part_id, x.content, 0, TO_DATE('2023.07.01.','YYYY.MM.DD.'));
+            END;
+            ]]>
+            /
+        </sql>
+
+        <sql dbms="oracle"
+            endDelimiter="/"
+            splitStatements="true"
+            stripComments="true">
+            <![CDATA[
+            DECLARE
+                temp_blob BLOB := EMPTY_BLOB;            
+            BEGIN            
+                dbms_lob.createtemporary(temp_blob, TRUE);
+                dbms_lob.open(temp_blob, dbms_lob.lob_readwrite);               
+                dbms_lob.append(temp_blob, utl_raw.cast_to_raw('Greetings,
+
+                NAV'));              
+                dbms_lob.close(temp_blob);     
+                
+                MERGE INTO ${schema_name}.template_part_content t
+                USING (SELECT 'XID4' as x__id, 
+                        'TEMPLATEPARTXID4' as template_part_id, 
+                        temp_blob as content
+                        FROM DUAL
+                      ) x
+                ON (t.x__id = x.x__id)
+                WHEN MATCHED THEN
+                    UPDATE SET t.template_part_id = x.template_part_id, t.content = x.content, t.compressed = 0, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM',  
+                        t.x__version = t.x__version + 1
+                WHEN NOT MATCHED THEN
+                    INSERT (x__id, template_part_id, content, compressed, validity_start)                     
+                    VALUES (x.x__id, x.template_part_id, x.content, 0, TO_DATE('2023.07.01.','YYYY.MM.DD.'));
+            END;
+            ]]>
+            /
+        </sql>
+
+        <sql dbms="oracle"
+            endDelimiter="/"
+            splitStatements="true"
+            stripComments="true">
+            <![CDATA[
+            DECLARE
+                temp_blob BLOB := EMPTY_BLOB;            
+            BEGIN            
+                dbms_lob.createtemporary(temp_blob, TRUE);
+                dbms_lob.open(temp_blob, dbms_lob.lob_readwrite);               
+                dbms_lob.append(temp_blob, utl_raw.cast_to_raw('Notification about the GDPR policy changes'));              
+                dbms_lob.close(temp_blob);     
+                
+                MERGE INTO ${schema_name}.template_part_content t
+                USING (SELECT 'XID5' as x__id, 
+                        'TEMPLATEPARTXID5' as template_part_id, 
+                        temp_blob as content
+                        FROM DUAL
+                      ) x
+                ON (t.x__id = x.x__id)
+                WHEN MATCHED THEN
+                    UPDATE SET t.template_part_id = x.template_part_id, t.content = x.content, t.compressed = 0, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM',  
+                        t.x__version = t.x__version + 1
+                WHEN NOT MATCHED THEN
+                    INSERT (x__id, template_part_id, content, compressed, validity_start)                     
+                    VALUES (x.x__id, x.template_part_id, x.content, 0, TO_DATE('2023.07.01.','YYYY.MM.DD.'));
+            END;
+            ]]>
+            /
+        </sql>
+
+        <sql dbms="oracle"
+            endDelimiter="/"
+            splitStatements="true"
+            stripComments="true">
+            <![CDATA[
+            DECLARE
+                temp_blob BLOB := EMPTY_BLOB;            
+            BEGIN            
+                dbms_lob.createtemporary(temp_blob, TRUE);
+                dbms_lob.open(temp_blob, dbms_lob.lob_readwrite);               
+                dbms_lob.append(temp_blob, utl_raw.cast_to_raw('Dear Customer,
+We would like to inform you that our GDPR policy has changed, which you can view on our website.
+Best regards!'));              
+                dbms_lob.close(temp_blob);     
+                
+                MERGE INTO ${schema_name}.template_part_content t
+                USING (SELECT 'XID6' as x__id, 
+                        'TEMPLATEPARTXID6' as template_part_id, 
+                        temp_blob as content
+                        FROM DUAL
+                      ) x
+                ON (t.x__id = x.x__id)
+                WHEN MATCHED THEN
+                    UPDATE SET t.template_part_id = x.template_part_id, t.content = x.content, t.compressed = 0, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM',  
+                        t.x__version = t.x__version + 1
+                WHEN NOT MATCHED THEN
+                    INSERT (x__id, template_part_id, content, compressed, validity_start)                     
+                    VALUES (x.x__id, x.template_part_id, x.content, 0, TO_DATE('2023.07.01.','YYYY.MM.DD.'));
+            END;
+            ]]>
+            /
+        </sql>
+                
+    </changeSet>
+</databaseChangeLog>

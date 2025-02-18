@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE defaultProperties SYSTEM "common/params.dtd">
+    <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <!-- include the default properties -->
+    &propertiesAll;
+
+    <changeSet id="0044" author="jozsef.holczer" labels="01.00.00">
+        <comment>DKG-238 Loading Default templates.</comment>
+
+        <insert schemaName="${schema_name}"  
+                tableName="template">  
+            <column  name="x__id"               value="DEV_TEMPLATE_HANDLEBARS"/>  
+            <column  name="name"                value="DEV_TEMPLATE_HANDLEBARS"/>  
+            <column  name="description"         value="Sample template for developments"/>  
+            <column  name="template_engine"     value="HANDLEBARS"/>  
+            <column  name="generator_engine"    value="PDF_BOX"/>  
+            <column  name="language"            value="HU"/>  
+        </insert>
+
+        <insert schemaName="${schema_name}"  
+                tableName="template">  
+            <column  name="x__id"               value="DEV_TEMPLATE_ERROR_HANDLEBARS"/>  
+            <column  name="name"                value="DEV_TEMPLATE_ERROR_HANDLEBARS"/>  
+            <column  name="description"         value="Failed Sample template for developments"/>  
+            <column  name="template_engine"     value="HANDLEBARS"/>  
+            <column  name="generator_engine"    value="PDF_BOX"/>  
+            <column  name="language"            value="HU"/>  
+        </insert>
+        
+        <insert schemaName="${schema_name}"  
+                tableName="template">  
+            <column  name="x__id"               value="TEMPLATEXID1"/>  
+            <column  name="name"                value="TEST_EMAIL_TEMPLATE_SUBJECT_WITH_PARAMS"/>  
+            <column  name="description"         value="Parametric template belonging to the object of email"/>  
+            <column  name="template_engine"     value="HANDLEBARS"/>  
+            <column  name="generator_engine"    value="NONE"/>  
+            <column  name="language"            value="HU"/>  
+        </insert>
+
+        <insert schemaName="${schema_name}"  
+                tableName="template">  
+            <column  name="x__id"               value="TEMPLATEXID2"/>  
+            <column  name="name"                value="TEST_EMAIL_TEMPLATE_BODY_WITH_PARAMS"/>  
+            <column  name="description"         value="Parametric template belonging to the body of email"/>  
+            <column  name="template_engine"     value="HANDLEBARS"/>  
+            <column  name="generator_engine"    value="NONE"/>  
+            <column  name="language"            value="HU"/>  
+        </insert>
+
+        <insert schemaName="${schema_name}"  
+                tableName="template">  
+            <column  name="x__id"               value="TEMPLATEXID3"/>  
+            <column  name="name"                value="TEST_EMAIL_TEMPLATE_SUBJECT_WITHOUT_PARAMS"/>  
+            <column  name="description"         value="Non parametric template belonging to the object of email"/>  
+            <column  name="template_engine"     value="HANDLEBARS"/>  
+            <column  name="generator_engine"    value="NONE"/>  
+            <column  name="language"            value="HU"/>  
+        </insert>
+        
+        <insert schemaName="${schema_name}"  
+                tableName="template">  
+            <column  name="x__id"               value="TEMPLATEXID4"/>  
+            <column  name="name"                value="TEST_EMAIL_TEMPLATE_BODY_WITHOUT_PARAMS"/>  
+            <column  name="description"         value="No parametric template belonging to the body of email"/>  
+            <column  name="template_engine"     value="HANDLEBARS"/>  
+            <column  name="generator_engine"    value="NONE"/>  
+            <column  name="language"            value="HU"/>  
+        </insert>
+
+        <insert schemaName="${schema_name}"  
+                tableName="template">  
+            <column  name="x__id"               value="TEMPLATEXID5"/>  
+            <column  name="name"                value="TEST_TEMPLATE_TITLE_ENG"/>  
+            <column  name="description"         value="English -language email subject"/>  
+            <column  name="template_engine"     value="HANDLEBARS"/>  
+            <column  name="generator_engine"    value="NONE"/>  
+            <column  name="language"            value="EN"/>  
+        </insert>
+
+        <insert schemaName="${schema_name}"  
+                tableName="template">  
+            <column  name="x__id"               value="TEMPLATEXID6"/>  
+            <column  name="name"                value="TEST_TEMPLATE_BODY_ENG"/>  
+            <column  name="description"         value="English -language email body"/>  
+            <column  name="template_engine"     value="HANDLEBARS"/>  
+            <column  name="generator_engine"    value="NONE"/>  
+            <column  name="language"            value="EN"/>  
+        </insert>
+
+        <insert schemaName="${schema_name}"  
+                tableName="template">  
+            <column  name="x__id"               value="TEMPLATEXID7"/>  
+            <column  name="name"                value="TEST_TEMPLATE_TITLE_GER"/>  
+            <column  name="description"         value="German -language email subject"/>  
+            <column  name="template_engine"     value="HANDLEBARS"/>  
+            <column  name="generator_engine"    value="NONE"/>  
+            <column  name="language"            value="DE"/>  
+        </insert>
+        
+        <insert schemaName="${schema_name}"  
+                tableName="template">  
+            <column  name="x__id"               value="TEMPLATEXID8"/>  
+            <column  name="name"                value="TEST_TEMPLATE_BODY_FRA"/>  
+            <column  name="description"         value="French -language email body"/>  
+            <column  name="template_engine"     value="HANDLEBARS"/>  
+            <column  name="generator_engine"    value="NONE"/>  
+            <column  name="language"            value="FR"/>  
+        </insert>
+
+        <insert schemaName="${schema_name}"  
+                tableName="template">  
+            <column  name="x__id"               value="TEMPLATEXID9"/>  
+            <column  name="name"                value="CUSTOM_MESSAGE_TEMPLATE"/>  
+            <column  name="description"         value="Template can be used to replace unique text."/>  
+            <column  name="template_engine"     value="HANDLEBARS"/>  
+            <column  name="generator_engine"    value="NONE"/>  
+            <column  name="language"            value="HU"/>  
+        </insert>
+
+        <insert schemaName="${schema_name}"
+            tableName="template">
+            <column name="x__id" value="48SJ6QJDLKG3CL01"/>
+            <column name="name" value="PROJECT_INVOICE_TEMPLATE"/>
+            <column name="description" value="PROJECT invoice template A4"/>
+            <column name="template_engine" value="NONE"/>
+            <column name="generator_engine" value="SAXON"/>
+            <column name="language" value="HU"/>
+        </insert>
+                  
+    </changeSet>
+</databaseChangeLog>    

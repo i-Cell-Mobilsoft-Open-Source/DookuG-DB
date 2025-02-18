@@ -1,0 +1,19 @@
+= Release notes
+* 0.1.0 Changes:
+- Dookug db install
+- Templates install
+- Documentation
+* 1.0.0 Changes:
+- DATE type has been replaced with Timestamp(6) in Common.dtd file.
+- DKG-228 - Insert a new flexible template into the boards.
+- DKG-217 - Replacing new date types in the boards.
+- DKG-233 - Hash Fix
+- DKG-231 - Convert documentation
+- DKG-238- Load default templates in Step 4.
+- DKG-245 - Improvement of Dookug Vader Installation Error
+* 1.0.3 Changes:
+- DKG-246 - Template Content Fix
+- DKG-261 - Repair of Readme adoc.
+- DKG-261 - Repair of Install.adoc.
+* 1.1.0 Changes:
+- DKG-265 - open source changes

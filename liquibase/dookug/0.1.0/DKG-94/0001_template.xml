@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE defaultProperties SYSTEM "common/params.dtd">
+ <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+   <!-- include the default properties -->
+    &propertiesAll;
+
+   <changeSet id="0001" author="jozsef.holczer" labels="0.1.0">
+      <comment>DKG-94 Creating Template Table.</comment>
+
+      <createTable tableName = "template" remarks = "Template data" schemaName = "${schema_name}">
+         <column name = "x__id" type = "varchar2(30 ${char})"  remarks = "Primary key"><constraints nullable = "false" /></column>
+         <column name = "name" type = "varchar2(255 ${char})"  remarks = "Template name"><constraints nullable = "false" /></column>
+         <column name = "description" type = "varchar2(1024 ${char})"  remarks = "description"><constraints nullable = "false" /></column>
+         <column name = "template_engine" type = "varchar2(30 ${char})"  remarks = "Template engine. possible values: HANDLEBARS, NONE"><constraints nullable = "false" /></column>
+         <column name = "generator_engine" type = "varchar2(30 ${char})"  remarks = "Document Generation engine. possible values: PDF_BOX, NONE"><constraints nullable = "false" /></column>
+         <column name = "language" type = "varchar2(30 ${char})"  remarks = "Template language"><constraints nullable = "false" /></column>
+         <column name = "validity_start" type = "${datetime}" defaultValueComputed = "${sysdate}" remarks = "Validity start"><constraints nullable = "false" /></column>
+         <column name = "validity_end" type = "${datetime}" remarks = "Validity end"> </column>
+         <column name = "x__insdate" type = "${datetime}" defaultValueComputed = "${sysdate}"  remarks = "Record creation date"><constraints nullable = "false" /></column>
+         <column name = "x__insuser" type = "varchar2(30 ${char})" defaultValue = "0"  remarks = "Record creater user"><constraints nullable = "false" /></column>
+         <column name = "x__moddate" type = "${datetime}"  remarks = "Record modification date"></column>
+         <column name = "x__moduser" type = "varchar2(30 ${char})"  remarks = "Record modifier user"></column>
+         <column name = "x__version" type = "${versionDataType}" defaultValueNumeric = "0"  remarks = "Number of Record modifications"><constraints nullable = "false" /></column>
+       </createTable>
+   
+      <sql dbms = "oracle"> alter table ${schema_name}.template add constraint pk_template PRIMARY KEY ( x__id );</sql>
+      <sql dbms = "postgresql"> alter table ${schema_name}.template add constraint pk_template PRIMARY KEY ( x__id );</sql>
+
+      <sql>alter table ${schema_name}.template add constraint ck_template_template_engine check ( template_engine IN ('HANDLEBARS', 'NONE') );</sql>
+      <sql>alter table ${schema_name}.template add constraint ck_template_generator_engine check ( generator_engine IN ('PDF_BOX', 'NONE') );</sql>
+
+   </changeSet>
+</databaseChangeLog>

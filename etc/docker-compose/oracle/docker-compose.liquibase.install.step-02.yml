@@ -1,0 +1,27 @@
+version: "3.8"
+
+# run
+# docker-compose -f <PATH>/etc/docker-compose/oracle/docker-compose.liquibase.install.step-02.yml up --build --force-recreate
+#
+# docker exec -it module-dookug-postgredb-step-02 /bin/bash
+# This 2nd step is used to create the schema level objects with Liquibase.
+# details are in "liquibase-install-step-02.xml"
+services:
+  module-dookug-oracle-step-02:
+    container_name: module-dookug-oracle-step-02
+    image: icellmobilsoft/db-base-liquibase:${DBDWH_IMAGE_VERSION}
+    volumes:
+      # to find the files were copied in dockerfile
+      - ./../../../liquibase/dookug:/home/icellmobilsoft/liquibase/changelog
+      - ./../../../liquibase/common:/home/icellmobilsoft/liquibase/changelog/common
+      # to access the liquibase-install-step-02
+      - ./../../../etc/release/oracle/defaults-step-02.properties:/home/icellmobilsoft/liquibase/oracle/defaults-step-02.properties
+      # to access the before-liquibase.sh
+      - ./../../../etc/release/before-liquibase.sh:/home/icellmobilsoft/liquibase/bash/before-liquibase.sh
+    environment:
+      AUTO_INSTALL: oracle
+      INSTALL_STEP: STEP_2
+networks:
+  default:
+    external: true
+    name: dookug-local-network

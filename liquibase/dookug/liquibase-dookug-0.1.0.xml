@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <include file="0.1.0/DKG-94/0001_template.xml" relativeToChangelogFile="true"/>
+    <include file="0.1.0/DKG-94/0002_template_part.xml" relativeToChangelogFile="true"/>
+    <include file="0.1.0/DKG-94/0003_template_part_content.xml" relativeToChangelogFile="true"/>
+    <include file="0.1.0/DKG-94/0004_template_part_content_others.xml" relativeToChangelogFile="true"/>
+    <include file="0.1.0/DKG-94/0005_template_part_content_fk_idx.xml" relativeToChangelogFile="true"/>
+    <include file="0.1.0/DKG-94/0006_template_template_part.xml" relativeToChangelogFile="true"/>
+    <include file="0.1.0/DKG-94/0007_document.xml" relativeToChangelogFile="true"/>
+    <include file="0.1.0/DKG-94/0008_document_others.xml" relativeToChangelogFile="true"/>
+    <include file="0.1.0/DKG-94/0009_document_content.xml" relativeToChangelogFile="true"/>
+    <include file="0.1.0/DKG-94/0010_document_content_others.xml" relativeToChangelogFile="true"/>
+    <include file="0.1.0/DKG-94/0011_document_content_fk_idx.xml" relativeToChangelogFile="true"/>
+    <include file="0.1.0/DKG-94/0012_merge_template_part-DML.xml" relativeToChangelogFile="true"/>
+    <include file="0.1.0/DKG-94/0013_merge_template_part_content-DML.xml" relativeToChangelogFile="true"/>
+    <include file="0.1.0/DKG-94/0014_merge_template-DML.xml" relativeToChangelogFile="true"/>
+    <include file="0.1.0/DKG-94/0015_merge_template_template_part-DML.xml" relativeToChangelogFile="true"/>
+    <include file="0.1.0/DKG-94/0016_add_saxon_template-DML.xml" relativeToChangelogFile="true"/>
+    <include file="0.1.0/DKG-103/0017_merge_template_part_content-DML.xml" relativeToChangelogFile="true"/>
+    <include file="0.1.0/DKG-116/0018_delete_template_template_part_dups-DML.xml" relativeToChangelogFile="true"/>
+    <include file="0.1.0/DKG-116/0019_delete_template_dups-DML.xml" relativeToChangelogFile="true"/>
+    
+</databaseChangeLog>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE defaultProperties SYSTEM "common/params.dtd">
+    <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <!-- include the default properties -->
+    &propertiesAll;
+
+    <changeSet id="0048" author="jozsef.holczer" labels="01.00.01">
+        <comment>DKG-244 Loading English Title Content to Template_part_Content.</comment>
+
+        <insert  dbms="postgresql"
+                schemaName="${schema_name}"  
+                tableName="template_part_content">  
+            <column name="x__id"            value="XID7"/>  
+            <column name="template_part_id" value="TEMPLATEPARTXID7"/>  
+            <column name="content"          value="Welcome message!"/>  
+            <column name="compressed"       valueNumeric="0"/>  
+            <column name="validity_start"   valueDate="2023-06-19T11:30:00"/>  
+        </insert>    
+                
+    </changeSet>
+</databaseChangeLog>

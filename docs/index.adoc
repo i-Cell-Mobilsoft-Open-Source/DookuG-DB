@@ -1,0 +1,49 @@
+:toc: left
+:toclevels: 4
+:sectnums:
+:sectnumlevels: 4
+:source-highlighter: rouge 
+:rouge-style: thankful_eyes
+:icons: font
+:table-stripes: even
+// :customcss: docs/my-css.css
+
+:attachmentsdir: /dookug/db/dookug-db/{release_version}/generated
+
+
+//toc - Table of Contents
+//coderay - preserves the code related highlights - https://docs.asciidoctor.org/asciidoctor/latest/syntax-highlighting/coderay/
+//:icons: font - shows icons in Admonitions - https://docs.asciidoctor.org/asciidoc/latest/blocks/admonitions/
+
+= Dookug Template Modul DB repo documentation
+
+ifdef::release_version[]
+:revnumber: {release_version}
+endif::[]
+
+ifndef::imagesdir[:imagesdir: /dookug/db/dookug-db/{release_version}/generated/images ]
+
+== Overview
+
+[%hardbreaks]
+
+include::summary.adoc[leveloffset=+1]
+
+include::technology.adoc[leveloffset=+1]
+
+ 
+== Schemas
+=== dookug
+==== ERD:
+
+include::dookug_erd.adoc[leveloffset=+1]
+
+==== Tables:
+
+include::dookug_tables_attributes.adoc[leveloffset=+1]
+
+include::config.adoc[leveloffset=+1]
+
+include::install.adoc[leveloffset=+1]
+
+include::release_notes.adoc[leveloffset=+1]

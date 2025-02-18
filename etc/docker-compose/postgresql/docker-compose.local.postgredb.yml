@@ -1,0 +1,30 @@
+version: "3.8"
+
+# run
+# docker-compose -f <PATH>/etc/docker-compose/postgresql/docker-compose.local.postgredb.yml up --build --force-recreate
+#
+# docker exec -it module-dookug-postgredb /bin/bash
+# This is used to download (if it wasn't already) the Postgres image and start it locally.
+# This is for local testing.
+services:
+  module-dookug-postgredb:
+    container_name: module-dookug-postgredb
+    #customized Postgres image with installed pg_cron
+    image: 'icellmobilsoft/db-base-postgres_148:${DBDWH_IMAGE_VERSION}'
+    environment:
+      #the pg_cron connects to the default postgres db
+      - CRON_DB_NAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - module-dookug-postgredb-data:/var/lib/postgresql/data
+networks: 
+  default: 
+    external: true
+    name: dookug-local-network
+volumes:
+  module-dookug-postgredb-data:
+    name: module-dookug-postgredb-data
+    

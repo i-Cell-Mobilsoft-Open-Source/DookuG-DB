@@ -1,0 +1,7 @@
+= Module: Template
+
+== About the project
+
+[%hardbreaks]
+
+include::../docs/summary.adoc[]

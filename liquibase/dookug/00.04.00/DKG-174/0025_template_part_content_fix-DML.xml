@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE defaultProperties SYSTEM "common/params.dtd">
+    <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <!-- include the default properties -->
+    &propertiesAll;
+
+    <changeSet id="0025" author="jozsef.holczer" labels="0.4.0" dbms="postgresql">
+        <comment>DKG-174-template_part_content html content fixes.</comment>
+
+        <update 
+            schemaName="${schema_name}"
+            tableName="template_part_content">
+            <column name="content"><![CDATA[<!DOCTYPE html> <html lang="hu-HU"> <head> <style type="text/css"> body { font-family: Arial; font-size: 16px; color: #aec5dd; background-color: #050e30; } div.header,div.footer { width: 100%; border: 2px solid #aec5dd; text-align: center; vertical-align: middle; margin-bottom: 20px; font-weight: 900; } div.footer { position: fixed; bottom: 0; } table.age_of_persons { width: 50%; border: 2px solid #aec5dd; margin-left: auto; margin-right: auto; } table.age_of_persons td { background-color: #aec5dd; color: #050e30;; } table.age_of_persons th.title { border-bottom: 1px solid #aec5dd; } </style> </head> <body> {{ DEV_TEMPLATE_HANDLEBARS_HEADER}} <table class="age_of_persons"> <thead> <tr> <th class="title" colspan="2">Age of persons</th> </tr> <tr> <th>Name</th> <th>Age</th> </tr> </thead> <tbody> {{ DEV_TEMPLATE_HANDLEBARS_ROW personList}} </tbody> </table> {{ DEV_TEMPLATE_HANDLEBARS_FOOTER}} </body> </html>]]> </column>
+            <where>x__id = 'DEV_TEMPLATE_HANDLEBARS_MAIN'</where>
+        </update>    
+        <update 
+            schemaName="${schema_name}"
+            tableName="template_part_content">
+            <column name="content"><![CDATA[<div class="header">{{title}}</div>]]> </column>
+            <where>x__id = 'DEV_TEMPLATE_HANDLEBARS_HEADER'</where>
+        </update>
+        <update 
+            schemaName="${schema_name}"
+            tableName="template_part_content">
+            <column name="content"><![CDATA[<tr><td>{{name}}</td><td>{{age}}</td></tr>]]> </column>
+            <where>x__id = 'DEV_TEMPLATE_HANDLEBARS_ROW'</where>
+        </update>
+        <update 
+            schemaName="${schema_name}"
+            tableName="template_part_content">
+            <column name="content"><![CDATA[<div class="footer">© {{currentYear}}</div>]]> </column>
+            <where>x__id = 'DEV_TEMPLATE_HANDLEBARS_FOOTER'</where>
+        </update>
+        <update 
+            schemaName="${schema_name}"
+            tableName="template_part_content">
+            <column name="content"><![CDATA[<!DOCTYPE html><html><head><style>html, body { width:180mm;height: 297mm;font-family: Arial;font-size: 10px;}table { page-break-inside:auto }tr{ page-break-inside:avoid; page-break-after:auto}thead{display:table-header-group }tfoot { display:table-footer-group }}table {  margin-bottom: 20px;}</style></head><body><table style="height: 161px; width: 100%; border-collapse: collapse;" border="0"><tbody><tr style="height: 161px;"><td style="width: 161px;">]]> </column>
+            <where>x__id = 'DEV_TEMPLATE_ERROR_MAIN'</where>
+        </update>  
+        <update 
+            schemaName="${schema_name}"
+            tableName="template_part_content">
+            <column name="content"> {{ TEST_TEMPLATE_BODY_WELCOME}}              The total amount paid in the year {{year}}: {{formatNumber sumAmount '#.###'}} Ft.                          {{ TEST_TEMPLATE_BODY_CLOSING}} </column>
+            <where>x__id = 'XID3'</where>
+        </update> 
+    </changeSet>     
+
+    <changeSet id="0025" author="jozsef.holczer" labels="0.4.0" dbms="oracle"> 
+        <comment>DKG-174-template_part_content html content fixes.</comment>
+    
+        <!-- & → &amp; -->
+        <!-- < → &lt; -->
+        <!-- > → &gt; -->
+        <!-- " → &quot; -->
+        <!-- ' → &apos; -->
+
+        <sql dbms="oracle"
+            endDelimiter="/"
+            splitStatements="true"
+            stripComments="true">
+            <!-- ****** -->
+            <![CDATA[
+            DECLARE
+                temp_blob BLOB := EMPTY_BLOB;            
+            BEGIN            
+                dbms_lob.createtemporary(temp_blob, TRUE);
+                dbms_lob.open(temp_blob, dbms_lob.lob_readwrite);               
+                dbms_lob.append(temp_blob, utl_raw.cast_to_raw('<!DOCTYPE html> <html lang="hu-HU"> <head> <style type="text/css"> body { font-family: Arial; font-size: 16px; color: #aec5dd; background-color: #050e30; } div.header,div.footer { width: 100%; border: 2px solid #aec5dd; text-align: center; vertical-align: middle; margin-bottom: 20px; font-weight: 900; } div.footer { position: fixed; bottom: 0; } table.age_of_persons { width: 50%; border: 2px solid #aec5dd; margin-left: auto; margin-right: auto; } table.age_of_persons td { background-color: #aec5dd; color: #050e30;; } table.age_of_persons th.title { border-bottom: 1px solid #aec5dd; } </style> </head> <body> {{ DEV_TEMPLATE_HANDLEBARS_HEADER}} <table class="age_of_persons"> <thead> <tr> <th class="title" colspan="2">Age of persons</th> </tr> <tr> <th>Name</th> <th>Age</th> </tr> </thead> <tbody> {{ DEV_TEMPLATE_HANDLEBARS_ROW personList}} </tbody> </table> {{ DEV_TEMPLATE_HANDLEBARS_FOOTER}} </body> </html>'));              
+                
+                dbms_lob.close(temp_blob);     
+                
+                MERGE INTO ${schema_name}.template_part_content t
+                USING (SELECT 'DEV_TEMPLATE_HANDLEBARS_MAIN' as x__id, 
+                        'DEV_TEMPLATE_HANDLEBARS_MAIN' as template_part_id, 
+                        utl_compress.lz_compress(temp_blob) as content
+                        FROM DUAL
+                      ) x
+                ON (t.x__id = x.x__id)
+                WHEN MATCHED THEN
+                    UPDATE SET t.template_part_id = x.template_part_id, t.content = x.content, t.compressed = 1, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM',  
+                        t.x__version = t.x__version + 1
+                WHEN NOT MATCHED THEN
+                    INSERT (x__id, template_part_id, content, compressed, validity_start, validity_end, x__insdate, x__insuser, x__moddate, x__moduser,                    x__version)                     
+                    VALUES (x.x__id, x.template_part_id, x.content, 1, SYSDATE, null, SYSDATE, 'SYSTEM', NULL, NULL, 1);
+            END;
+            ]]>
+            /
+        </sql>
+        <sql dbms="oracle"
+            endDelimiter="/"
+            splitStatements="true"
+            stripComments="true">
+            <!-- ****** -->
+            <![CDATA[
+            DECLARE
+                temp_blob BLOB := EMPTY_BLOB;            
+            BEGIN            
+                dbms_lob.createtemporary(temp_blob, TRUE);
+                dbms_lob.open(temp_blob, dbms_lob.lob_readwrite);               
+                dbms_lob.append(temp_blob, utl_raw.cast_to_raw('<div class="header">{{title}}</div>'));              
+                
+                dbms_lob.close(temp_blob);     
+                
+                MERGE INTO ${schema_name}.template_part_content t
+                USING (SELECT 'DEV_TEMPLATE_HANDLEBARS_HEADER' as x__id, 
+                        'DEV_TEMPLATE_HANDLEBARS_HEADER' as template_part_id, 
+                        utl_compress.lz_compress(temp_blob) as content
+                        FROM DUAL
+                      ) x
+                ON (t.x__id = x.x__id)
+                WHEN MATCHED THEN
+                    UPDATE SET t.template_part_id = x.template_part_id, t.content = x.content, t.compressed = 1, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM',  
+                        t.x__version = t.x__version + 1
+                WHEN NOT MATCHED THEN
+                    INSERT (x__id, template_part_id, content, compressed, validity_start, validity_end, x__insdate, x__insuser, x__moddate, x__moduser,                    x__version)                     
+                    VALUES (x.x__id, x.template_part_id, x.content, 1, SYSDATE, null, SYSDATE, 'SYSTEM', NULL, NULL, 1);
+            END;
+            ]]>
+            /
+        </sql>
+        <sql dbms="oracle"
+            endDelimiter="/"
+            splitStatements="true"
+            stripComments="true">
+            <!-- ****** -->
+            <![CDATA[
+            DECLARE
+                temp_blob BLOB := EMPTY_BLOB;            
+            BEGIN            
+                dbms_lob.createtemporary(temp_blob, TRUE);
+                dbms_lob.open(temp_blob, dbms_lob.lob_readwrite);               
+                dbms_lob.append(temp_blob, utl_raw.cast_to_raw('<tr><td>{{name}}</td><td>{{age}}</td></tr>'));              
+                
+                dbms_lob.close(temp_blob);     
+                
+                MERGE INTO ${schema_name}.template_part_content t
+                USING (SELECT 'DEV_TEMPLATE_HANDLEBARS_ROW' as x__id, 
+                        'DEV_TEMPLATE_HANDLEBARS_ROW' as template_part_id, 
+                        utl_compress.lz_compress(temp_blob) as content
+                        FROM DUAL
+                      ) x
+                ON (t.x__id = x.x__id)
+                WHEN MATCHED THEN
+                    UPDATE SET t.template_part_id = x.template_part_id, t.content = x.content, t.compressed = 1, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM',  
+                        t.x__version = t.x__version + 1
+                WHEN NOT MATCHED THEN
+                    INSERT (x__id, template_part_id, content, compressed, validity_start, validity_end, x__insdate, x__insuser, x__moddate, x__moduser,                    x__version)                     
+                    VALUES (x.x__id, x.template_part_id, x.content, 1, SYSDATE, null, SYSDATE, 'SYSTEM', NULL, NULL, 1);
+            END;
+            ]]>
+            /
+        </sql>
+        <sql dbms="oracle"
+            endDelimiter="/"
+            splitStatements="true"
+            stripComments="true">
+            <!-- ****** -->
+            <![CDATA[
+            DECLARE
+                temp_blob BLOB := EMPTY_BLOB;            
+            BEGIN            
+                dbms_lob.createtemporary(temp_blob, TRUE);
+                dbms_lob.open(temp_blob, dbms_lob.lob_readwrite);               
+                dbms_lob.append(temp_blob, utl_raw.cast_to_raw('<div class="footer">© {{currentYear}}</div>'));              
+                
+                dbms_lob.close(temp_blob);     
+                
+                MERGE INTO ${schema_name}.template_part_content t
+                USING (SELECT 'DEV_TEMPLATE_HANDLEBARS_FOOTER' as x__id, 
+                        'DEV_TEMPLATE_HANDLEBARS_FOOTER' as template_part_id, 
+                        utl_compress.lz_compress(temp_blob) as content
+                        FROM DUAL
+                      ) x
+                ON (t.x__id = x.x__id)
+                WHEN MATCHED THEN
+                    UPDATE SET t.template_part_id = x.template_part_id, t.content = x.content, t.compressed = 1, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM',  
+                        t.x__version = t.x__version + 1
+                WHEN NOT MATCHED THEN
+                    INSERT (x__id, template_part_id, content, compressed, validity_start, validity_end, x__insdate, x__insuser, x__moddate, x__moduser,                    x__version)                     
+                    VALUES (x.x__id, x.template_part_id, x.content, 1, SYSDATE, null, SYSDATE, 'SYSTEM', NULL, NULL, 1);
+            END;
+            ]]>
+            /
+        </sql>
+        <sql dbms="oracle"
+            endDelimiter="/"
+            splitStatements="true"
+            stripComments="true">
+            <!-- ****** -->
+            <![CDATA[
+            DECLARE
+                temp_blob BLOB := EMPTY_BLOB;            
+            BEGIN            
+                dbms_lob.createtemporary(temp_blob, TRUE);
+                dbms_lob.open(temp_blob, dbms_lob.lob_readwrite);               
+                dbms_lob.append(temp_blob, utl_raw.cast_to_raw('<!DOCTYPE html><html><head><style>html, body { width:180mm;height: 297mm;font-family: Arial;font-size: 10px;}table { page-break-inside:auto }tr{ page-break-inside:avoid; page-break-after:auto}thead{display:table-header-group }tfoot { display:table-footer-group }}table {  margin-bottom: 20px;}</style></head><body><table style="height: 161px; width: 100%; border-collapse: collapse;" border="0"><tbody><tr style="height: 161px;"><td style="width: 161px;">'));              
+                
+                dbms_lob.close(temp_blob);     
+                
+                MERGE INTO ${schema_name}.template_part_content t
+                USING (SELECT 'DEV_TEMPLATE_ERROR_MAIN' as x__id, 
+                        'DEV_TEMPLATE_ERROR_MAIN' as template_part_id, 
+                        utl_compress.lz_compress(temp_blob) as content
+                        FROM DUAL
+                      ) x
+                ON (t.x__id = x.x__id)
+                WHEN MATCHED THEN
+                    UPDATE SET t.template_part_id = x.template_part_id, t.content = x.content, t.compressed = 1, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM',  
+                        t.x__version = t.x__version + 1
+                WHEN NOT MATCHED THEN
+                    INSERT (x__id, template_part_id, content, compressed, validity_start, validity_end, x__insdate, x__insuser, x__moddate, x__moduser,                    x__version)                     
+                    VALUES (x.x__id, x.template_part_id, x.content, 1, SYSDATE, null, SYSDATE, 'SYSTEM', NULL, NULL, 1);
+            END;
+            ]]>
+            /
+        </sql>
+
+        <sql dbms="oracle"
+            endDelimiter="/"
+            splitStatements="true"
+            stripComments="true">
+            <![CDATA[
+            DECLARE
+                temp_blob BLOB := EMPTY_BLOB;            
+            BEGIN            
+                dbms_lob.createtemporary(temp_blob, TRUE);
+                dbms_lob.open(temp_blob, dbms_lob.lob_readwrite);               
+                dbms_lob.append(temp_blob, utl_raw.cast_to_raw('{{ TEST_TEMPLATE_BODY_WELCOME}}
+
+                The total amount paid in the year {{year}}: {{formatNumber sumAmount ''#.###''}} Ft.
+                
+                {{ TEST_TEMPLATE_BODY_CLOSING}}'));              
+                dbms_lob.close(temp_blob);     
+                
+                MERGE INTO ${schema_name}.template_part_content t
+                USING (SELECT 'XID3' as x__id, 
+                        'TEMPLATEPARTXID3' as template_part_id, 
+                        temp_blob as content
+                        FROM DUAL
+                      ) x
+                ON (t.x__id = x.x__id)
+                WHEN MATCHED THEN
+                    UPDATE SET t.template_part_id = x.template_part_id, t.content = x.content, t.compressed = 0, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM',  
+                        t.x__version = t.x__version + 1
+                WHEN NOT MATCHED THEN
+                    INSERT (x__id, template_part_id, content, compressed, validity_start)                     
+                    VALUES (x.x__id, x.template_part_id, x.content, 0, TO_DATE('2023.07.01.','YYYY.MM.DD.'));
+            END;
+            ]]>
+            /
+        </sql>
+
+
+    </changeSet>
+</databaseChangeLog>
