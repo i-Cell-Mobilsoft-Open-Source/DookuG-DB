@@ -25,14 +25,14 @@
 . Oracle liquibase header SQL version:
 [source,sql]
 --liquibase formatted sql
---changeset tibor.ivan:0002 labels:0.3.0 dbms:oracle
---comment VDRDEV-504 Creating INTERVAL_DECLARATION_DATA table
+--changeset developer.name:0002 labels:0.3.0 dbms:oracle
+--comment PROJECT-504 Creating INTERVAL_DECLARATION_DATA table
 
 . Postgresql liquibase header SQL version:
 [source,sql]
 --liquibase formatted sql
---changeset tibor.ivan:0002 labels:0.3.0 dbms:postgresql
---comment VDRDEV-504 Creating INTERVAL_DECLARATION_DATA table
+--changeset developer.name:0002 labels:0.3.0 dbms:postgresql
+--comment PROJECT-504 Creating INTERVAL_DECLARATION_DATA table
 
 *Create Table part without BLOB or Partition:*
 //A paragraph with the [%hardbreaks] option preserves line breaks
@@ -238,7 +238,7 @@ IMPORTANT: FK indexes must be in a separate XML file (_with the same XML header_
     <!-- include the default properties -->
     &propertiesAll;
     <changeSet id="0005" author="jozsef.holczer" labels="0.1.0">
-        <comment>ICMV2-44-Creating TAXI_INVOICE table, Foreign Key index.</comment>
+        <comment>PROJECT-44-Creating TAXI_INVOICE table, Foreign Key index.</comment>
         <!-- FK Index -->
         <createIndex indexName = "ix_taxi_invoice_taxi_transaction_id" tableName = "taxi_invoice" schemaName = "${schema_name}">
             <column name = "taxi_transaction_id"/>

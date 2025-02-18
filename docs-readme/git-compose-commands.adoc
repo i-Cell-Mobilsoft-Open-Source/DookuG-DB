@@ -93,11 +93,11 @@ docker compose --env-file .env -f ./etc/docker-compose/postgresql/docker-compose
 [%collapsible]
 ==========
 [source,console]
-PS C:\Users\jozsef.holczer\Documents\SourceTree\modul\dookug-db> docker-compose -f etc/docker-compose/postgresql/docker-compose.local.postgredb.yml down -v
+PS Git Client\modul\dookug-db> docker-compose -f etc/docker-compose/postgresql/docker-compose.local.postgredb.yml down -v
 time="2023-08-16T14:52:23+02:00" level=warning msg="network default: network.external.name is deprecated. Please set network.name with external: true"
 [+] Running 1/0
  ✔ Volume module-dookug-postgredb-data  Removed                                                                                                                  0.0s
-PS C:\Users\jozsef.holczer\Documents\SourceTree\modul\dookug-db>
+PS Git Client\modul\dookug-db>
 ==========
 
 ========
@@ -117,7 +117,7 @@ docker-compose -f etc/docker-compose/oracle/docker-compose.local.oracle.yml up -
 [%collapsible]
 ==========
 [source,console]
-PS C:\Users\jozsef.holczer\Documents\SourceTree\modul\dookug-db> docker compose --env-file .env -f etc/docker-compose/oracle/docker-compose.local.oracle.yml up --build --force-recreate --remove-orphans
+PS Git Client\modul\dookug-db> docker compose --env-file .env -f etc/docker-compose/oracle/docker-compose.local.oracle.yml up --build --force-recreate --remove-orphans
 time="2023-08-16T14:54:53+02:00" level=warning msg="network default: network.external.name is deprecated. Please set network.name with external: true"
 [+] Running 4/4
  ✔ Volume "dookug-db-oracle-data"            Created                                                                                                             0.0s
@@ -200,11 +200,11 @@ docker compose --env-file .env -f etc/docker-compose/oracle/docker-compose.local
 [%collapsible]
 ==========
 [source,console]
-PS C:\Users\jozsef.holczer\Documents\SourceTree\modul\dookug-db> docker compose --env-file .env -f etc/docker-compose/oracle/docker-compose.local.oracle.yml down -v
+PS Git Client\modul\dookug-db> docker compose --env-file .env -f etc/docker-compose/oracle/docker-compose.local.oracle.yml down -v
 time="2023-08-16T14:54:19+02:00" level=warning msg="network default: network.external.name is deprecated. Please set network.name with external: true"
 [+] Running 1/0
  ✔ Volume dookug-db-oracle-data  Removed                                                                                                                         0.0s
-PS C:\Users\jozsef.holczer\Documents\SourceTree\modul\dookug-db>
+PS Git Client\modul\dookug-db>
 ==========
 
 ========
