@@ -1,0 +1,7 @@
+[DEFAULT]
+copyright = Copyright (C) 2025 i-Cell Mobilsoft Zrt.
+license = Apache-2.0
+contributor = Jozsef Holczer <jozsef.holczer@icellmobilsoft.hu>
+[Templates]
+extensions = sh, yaml, yml, dtd, xml, sql
+template = apache.jinja2
