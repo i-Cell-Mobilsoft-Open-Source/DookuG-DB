@@ -84,13 +84,7 @@ jobs:
                 echo "$line" >> $GITHUB_ENV
               fi
             done < .env
-          fi
-      - name: Debug environment variables
-        run: |
-          echo "DOCKER_REPOSITORY: $DOCKER_REPOSITORY"
-          echo "DOCKER_LIQUIBASE_DOOKUG: $DOCKER_LIQUIBASE_DOOKUG"
-      - name: Setup Debug Session
-        uses: csexton/debugger-action@master    
+          fi      
       - name: docker buildx bake "#1"
         uses: docker/bake-action@v5
         with:
@@ -98,7 +92,7 @@ jobs:
           set: |
             *.platform=${{ env.DOCKER_BAKE_PLATFORM }}
             *.args.DOCKER_REPOSITORY=${{ env.DOCKER_REPOSITORY }}
-            *.args.DOCKER_LIQUIBASE_DOOKUG=${{ env.DOCKER_LIQUIBASE_DOOKUG }}
+            *.args.DOCKER_LIQUIBASE_DOOKUG=icellmobilsoft/dookug_db
           push: true
           files: |
             docker-compose.yml
