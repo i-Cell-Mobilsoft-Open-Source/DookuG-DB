@@ -81,18 +81,18 @@ jobs:
           if [ -f .env ]; then
             while IFS= read -r line || [ -n "$line" ]; do
               if [[ $line != '#'* ]] && [[ $line == *'='* ]]; then
-                key=$(echo "$line" | cut -d '=' -f 1)
-                value=$(echo "$line" | cut -d '=' -f 2-)
-                echo "$key=$value" >> $GITHUB_ENV
+                echo "$line" >> $GITHUB_ENV
               fi
             done < .env
-          fi    
+          fi
       - name: docker buildx bake "#1"
         uses: docker/bake-action@v5
         with:
           workdir: etc/release
           set: |
             *.platform=${{ env.DOCKER_BAKE_PLATFORM }}
+            *.args.DOCKER_REPOSITORY=${{ env.DOCKER_REPOSITORY }}
+            *.args.DOCKER_LIQUIBASE_DOOKUG=${{ env.DOCKER_LIQUIBASE_DOOKUG }}
           push: true
           files: |
             docker-compose.yml
