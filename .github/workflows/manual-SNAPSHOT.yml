@@ -74,6 +74,11 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Set environment variables from .env
+        run: |
+          while IFS='=' read -r key value; do
+            echo "::set-env name=$key::$value"
+          done < .env    
       - name: docker buildx bake "#1"
         uses: docker/bake-action@v5
         with:
