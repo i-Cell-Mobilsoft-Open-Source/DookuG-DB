@@ -83,9 +83,9 @@ jobs:
         with:
           workdir: etc/release
           set: |
+            args.liquibase-release.DOCKER_LIQUIBASE_DOOKUG=${{ env.DOCKER_LIQUIBASE_DOOKUG }}
+            args.liquibase-release.VERSION=${{ env.VERSION }}
             *.platform=${{ env.DOCKER_BAKE_PLATFORM }}
-            args.DOCKER_LIQUIBASE_DOOKUG=${{ env.DOCKER_LIQUIBASE_DOOKUG }}
-            args.VERSION=${{ env.VERSION }}
           push: true
           files: |
             docker-compose.yml
