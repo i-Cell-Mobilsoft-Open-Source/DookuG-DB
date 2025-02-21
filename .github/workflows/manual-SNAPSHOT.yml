@@ -88,3 +88,6 @@ jobs:
           files: |
             docker-compose.yml
           targets: liquibase-release
+          build-args: |
+            DOCKER_LIQUIBASE_DOOKUG=${{ env.DOCKER_LIQUIBASE_DOOKUG }}
+            VERSION=${{ env.VERSION }}
