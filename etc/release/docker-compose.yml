@@ -42,4 +42,4 @@ services:
         LIQUIBASE_BASE_IMAGE: 'icellmobilsoft/db-base-liquibase:${DBDWH_IMAGE_VERSION}'
         LIQUIBASE_INSTALL_DIR: '/liquibase/dookug'
         LIQUIBASE_INSTALL_COMMON_DIR: '/liquibase/common'
-    image: "$DOCKER_LIQUIBASE_DOOKUG:$VERSION"
+    image: ${$DOCKER_LIQUIBASE_DOOKUG}:$VERSION
