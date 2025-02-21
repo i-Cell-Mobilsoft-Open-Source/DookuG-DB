@@ -92,7 +92,7 @@ jobs:
           set: |
             *.platform=${{ env.DOCKER_BAKE_PLATFORM }}
             *.args.DOCKER_REPOSITORY=${{ env.DOCKER_REPOSITORY }}
-            *.args.DOCKER_LIQUIBASE_DOOKUG=icellmobilsoft/dookug_db
+            *.args.DOCKER_LIQUIBASE_DOOKUG=${{ env.DOCKER_LIQUIBASE_DOOKUG }}
           push: true
           files: |
             docker-compose.yml
