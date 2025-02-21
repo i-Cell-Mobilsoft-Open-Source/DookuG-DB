@@ -85,6 +85,12 @@ jobs:
               fi
             done < .env
           fi
+      - name: Debug environment variables
+        run: |
+          echo "DOCKER_REPOSITORY: $DOCKER_REPOSITORY"
+          echo "DOCKER_LIQUIBASE_DOOKUG: $DOCKER_LIQUIBASE_DOOKUG"
+      - name: Setup Debug Session
+        uses: csexton/debugger-action@master    
       - name: docker buildx bake "#1"
         uses: docker/bake-action@v5
         with:
