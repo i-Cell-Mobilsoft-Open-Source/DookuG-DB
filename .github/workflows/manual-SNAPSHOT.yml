@@ -73,7 +73,20 @@ jobs:
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}          
+          password: ${{ secrets.DOCKERHUB_TOKEN }}   
+      - name: Checkout main
+        uses: actions/checkout@v4
+      - name: Load .env file
+        run: |
+          if [ -f .env ]; then
+            while IFS= read -r line || [ -n "$line" ]; do
+              if [[ $line != '#'* ]] && [[ $line == *'='* ]]; then
+                key=$(echo "$line" | cut -d '=' -f 1)
+                value=$(echo "$line" | cut -d '=' -f 2-)
+                echo "$key=$value" >> $GITHUB_ENV
+              fi
+            done < .env
+          fi    
       - name: docker buildx bake "#1"
         uses: docker/bake-action@v5
         with:
