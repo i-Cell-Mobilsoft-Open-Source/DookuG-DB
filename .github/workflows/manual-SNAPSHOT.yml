@@ -81,5 +81,5 @@ jobs:
             *.platform=${{ env.DOCKER_BAKE_PLATFORM }}
           push: true
           files: |
-            docker-compose.yml
+            ./etc/release/docker-compose.yml
           targets: liquibase-release
