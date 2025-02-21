@@ -73,18 +73,12 @@ jobs:
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Set environment variables from .env
-        run: |
-          echo "DOTENV_VARS=$(cat .env | xargs)" >> $GITHUB_ENV
-          echo "GITHUB_ENV content: $(cat $GITHUB_ENV)"    
+          password: ${{ secrets.DOCKERHUB_TOKEN }}          
       - name: docker buildx bake "#1"
         uses: docker/bake-action@v5
         with:
           workdir: etc/release
           set: |
-            args.liquibase-release.DOCKER_LIQUIBASE_DOOKUG=${{ env.DOCKER_LIQUIBASE_DOOKUG }}
-            args.liquibase-release.VERSION=${{ env.VERSION }}
             *.platform=${{ env.DOCKER_BAKE_PLATFORM }}
           push: true
           files: |
