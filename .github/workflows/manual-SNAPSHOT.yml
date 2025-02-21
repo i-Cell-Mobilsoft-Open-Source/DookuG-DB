@@ -84,7 +84,7 @@ jobs:
           workdir: etc/release
           set: |
             *.platform=${{ env.DOCKER_BAKE_PLATFORM }}
-                        args.DOCKER_LIQUIBASE_DOOKUG=${{ env.DOCKER_LIQUIBASE_DOOKUG }}
+            args.DOCKER_LIQUIBASE_DOOKUG=${{ env.DOCKER_LIQUIBASE_DOOKUG }}
             args.VERSION=${{ env.VERSION }}
           push: true
           files: |
