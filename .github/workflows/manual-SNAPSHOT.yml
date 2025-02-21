@@ -97,6 +97,4 @@ jobs:
           files: |
             docker-compose.yml
           targets: liquibase-release
-          bake-args: |
-            --env-file ../../.env
 
