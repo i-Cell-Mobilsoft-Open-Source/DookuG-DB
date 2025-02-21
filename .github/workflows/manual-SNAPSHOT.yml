@@ -76,7 +76,8 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Set environment variables from .env
         run: |
-          echo "DOTENV_VARS=$(cat .env | xargs)" >> $GITHUB_ENV    
+          echo "DOTENV_VARS=$(cat .env | xargs)" >> $GITHUB_ENV
+          echo "GITHUB_ENV content: $(cat $GITHUB_ENV)"    
       - name: docker buildx bake "#1"
         uses: docker/bake-action@v5
         with:
