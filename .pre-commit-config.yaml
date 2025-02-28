@@ -1,49 +1,21 @@
 repos:
-  - repo: https://github.com/ansys/pre-commit-hooks
-    rev: v0.5.1
-    hooks:
-      - id: add-license-headers
-        name: Add license headers (sh)
-        args:
-          - --custom_copyright=i-Cell Mobilsoft Zrt.
-          - --custom_license=Apache-2.0
-          - --start_year=2025
-          - --custom_template=apache.jinja2
-          - --parser=shell
-        files: '^(etc|liquibase)/.*\.(sh)$'
-
-      - id: add-license-headers
-        name: Add license headers (XML)
-        args:
-          - --custom_copyright=i-Cell Mobilsoft Zrt.
-          - --custom_license=Apache-2.0
-          - --start_year=2025
-          - --custom_template=apache.jinja2
-          - --parser=xml
-        files: '^(etc|liquibase)/.*\.(xml|dtd)$'
-
-      - id: add-license-headers
-        name: Add license headers (YML)
-        args:
-          - --custom_copyright=i-Cell Mobilsoft Zrt.
-          - --custom_license=Apache-2.0
-          - --start_year=2025
-          - --custom_template=apache.jinja2
-          - --parser=yaml
-        files: '^(etc|liquibase)/.*\.(yaml|yml)$'
-
-      - id: add-license-headers
-        name: Add license headers (SQL)
-        args:
-          - --custom_copyright=i-Cell Mobilsoft Zrt.
-          - --custom_license=Apache-2.0
-          - --start_year=2025
-          - --custom_template=apache.jinja2
-          - --parser=sql
-        files: '^(etc|liquibase)/.*\.(sql)$'
-        exclude: |
-              (?x)^(
-                  \.git/|
-                  \.github/|
-                  \.reuse/
-              )$
+- repo: local
+  hooks:
+#  - id: echo
+#    name: Add License Header Docker files
+#    entry: echo $PWD > ./pwd
+#    language: system
+#    types: [file]
+#    files: \.(sh|yaml|yml|xml|dtd)$
+  - id: add-license-header-docker
+    name: Add License Header Docker files
+    entry: reuse annotate --license="Apache-2.0" --copyright="(C) 2023 i-Cell Mobilsoft Zrt." --template apache.jinja2 etc
+    language: system
+    types: [file]
+    files: \.(sh|yaml|yml|xml|dtd)$
+  - id: add-license-header-sql
+    name: Add License Header Liquibase files
+    entry: reuse annotate --license="Apache-2.0" --copyright="(C) 2023 i-Cell Mobilsoft Zrt." --template apache.jinja2 liquibase
+    language: system
+    types: [file]
+    files: \.(sh|yaml|yml|xml|dtd)$
