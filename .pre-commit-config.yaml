@@ -1,21 +1,16 @@
 repos:
 - repo: local
   hooks:
-#  - id: echo
-#    name: Add License Header Docker files
-#    entry: echo $PWD > ./pwd
+  - id: add-license-header
+    name: Add License Header
+    entry: reuse annotate --license 'Apache-2.0' --copyright '(C) i-Cell Mobilsoft Zrt.' --year '2023' --template 'apache.jinja2' --copyright-prefix string .
+#    entry: reuse annotate --copyright='(C) i-Cell Mobilsoft Zrt.' --license='Apache-2.0' etc/
+    language: system
+    types: [file]
+    files: \.(sh|yaml|yml|xml|dtd)$
+#  - id: add-license-header-sql
+#    name: Add License Header Liquibase files
+#    entry: reuse annotate --license="Apache-2.0" --copyright="(C) i-Cell Mobilsoft Zrt." --year 2023 --template apache.jinja2 liquibase
 #    language: system
 #    types: [file]
 #    files: \.(sh|yaml|yml|xml|dtd)$
-  - id: add-license-header-docker
-    name: Add License Header Docker files
-    entry: reuse annotate --license="Apache-2.0" --copyright="(C) 2023 i-Cell Mobilsoft Zrt." --template apache.jinja2 etc
-    language: system
-    types: [file]
-    files: \.(sh|yaml|yml|xml|dtd)$
-  - id: add-license-header-sql
-    name: Add License Header Liquibase files
-    entry: reuse annotate --license="Apache-2.0" --copyright="(C) 2023 i-Cell Mobilsoft Zrt." --template apache.jinja2 liquibase
-    language: system
-    types: [file]
-    files: \.(sh|yaml|yml|xml|dtd)$
