@@ -1,5 +1,0 @@
-version = 1
-SPDX-PackageName = "DookuG"
-SPDX-PackageSupplier = "József Holczer <jozsef.holczer@icellmobilsoft.hu>"
-SPDX-PackageDownloadLocation = "https://github.com/i-Cell-Mobilsoft-Open-Source/DookuG-DB"
-annotations = []
