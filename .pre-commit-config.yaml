@@ -1,23 +1,13 @@
 repos:
 - repo: https://github.com/ansys/pre-commit-hooks
-  rev: v0.5.1
+  rev: v0.5.2
   hooks:
   - id: add-license-headers
     name: Add license headers
     args:
+#    - --start_year=2025
     - --custom_copyright=i-Cell Mobilsoft Zrt.
-    - --custom_license=Apache-2.0.txt
-    - --start_year=2025
+    - --custom_license=Apache-2.0
     - --custom_template=apache.jinja2
     - --parser=shell
     files: '^(etc|liquibase)/.*\.(sh|xml|yaml|yml)$'
-##    files: '^(etc|liquibase)/.*\.(sh|xml|yaml|yml|dtd)$'
-#- repo: local
-#  hooks:
-#  - id: add-license-header
-#    name: Add License Header
-#    entry: reuse annotate --license='Apache-2.0' --copyright='(C) i-Cell Mobilsoft Zrt.' --year='2023' --template='apache.jinja2' --copyright-prefix=string .
-#    language: system
-#    types: [file]
-#    files: '^(etc|liquibase)/.*\.(sh|xml|yaml|yml)$'
-##    files: '^(etc|liquibase)/.*\.(sh|xml|yaml|yml|dtd)$'
