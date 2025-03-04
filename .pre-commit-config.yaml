@@ -10,4 +10,4 @@ repos:
     - --custom_license=Apache-2.0
     - --custom_template=apache.jinja2
     - --parser=shell
-    files: '^(etc|liquibase)/.*\.(sh|xml|yaml|yml)$'
+    files: '^(etc|liquibase)/.*\.(sh|xml|yaml|yml|sql)$'
