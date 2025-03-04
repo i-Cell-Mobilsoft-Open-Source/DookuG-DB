@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
- Copyright  
- 
+Copyright (C) 2025 i-Cell Mobilsoft Zrt.
+
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
 
     <!-- include the default properties -->
     &propertiesAll;
 
-    <changeSet id="2025" author="jozsef.holczer" labels="01.00.03" dbms="postgresql">
+    <changeSet id="0049" author="jozsef.holczer" labels="01.00.03" dbms="postgresql">
         <comment>DKG-246-template_part_content html content fixes.</comment>
 
         <update 
@@ -79,8 +79,8 @@
                     UPDATE SET t.template_part_id = x.template_part_id, t.content = x.content, t.compressed = 1, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM',  
                         t.x__version = t.x__version + 1
                 WHEN NOT MATCHED THEN
-                    INSERT (x__id, template_part_id, content, compressed, x__insdate, x__insuser, x__moddate, x__moduser, x__version)                     
-                    VALUES (x.x__id, x.template_part_id, x.content, 1, SYSDATE, 'SYSTEM', NULL, NULL, 1);
+                    INSERT (x__id, template_part_id, content, compressed, validity_start, validity_end, x__insdate, x__insuser, x__moddate, x__moduser,                    x__version)                     
+                    VALUES (x.x__id, x.template_part_id, x.content, 1, SYSDATE, null, SYSDATE, 'SYSTEM', NULL, NULL, 1);
             END;
             ]]>
             /
@@ -111,8 +111,8 @@
                     UPDATE SET t.template_part_id = x.template_part_id, t.content = x.content, t.compressed = 1, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM',  
                         t.x__version = t.x__version + 1
                 WHEN NOT MATCHED THEN
-                    INSERT (x__id, template_part_id, content, compressed, x__insdate, x__insuser, x__moddate, x__moduser, x__version)                     
-                    VALUES (x.x__id, x.template_part_id, x.content, 1, SYSDATE, 'SYSTEM', NULL, NULL, 1);
+                    INSERT (x__id, template_part_id, content, compressed, validity_start, validity_end, x__insdate, x__insuser, x__moddate, x__moduser,                    x__version)                     
+                    VALUES (x.x__id, x.template_part_id, x.content, 1, SYSDATE, null, SYSDATE, 'SYSTEM', NULL, NULL, 1);
             END;
             ]]>
             /
@@ -143,8 +143,8 @@
                     UPDATE SET t.template_part_id = x.template_part_id, t.content = x.content, t.compressed = 1, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM',  
                         t.x__version = t.x__version + 1
                 WHEN NOT MATCHED THEN
-                    INSERT (x__id, template_part_id, content, compressed, x__insdate, x__insuser, x__moddate, x__moduser, x__version)                     
-                    VALUES (x.x__id, x.template_part_id, x.content, 1, SYSDATE, 'SYSTEM', NULL, NULL, 1);
+                    INSERT (x__id, template_part_id, content, compressed, validity_start, validity_end, x__insdate, x__insuser, x__moddate, x__moduser,                    x__version)                     
+                    VALUES (x.x__id, x.template_part_id, x.content, 1, SYSDATE, null, SYSDATE, 'SYSTEM', NULL, NULL, 1);
             END;
             ]]>
             /
@@ -175,8 +175,8 @@
                     UPDATE SET t.template_part_id = x.template_part_id, t.content = x.content, t.compressed = 1, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM',  
                         t.x__version = t.x__version + 1
                 WHEN NOT MATCHED THEN
-                    INSERT (x__id, template_part_id, content, compressed, x__insdate, x__insuser, x__moddate, x__moduser, x__version)                     
-                    VALUES (x.x__id, x.template_part_id, x.content, 1, SYSDATE, 'SYSTEM', NULL, NULL, 1);
+                    INSERT (x__id, template_part_id, content, compressed, validity_start, validity_end, x__insdate, x__insuser, x__moddate, x__moduser,                    x__version)                     
+                    VALUES (x.x__id, x.template_part_id, x.content, 1, SYSDATE, null, SYSDATE, 'SYSTEM', NULL, NULL, 1);
             END;
             ]]>
             /
@@ -207,8 +207,8 @@
                     UPDATE SET t.template_part_id = x.template_part_id, t.content = x.content, t.compressed = 1, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM',  
                         t.x__version = t.x__version + 1
                 WHEN NOT MATCHED THEN
-                    INSERT (x__id, template_part_id, content, compressed, x__insdate, x__insuser, x__moddate, x__moduser, x__version)                     
-                    VALUES (x.x__id, x.template_part_id, x.content, 1, SYSDATE, 'SYSTEM', NULL, NULL, 1);
+                    INSERT (x__id, template_part_id, content, compressed, validity_start, validity_end, x__insdate, x__insuser, x__moddate, x__moduser,                    x__version)                     
+                    VALUES (x.x__id, x.template_part_id, x.content, 1, SYSDATE, null, SYSDATE, 'SYSTEM', NULL, NULL, 1);
             END;
             ]]>
             /
@@ -242,8 +242,8 @@
                     UPDATE SET t.template_part_id = x.template_part_id, t.content = x.content, t.compressed = 0, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM',  
                         t.x__version = t.x__version + 1
                 WHEN NOT MATCHED THEN
-                    INSERT (x__id, template_part_id, content, compressed)                     
-                    VALUES (x.x__id, x.template_part_id, x.content, 0);
+                    INSERT (x__id, template_part_id, content, compressed, validity_start)                     
+                    VALUES (x.x__id, x.template_part_id, x.content, 0, TO_DATE('2023.07.01.','YYYY.MM.DD.'));
             END;
             ]]>
             /
