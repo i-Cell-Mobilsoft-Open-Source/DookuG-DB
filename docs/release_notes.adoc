@@ -17,3 +17,4 @@
 - DKG-261 - Repair of Install.adoc.
 * 1.1.0 Changes:
 - DKG-265 - open source changes
+- DKG-297 - Drop validity_start, validity_end cols from template_part_content, drop template_part_content.template_part_id index, change template_part_content.template_part_id index to unique.

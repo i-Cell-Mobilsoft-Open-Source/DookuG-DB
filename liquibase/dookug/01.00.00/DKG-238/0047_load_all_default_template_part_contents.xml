@@ -178,8 +178,8 @@ Best regards!"/>
                     UPDATE SET t.template_part_id = x.template_part_id, t.content = x.content, t.compressed = 1, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM',  
                         t.x__version = t.x__version + 1
                 WHEN NOT MATCHED THEN
-                    INSERT (x__id, template_part_id, content, compressed, validity_start, validity_end, x__insdate, x__insuser, x__moddate, x__moduser, x__version)                     
-                    VALUES (x.x__id, x.template_part_id, x.content, 1, SYSDATE, null, SYSDATE, 'SYSTEM', NULL, NULL, 0);
+                    INSERT (x__id, template_part_id, content, compressed, x__insdate, x__insuser, x__moddate, x__moduser, x__version)                     
+                    VALUES (x.x__id, x.template_part_id, x.content, 1, SYSDATE, 'SYSTEM', NULL, NULL, 0);
             END;
             ]]>
             /
@@ -210,8 +210,8 @@ Best regards!"/>
                     UPDATE SET t.template_part_id = x.template_part_id, t.content = x.content, t.compressed = 1, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM',  
                         t.x__version = t.x__version + 1
                 WHEN NOT MATCHED THEN
-                    INSERT (x__id, template_part_id, content, compressed, validity_start, validity_end, x__insdate, x__insuser, x__moddate, x__moduser, x__version)                     
-                    VALUES (x.x__id, x.template_part_id, x.content, 1, SYSDATE, null, SYSDATE, 'SYSTEM', NULL, NULL, 0);
+                    INSERT (x__id, template_part_id, content, compressed, x__insdate, x__insuser, x__moddate, x__moduser, x__version)                     
+                    VALUES (x.x__id, x.template_part_id, x.content, 1, SYSDATE, 'SYSTEM', NULL, NULL, 0);
             END;
             ]]>
             /
@@ -242,8 +242,8 @@ Best regards!"/>
                     UPDATE SET t.template_part_id = x.template_part_id, t.content = x.content, t.compressed = 1, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM',  
                         t.x__version = t.x__version + 1
                 WHEN NOT MATCHED THEN
-                    INSERT (x__id, template_part_id, content, compressed, validity_start, validity_end, x__insdate, x__insuser, x__moddate, x__moduser, x__version)                     
-                    VALUES (x.x__id, x.template_part_id, x.content, 1, SYSDATE, null, SYSDATE, 'SYSTEM', NULL, NULL, 0);
+                    INSERT (x__id, template_part_id, content, compressed, x__insdate, x__insuser, x__moddate, x__moduser, x__version)                     
+                    VALUES (x.x__id, x.template_part_id, x.content, 1, SYSDATE, 'SYSTEM', NULL, NULL, 0);
             END;
             ]]>
             /
@@ -274,8 +274,8 @@ Best regards!"/>
                     UPDATE SET t.template_part_id = x.template_part_id, t.content = x.content, t.compressed = 1, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM',  
                         t.x__version = t.x__version + 1
                 WHEN NOT MATCHED THEN
-                    INSERT (x__id, template_part_id, content, compressed, validity_start, validity_end, x__insdate, x__insuser, x__moddate, x__moduser, x__version)                     
-                    VALUES (x.x__id, x.template_part_id, x.content, 1, SYSDATE, null, SYSDATE, 'SYSTEM', NULL, NULL, 0);
+                    INSERT (x__id, template_part_id, content, compressed, x__insdate, x__insuser, x__moddate, x__moduser, x__version)                     
+                    VALUES (x.x__id, x.template_part_id, x.content, 1, SYSDATE, 'SYSTEM', NULL, NULL, 0);
             END;
             ]]>
             /
@@ -305,8 +305,8 @@ Best regards!"/>
                     UPDATE SET t.template_part_id = x.template_part_id, t.content = x.content, t.compressed = 1, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM',  
                         t.x__version = t.x__version + 1
                 WHEN NOT MATCHED THEN
-                    INSERT (x__id, template_part_id, content, compressed, validity_start, validity_end, x__insdate, x__insuser, x__moddate, x__moduser, x__version)                     
-                    VALUES (x.x__id, x.template_part_id, x.content, 1, SYSDATE, null, SYSDATE, 'SYSTEM', NULL, NULL, 0);
+                    INSERT (x__id, template_part_id, content, compressed, x__insdate, x__insuser, x__moddate, x__moduser, x__version)                     
+                    VALUES (x.x__id, x.template_part_id, x.content, 1, SYSDATE, 'SYSTEM', NULL, NULL, 0);
             END;
             /
         </sql>

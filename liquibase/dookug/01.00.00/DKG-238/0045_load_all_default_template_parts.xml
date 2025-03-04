@@ -55,7 +55,7 @@
                 tableName="template_part">  
             <column name="x__id"               value="DEV_TEMPLATE_ERROR_MAIN"/>  
             <column name="key"                 value="DEV_TEMPLATE_ERROR_MAIN"/>  
-            <column name="description"         value="Hibás Sample template for developments - footer"/>  
+            <column name="description"         value="Failed Sample template for developments - footer"/>  
             <column name="template_engine"     value="HANDLEBARS"/>  
             <column name="generator_engine"    value="PDF_BOX"/>  
             <column name="template_part_type"  value="MAIN" />  
@@ -65,7 +65,7 @@
                 tableName="template_part">  
             <column name="x__id"               value="TEMPLATEPARTXID1"/>  
             <column name="key"                 value="TEST_TEMPLATE_SUBJECT_MAIN"/>  
-            <column name="description"         value="Példa template fejlesztéshez - email subject"/>  
+            <column name="description"         value="Sample template for developments - email subject"/>  
             <column name="template_engine"     value="HANDLEBARS"/>  
             <column name="generator_engine"    value="NONE"/>  
             <column name="template_part_type"  value="MAIN" />  
@@ -75,7 +75,7 @@
                 tableName="template_part">  
             <column name="x__id"               value="TEMPLATEPARTXID2"/>  
             <column name="key"                 value="TEST_TEMPLATE_BODY_WELCOME"/>  
-            <column name="description"         value="Példa template fejlesztéshez - email welcome subtemplate"/>  
+            <column name="description"         value="Sample template for developments - email welcome subtemplate"/>  
             <column name="template_engine"     value="HANDLEBARS"/>  
             <column name="generator_engine"    value="NONE"/>  
             <column name="template_part_type"  value="HEADER" />  
@@ -85,7 +85,7 @@
                 tableName="template_part">  
             <column name="x__id"               value="TEMPLATEPARTXID3"/>  
             <column name="key"                 value="TEST_TEMPLATE_BODY_MAIN"/>  
-            <column name="description"         value="Példa template fejlesztéshez - email body main note"/>  
+            <column name="description"         value="Sample template for developments - email body main note"/>  
             <column name="template_engine"     value="HANDLEBARS"/>  
             <column name="generator_engine"    value="NONE"/>  
             <column name="template_part_type"  value="MAIN" />  
@@ -95,7 +95,7 @@
                 tableName="template_part">  
             <column name="x__id"               value="TEMPLATEPARTXID4"/>  
             <column name="key"                 value="TEST_TEMPLATE_BODY_CLOSING"/>  
-            <column name="description"         value="Példa template fejlesztéshez - email closing subtemplate"/>  
+            <column name="description"         value="Sample template for developments - email closing subtemplate"/>  
             <column name="template_engine"     value="HANDLEBARS"/>  
             <column name="generator_engine"    value="NONE"/>  
             <column name="template_part_type"  value="FOOTER" />  
@@ -105,7 +105,7 @@
                 tableName="template_part">  
             <column name="x__id"               value="TEMPLATEPARTXID5"/>  
             <column name="key"                 value="TEST_TEMPLATE_SUBJECT_WITHOUT_PARAMS"/>  
-            <column name="description"         value="Példa template fejlesztéshez - email subject without parameter"/>  
+            <column name="description"         value="Sample template for developments - email subject without parameter"/>  
             <column name="template_engine"     value="HANDLEBARS"/>  
             <column name="generator_engine"    value="NONE"/>  
             <column name="template_part_type"  value="MAIN" />  
@@ -115,7 +115,7 @@
                 tableName="template_part">  
             <column name="x__id"               value="TEMPLATEPARTXID6"/>  
             <column name="key"                 value="TEST_TEMPLATE_BODY_WITHOUT_PARAMS"/>  
-            <column name="description"         value="Példa template fejlesztéshez - email body without parameter"/>  
+            <column name="description"         value="Sample template for developments - email body without parameter"/>  
             <column name="template_engine"     value="HANDLEBARS"/>  
             <column name="generator_engine"    value="NONE"/>  
             <column name="template_part_type"  value="MAIN" />  
@@ -175,7 +175,7 @@
             tableName="template_part">
             <column name="x__id" value="48SJ6QJDLKG3CM01"/>
             <column name="key" value="PROJECT_INVOICE_TEMPLATE_FULL"/>
-            <column name="description" value="PROJECT számla sablon A4"/>
+            <column name="description" value="PROJECT invoice sablon A4"/>
             <column name="template_engine" value="NONE"/>
             <column name="generator_engine" value="SAXON"/>
             <column name="template_part_type" value="MAIN"/>

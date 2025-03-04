@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE defaultProperties SYSTEM "common/params.dtd">
+    <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <!-- include the default properties -->
+    &propertiesAll;
+
+   <changeSet id="0052" author="jozsef.holczer" labels="01.01.00" >
+        <comment>DKG-297 drop template_part_content.template_part_id index.</comment>
+    
+        <dropIndex indexName="ix_template_part_content_template_part_id"
+            schemaName="${schema_name}"
+            tableName="template_part_content"/>
+
+   </changeSet>
+
+</databaseChangeLog>

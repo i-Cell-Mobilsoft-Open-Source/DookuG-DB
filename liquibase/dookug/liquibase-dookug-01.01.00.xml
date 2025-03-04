@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <include file="01.01.00/DKG-297/0051_drop_val_cols_template_part_contents.xml" relativeToChangelogFile="true"/>
+    <include file="01.01.00/DKG-297/0052_drop_template_part_content_temp_part_id_idx.xml" relativeToChangelogFile="true"/>
+    <include file="01.01.00/DKG-297/0053_change_template_part_content_temp_part_id_idx_to_unique.xml" relativeToChangelogFile="true"/>
+    
+</databaseChangeLog>
