@@ -1,4 +1,5 @@
-# SPDX-FileCopyrightText: Copyright (C) 2025 i-Cell Mobilsoft Zrt.
+# Copyright (C) 2025 i-Cell Mobilsoft Zrt.
+#
 # SPDX-License-Identifier: Apache-2.0
 
 #!/bin/bash
