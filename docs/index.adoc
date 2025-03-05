@@ -6,14 +6,8 @@
 :rouge-style: thankful_eyes
 :icons: font
 :table-stripes: even
-// :customcss: docs/my-css.css
 
 :attachmentsdir: /dookug/db/dookug-db/{release_version}/generated
-
-
-//toc - Table of Contents
-//coderay - preserves the code related highlights - https://docs.asciidoctor.org/asciidoctor/latest/syntax-highlighting/coderay/
-//:icons: font - shows icons in Admonitions - https://docs.asciidoctor.org/asciidoc/latest/blocks/admonitions/
 
 = Dookug Template Modul DB repo documentation
 
@@ -21,7 +15,7 @@ ifdef::release_version[]
 :revnumber: {release_version}
 endif::[]
 
-ifndef::imagesdir[:imagesdir: /dookug/db/dookug-db/{release_version}/generated/images ]
+ifndef::imagesdir[:imagesdir: ./images]
 
 == Overview
 
