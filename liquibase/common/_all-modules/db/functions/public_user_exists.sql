@@ -1,3 +1,6 @@
+--liquibase formatted sql
+
+-----------------------------------------------------------------------
 -- Copyright (C) 2025 i-Cell Mobilsoft Zrt.
 --
 -- Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,13 +16,11 @@
 -- limitations under the License.
 --
 -- SPDX-License-Identifier: Apache-2.0
+-----------------------------------------------------------------------
 
---liquibase formatted sql
-
----------------------------------------------------------------------------------------------------
 --changeset endre.balazs:${schema_name}-PUBLIC_USER_EXISTS_FUNCTION dbms:postgresql runOnChange:true endDelimiter:/
 --comment Creating public_user_exists function...
----------------------------------------------------------------------------------------------------
+
 DROP FUNCTION IF EXISTS public.public_user_exists(text);
 
 CREATE OR REPLACE FUNCTION public.public_user_exists(p_user_name text)

@@ -1,3 +1,6 @@
+--liquibase formatted sql
+
+-----------------------------------------------------------------------
 -- Copyright (C) 2025 i-Cell Mobilsoft Zrt.
 --
 -- Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,15 +16,11 @@
 -- limitations under the License.
 --
 -- SPDX-License-Identifier: Apache-2.0
+-----------------------------------------------------------------------
 
---liquibase formatted sql
-
---===============================================================================================--
--- ROLE ==
----------------------------------------------------------------------------------------------------
 --changeset jozsef.holczer:${schema_name}-PG_SCHEMA_ROLES dbms:postgresql endDelimiter:/
 --comment Creating Postgresql Schema Roles...
----------------------------------------------------------------------------------------------------
+
 DO $$ 
 BEGIN 
   IF NOT public_role_exists('${schema_name}_read') THEN

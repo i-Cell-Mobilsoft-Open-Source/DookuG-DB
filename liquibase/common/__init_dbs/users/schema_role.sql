@@ -1,3 +1,6 @@
+--liquibase formatted sql
+
+-----------------------------------------------------------------------
 -- Copyright (C) 2025 i-Cell Mobilsoft Zrt.
 --
 -- Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,18 +16,14 @@
 -- limitations under the License.
 --
 -- SPDX-License-Identifier: Apache-2.0
+-----------------------------------------------------------------------
 
---liquibase formatted sql
-
---===============================================================================================--
--- USER ==
----------------------------------------------------------------------------------------------------
 --changeset bertalan.pasztor:${schema_name}-AUTH_ROLE dbms:postgresql 
 --comment Creating DB schema role..
---
+
 --preconditions onFail:MARK_RAN onError:HALT
 --precondition-sql-check expectedResult:0 SELECT count(*) FROM pg_catalog.pg_roles WHERE rolname = '${schema_name}'
----------------------------------------------------------------------------------------------------
+
 CREATE ROLE ${schema_name};
 
 COMMIT;

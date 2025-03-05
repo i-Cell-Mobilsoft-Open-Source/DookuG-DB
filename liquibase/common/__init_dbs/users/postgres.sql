@@ -1,3 +1,6 @@
+--liquibase formatted sql
+
+-----------------------------------------------------------------------
 -- Copyright (C) 2025 i-Cell Mobilsoft Zrt.
 --
 -- Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,15 +16,10 @@
 -- limitations under the License.
 --
 -- SPDX-License-Identifier: Apache-2.0
+-----------------------------------------------------------------------
 
---liquibase formatted sql
-
---===============================================================================================--
--- ROLE ==
----------------------------------------------------------------------------------------------------
 --changeset bertalan.pasztor:${schema_name}-POSTGRES_ROLE dbms:postgresql runOnChange:true
---comment Romoving REPLICATION role from postgres user...
----------------------------------------------------------------------------------------------------
+--comment Removing REPLICATION role from postgres user...
 
 ALTER USER postgres WITH NOREPLICATION;
 

@@ -1,3 +1,6 @@
+--liquibase formatted sql
+
+-----------------------------------------------------------------------
 -- Copyright (C) 2025 i-Cell Mobilsoft Zrt.
 --
 -- Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,19 +16,15 @@
 -- limitations under the License.
 --
 -- SPDX-License-Identifier: Apache-2.0
+-----------------------------------------------------------------------
 
---liquibase formatted sql
-
---===============================================================================================--
--- DATABASE ==
----------------------------------------------------------------------------------------------------
 --changeset bertalan.pasztor:${schema_name}-CREATE_DATABASE runInTransaction:false dbms:postgresql
 --comment Creating dookug DB...
---
+
 --preconditions onFail:MARK_RAN onError:MARK_RAN
 --precondition-sql-check expectedResult:0 SELECT count(*) FROM pg_catalog.pg_database WHERE datname = 'dookug_db'
 --precondition-sql-check expectedResult:t SELECT ${CREATE_DATABASE} = true
----------------------------------------------------------------------------------------------------
+
 -- Explanation of the above precondition:
 /*
 The database (DB) is always executed in the default PostgreSQL database.

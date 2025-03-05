@@ -94,8 +94,8 @@ SPDX-License-Identifier: Apache-2.0
                     UPDATE SET t.template_part_id = x.template_part_id, t.content = x.content, t.compressed = 1, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM',  
                         t.x__version = t.x__version + 1
                 WHEN NOT MATCHED THEN
-                    INSERT (x__id, template_part_id, content, compressed, validity_start, validity_end, x__insdate, x__insuser, x__moddate, x__moduser,                    x__version)                     
-                    VALUES (x.x__id, x.template_part_id, x.content, 1, SYSDATE, null, SYSDATE, 'SYSTEM', NULL, NULL, 1);
+                    INSERT (x__id, template_part_id, content, compressed, x__insdate, x__insuser, x__moddate, x__moduser, x__version)                     
+                    VALUES (x.x__id, x.template_part_id, x.content, 1, SYSDATE, 'SYSTEM', NULL, NULL, 1);
             END;
             ]]>
             /
@@ -126,8 +126,8 @@ SPDX-License-Identifier: Apache-2.0
                     UPDATE SET t.template_part_id = x.template_part_id, t.content = x.content, t.compressed = 1, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM',  
                         t.x__version = t.x__version + 1
                 WHEN NOT MATCHED THEN
-                    INSERT (x__id, template_part_id, content, compressed, validity_start, validity_end, x__insdate, x__insuser, x__moddate, x__moduser,                    x__version)                     
-                    VALUES (x.x__id, x.template_part_id, x.content, 1, SYSDATE, null, SYSDATE, 'SYSTEM', NULL, NULL, 1);
+                    INSERT (x__id, template_part_id, content, compressed, x__insdate, x__insuser, x__moddate, x__moduser, x__version)                     
+                    VALUES (x.x__id, x.template_part_id, x.content, 1, SYSDATE, 'SYSTEM', NULL, NULL, 1);
             END;
             ]]>
             /
@@ -158,8 +158,8 @@ SPDX-License-Identifier: Apache-2.0
                     UPDATE SET t.template_part_id = x.template_part_id, t.content = x.content, t.compressed = 1, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM',  
                         t.x__version = t.x__version + 1
                 WHEN NOT MATCHED THEN
-                    INSERT (x__id, template_part_id, content, compressed, validity_start, validity_end, x__insdate, x__insuser, x__moddate, x__moduser,                    x__version)                     
-                    VALUES (x.x__id, x.template_part_id, x.content, 1, SYSDATE, null, SYSDATE, 'SYSTEM', NULL, NULL, 1);
+                    INSERT (x__id, template_part_id, content, compressed, x__insdate, x__insuser, x__moddate, x__moduser, x__version)                     
+                    VALUES (x.x__id, x.template_part_id, x.content, 1, SYSDATE, 'SYSTEM', NULL, NULL, 1);
             END;
             ]]>
             /
@@ -190,8 +190,8 @@ SPDX-License-Identifier: Apache-2.0
                     UPDATE SET t.template_part_id = x.template_part_id, t.content = x.content, t.compressed = 1, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM',  
                         t.x__version = t.x__version + 1
                 WHEN NOT MATCHED THEN
-                    INSERT (x__id, template_part_id, content, compressed, validity_start, validity_end, x__insdate, x__insuser, x__moddate, x__moduser,                    x__version)                     
-                    VALUES (x.x__id, x.template_part_id, x.content, 1, SYSDATE, null, SYSDATE, 'SYSTEM', NULL, NULL, 1);
+                    INSERT (x__id, template_part_id, content, compressed, x__insdate, x__insuser, x__moddate, x__moduser, x__version)                     
+                    VALUES (x.x__id, x.template_part_id, x.content, 1, SYSDATE, 'SYSTEM', NULL, NULL, 1);
             END;
             ]]>
             /
@@ -222,8 +222,8 @@ SPDX-License-Identifier: Apache-2.0
                     UPDATE SET t.template_part_id = x.template_part_id, t.content = x.content, t.compressed = 1, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM',  
                         t.x__version = t.x__version + 1
                 WHEN NOT MATCHED THEN
-                    INSERT (x__id, template_part_id, content, compressed, validity_start, validity_end, x__insdate, x__insuser, x__moddate, x__moduser,                    x__version)                     
-                    VALUES (x.x__id, x.template_part_id, x.content, 1, SYSDATE, null, SYSDATE, 'SYSTEM', NULL, NULL, 1);
+                    INSERT (x__id, template_part_id, content, compressed, x__insdate, x__insuser, x__moddate, x__moduser, x__version)                     
+                    VALUES (x.x__id, x.template_part_id, x.content, 1, SYSDATE, 'SYSTEM', NULL, NULL, 1);
             END;
             ]]>
             /
@@ -257,8 +257,8 @@ SPDX-License-Identifier: Apache-2.0
                     UPDATE SET t.template_part_id = x.template_part_id, t.content = x.content, t.compressed = 0, t.x__moddate = SYSDATE, t.x__moduser= 'SYSTEM',  
                         t.x__version = t.x__version + 1
                 WHEN NOT MATCHED THEN
-                    INSERT (x__id, template_part_id, content, compressed, validity_start)                     
-                    VALUES (x.x__id, x.template_part_id, x.content, 0, TO_DATE('2023.07.01.','YYYY.MM.DD.'));
+                    INSERT (x__id, template_part_id, content, compressed)                     
+                    VALUES (x.x__id, x.template_part_id, x.content, 0);
             END;
             ]]>
             /

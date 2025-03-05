@@ -1,3 +1,6 @@
+--liquibase formatted sql
+
+-----------------------------------------------------------------------
 -- Copyright (C) 2025 i-Cell Mobilsoft Zrt.
 --
 -- Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,15 +16,11 @@
 -- limitations under the License.
 --
 -- SPDX-License-Identifier: Apache-2.0
+-----------------------------------------------------------------------
 
---liquibase formatted sql
-
---===============================================================================================--
--- EXTENSIONS ==
----------------------------------------------------------------------------------------------------
 --changeset jozsef.holczer:${schema_name}-PG_CRON-MLFFDEV-10151-01 dbms:postgresql runOnChange:true endDelimiter:/
 --comment pg_cron extension install
----------------------------------------------------------------------------------------------------
+
 -- The CRON extension can only be installed in default Postgres DB (blackbox)
 -- This part comes into the picture during embedding the DB into another DB. 
 /*If you want to install it into another "project" DB, you get the following or similar error message:

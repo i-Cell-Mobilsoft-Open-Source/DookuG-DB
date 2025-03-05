@@ -1,3 +1,6 @@
+--liquibase formatted sql
+
+-----------------------------------------------------------------------
 -- Copyright (C) 2025 i-Cell Mobilsoft Zrt.
 --
 -- Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,10 +16,11 @@
 -- limitations under the License.
 --
 -- SPDX-License-Identifier: Apache-2.0
+-----------------------------------------------------------------------
 
---liquibase formatted sql
 --changeset jozsef.szollosi:${schema_name}_recompile_invalid_objects runAlways:true dbms:oracle endDelimiter:/ 
 --comment Recompile invalid packages, functions, procedures, triggers...
+
 declare
 cursor c is
 select 'ALTER ' || case when object_type = 'PACKAGE BODY' then 'PACKAGE' else object_type end || ' ' || object_name || ' COMPILE' stmt
