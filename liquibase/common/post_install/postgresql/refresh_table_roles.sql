@@ -1,3 +1,6 @@
+--liquibase formatted sql
+
+-----------------------------------------------------------------------
 -- Copyright (C) 2025 i-Cell Mobilsoft Zrt.
 --
 -- Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,15 +16,11 @@
 -- limitations under the License.
 --
 -- SPDX-License-Identifier: Apache-2.0
+-----------------------------------------------------------------------
 
---liquibase formatted sql
-
---===============================================================================================--
--- SQL ==
----------------------------------------------------------------------------------------------------
 --changeset endre.balazs:${schema_name}_REFRESH_TABLE_ROLES runAlways:true dbms:postgresql runOnChange:true
 --comment Refreshing the table level privileges at the end of schema modification...
----------------------------------------------------------------------------------------------------
+
 SET search_path = ${schema_name};
 
 call add_privileges_to_all_tables('${schema_name}');

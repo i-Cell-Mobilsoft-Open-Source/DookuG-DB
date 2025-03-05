@@ -1,3 +1,6 @@
+--liquibase formatted sql
+
+-----------------------------------------------------------------------
 -- Copyright (C) 2025 i-Cell Mobilsoft Zrt.
 --
 -- Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,13 +16,11 @@
 -- limitations under the License.
 --
 -- SPDX-License-Identifier: Apache-2.0
+-----------------------------------------------------------------------
 
---liquibase formatted sql
-
----------------------------------------------------------------------------------------------------
 --changeset bertalan.pasztor:${schema_name}-PROC_PARTITION_DELETER_PROCEDURE dbms:postgresql runOnChange:true endDelimiter:/
 --comment Creating proc_partition_deleter procedure...
----------------------------------------------------------------------------------------------------
+
 DROP PROCEDURE IF EXISTS public.proc_partition_deleter(text, text);
 DROP PROCEDURE IF EXISTS public.proc_partition_deleter(text);
 

@@ -1,3 +1,6 @@
+--liquibase formatted sql
+
+-----------------------------------------------------------------------
 -- Copyright (C) 2025 i-Cell Mobilsoft Zrt.
 --
 -- Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,10 +16,11 @@
 -- limitations under the License.
 --
 -- SPDX-License-Identifier: Apache-2.0
+-----------------------------------------------------------------------
 
---liquibase formatted sql
 --changeset jozsef.szollosi:${schema_name}_grant_object_privileges runAlways:true runOnChange:true dbms:oracle endDelimiter:/ 
 --comment Assigning grants to roles of the current schema...
+
 DECLARE
    CURSOR c IS
       SELECT table_name

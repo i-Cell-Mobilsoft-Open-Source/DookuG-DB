@@ -1,3 +1,6 @@
+--liquibase formatted sql
+
+-----------------------------------------------------------------------
 -- Copyright (C) 2025 i-Cell Mobilsoft Zrt.
 --
 -- Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,13 +16,11 @@
 -- limitations under the License.
 --
 -- SPDX-License-Identifier: Apache-2.0
+-----------------------------------------------------------------------
 
---liquibase formatted sql
-
----------------------------------------------------------------------------------------------------
 --changeset bertalan.pasztor:${schema_name}_ADD_PRIVILEGES_TO_TABLE runOnChange:true dbms:postgresql endDelimiter:/
 --comment Creating add_privileges_to_table procedure...
----------------------------------------------------------------------------------------------------
+
 DROP PROCEDURE IF EXISTS ${schema_name}.add_privileges_to_table(text, text);
 
 CREATE OR REPLACE PROCEDURE ${schema_name}.add_privileges_to_table(IN p_table_schema text, IN p_table_name text)

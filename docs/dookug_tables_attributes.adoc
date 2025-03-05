@@ -288,16 +288,6 @@ Postgres: BYTEA | | Yes | Template content
 
 Postgres: INT | | Yes | Is template content compressed
 
-| validity_start | Oracle: TIMESTAMP(6) 
-
-Postgres: TIMESTAMP(6) | Oracle: sysdate 
-
-Postgres: now() | Yes | Validity start
-
-| validity_end | Oracle: TIMESTAMP(6) 
-
-Postgres: TIMESTAMP(6) | | No | Validity end
-
 | x__insdate | timestamp(6) | Oracle: sysdate 
 
 Postgres: now() | Yes | Insertion timestamp
@@ -324,7 +314,7 @@ Postgres: int | 0 | Yes | Change versioning
 
 | pk_template_part_content | primary key | | x__id |
 
-| ix_template_part_content_template_part_id | index | | template_part_id |
+| uk_template_part_content_template_part_id | unique index | | template_part_id |
 
 | fk_template_part_content_template_part | Foreign key constraint| | template_part_id | template_part.x__id 
 

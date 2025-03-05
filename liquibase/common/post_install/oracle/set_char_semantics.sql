@@ -1,3 +1,6 @@
+--liquibase formatted sql
+
+-----------------------------------------------------------------------
 -- Copyright (C) 2025 i-Cell Mobilsoft Zrt.
 --
 -- Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,10 +16,11 @@
 -- limitations under the License.
 --
 -- SPDX-License-Identifier: Apache-2.0
+-----------------------------------------------------------------------
 
---liquibase formatted sql
 --changeset jozsef.szollosi:${schema_name}_set_character_semantics runAlways:true dbms:oracle endDelimiter:/ 
 --comment Changing the VARCHAR2 columns with BYTE semantics to CHAR semantics within the schema...
+
 DECLARE
    TYPE t_stmts IS TABLE OF VARCHAR2(2018);
    l_mod t_stmts;

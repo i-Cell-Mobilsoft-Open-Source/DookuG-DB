@@ -1,3 +1,6 @@
+--liquibase formatted sql
+
+-----------------------------------------------------------------------
 -- Copyright (C) 2025 i-Cell Mobilsoft Zrt.
 --
 -- Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,15 +16,11 @@
 -- limitations under the License.
 --
 -- SPDX-License-Identifier: Apache-2.0
+-----------------------------------------------------------------------
 
---liquibase formatted sql
-
---===============================================================================================--
--- USER ==
----------------------------------------------------------------------------------------------------
 --changeset jozsef.holczer:${schema_name}-SERVICE_USER dbms:postgresql endDelimiter:/
 --comment Creating service user of the DB schema...
----------------------------------------------------------------------------------------------------
+
 SET search_path = public;
 
 DO $$
