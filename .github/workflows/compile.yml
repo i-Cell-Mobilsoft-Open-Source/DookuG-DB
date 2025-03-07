@@ -1,10 +1,9 @@
 name: Docker compile
 
 on:
-  pull_request:
-    branches-ignore:
-      - 'gh-pages'
-      - 'dependabot/**'
+  push:
+    branches:
+      - 'feature/**'
 
 jobs:
   docker-release:
