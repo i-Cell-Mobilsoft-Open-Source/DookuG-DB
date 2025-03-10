@@ -19,11 +19,11 @@ ifndef::imagesdir[:imagesdir: ./docs/images]
   - The module is designed to generate output documents (PDF, XLSX, HTML, TXT, ...) from various template formats with identifiers (TXT, HTML, object, JRXML, ...) by inserting the received parameter(s) into the received template.
   - The solution is based on a microservice architecture.
 
-= Using Compose Commands
+== Using Compose Commands
 
 You need to use these compose commands during development. You can develop and test the installation process step by step.
 ====
-.First command: docker-compose up with build (click here)
+.First command: docker-compose up with build (_click here_)
 [%collapsible]
 ======
 .Postgresql (_click here_)
@@ -265,10 +265,15 @@ docker compose --env-file .env -f ./etc/docker-compose/postgresql/docker-compose
 ======
 ====
 
-= Development guide
+== Development guide
 
-== Development
-=== Used tools, scripts
+=== Development
+==== Used tools, scripts
+
+TIP: The Github license will be added to the chosen file extensions automatically, by the https://github.com/ansys/pre-commit-hooks[pre-commit-hook], if you set the extensions in the ".pre-commit-config.yaml" file.
+Currently, the following extensions are set in this file: sql, xml, yaml, shell, dtd, and only in the following folders: etc, liquibase.
+All the usable extensions can be found in the ".sourceheaders.toml" file.
+The above info means, you need to install it.
 
 ====
 .Available Liquibase changefile types (_click here_) 
@@ -624,7 +629,7 @@ TIP: This logs in with dookug (_schema_) user and creates the default (dev/test)
 ======
 ====
 
-= Installation, Release, Deployment
+== Installation, Release, Deployment
 
 .Local Postgres (_click here_)
 [%collapsible]
@@ -898,9 +903,9 @@ image::{embedded_dookug_db_in_cron_jobs}[DookuG Service register in CRON,link="{
   -e DB_SERVICE_USER_PASSWORD=<service user passw> \  
 ==========
 
-= Access to databases
+== Access to databases
 
-.Local Oracle DB (clock here)
+.Local Oracle DB (_click here_)
 [%collapsible]
 ======
 . Since we use XEPDB1 in the local Oracle XE database and not the XE itself, we need to connect to it as follows:
@@ -928,7 +933,7 @@ image::{vscode_oracle_developer_tools_connect_to_xepdb1}[Local ORA DB connection
 
 image::{dookug_erd}[DookuG table ERD diagram,link="{imagesdir}/{dookug_erd}",window=_blank]
 
-= Release notes
+== Release notes
 * 0.1.0 Changes:
 - Dookug db install
 - Templates install
