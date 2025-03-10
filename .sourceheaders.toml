@@ -1,0 +1,81 @@
+[general]
+prefer_inline = false
+preserve_copyright_years = false
+preserve_copyright_holder = true
+preserve_license = true
+header_pattern = "(?:Copyright|\\(c\\)|All rights reserved.|SPDX-License-Identifier:)"
+header_head = ""
+header_foot = ""
+copyright_template = "Copyright (c) {year} {copyright_holder}"
+copyright_holder = "i-Cell Mobilsoft Zrt."
+license = "Apache-2.0"
+#license_text = "Some custom license text."
+#spdx_license_identifier = "MIT"
+include_spdx_license_identifier = "auto"
+
+[language.c]
+extensions = [".c", ".h", ".cc", ".cpp", ".cxx", ".hpp", ".hxx"]
+block_comment = { start = "/* ", line = " * ", end = " */" }
+inline_comment = "// "
+
+[language.csharp]
+extensions = [".cs"]
+block_comment = { start = "/* ", line = " * ", end = " */" }
+inline_comment = "// "
+
+[language.java]
+extensions = [".java", ".scala", ".groovy"]
+block_comment = { start = "/* ", line = " * ", end = " */" }
+inline_comment = "// "
+
+[language.javascript]
+extensions = [".js", ".jsx", ".mjs", ".ts", ".tsx"]
+block_comment = { start = "/* ", line = " * ", end = " */" }
+inline_comment = "// "
+skip_line = "^#!"
+
+[language.perl]
+extensions = [".pl"]
+inline_comment = "# "
+
+[language.protobuf]
+extensions = [".proto"]
+block_comment = { start = "/* ", line = " * ", end = " */" }
+inline_comment = "// "
+
+[language.python]
+extensions = [".py"]
+block_comment = { start = '"""', end = '"""' }
+inline_comment = "# "
+skip_line = "^#!|^# +-\\*-|^# +(?:pylint|pyright|coding|encoding|type|flake8):"
+prefer_inline = true
+
+[language.ruby]
+extensions = [".rb"]
+block_comment = { start = "=begin\n", end = "=end\n" }
+inline_comment = "# "
+skip_line = "^#!"
+
+[language.rust]
+extensions = [".rs"]
+block_comment = { start = "/* ", line = " * ", end = " */" }
+inline_comment = "// "
+
+[language.shell]
+extensions = [".sh", ".bash", ".csh", ".zsh", ".fish"]
+inline_comment = "# "
+skip_line = "^#!"
+
+[language.xml]
+extensions = [".xml", ".xhtml", ".dtd"]
+block_comment = { start = "<!--", line = "", end = "-->" }
+skip_line = "^\\s*<\\?xml.*\\?>"
+
+[language.sql]
+extensions = [".sql"]
+inline_comment = "-- "
+skip_line = "^--liquibase formatted sql$"
+
+[language.yaml]
+extensions = [".yaml", ".yml"]
+inline_comment = "# "
