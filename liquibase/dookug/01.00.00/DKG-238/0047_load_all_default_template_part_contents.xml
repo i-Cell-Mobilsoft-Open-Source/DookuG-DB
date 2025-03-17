@@ -167,7 +167,7 @@ Best regards!"/>
             tableName="template_part_content">
             <column name="x__id" value="48SJ6QJDLKG3CN01"/>
             <column name="template_part_id" value="48SJ6QJDLKG3CM01"/>
-            <column name="content" valueBlobFile="InvoiceDataTemplate_XSLT_HTML.xslt"/>
+            <column name="content" valueBlobFile="InvoiceDataTemplate_XSLT_FO.xslt"/>
             <column name="compressed" valueNumeric="0"/>
         </insert>
 
