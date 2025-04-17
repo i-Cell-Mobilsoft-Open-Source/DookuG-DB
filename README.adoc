@@ -934,6 +934,7 @@ image::{vscode_oracle_developer_tools_connect_to_xepdb1}[Local ORA DB connection
 image::{dookug_erd}[DookuG table ERD diagram,link="{imagesdir}/{dookug_erd}",window=_blank]
 
 == Release notes
+
 * 0.1.0 Changes:
 - Dookug db install
 - Templates install
@@ -945,7 +946,7 @@ image::{dookug_erd}[DookuG table ERD diagram,link="{imagesdir}/{dookug_erd}",win
 - DKG-233 - Hash Fix
 - DKG-231 - Convert documentation
 - DKG-238- Load default templates in Step 4.
-- DKG-245 - Improvement of Dookug Vader Installation Error
+- DKG-245 - Improvement of Dookug Installation Error
 * 1.0.3 Changes:
 - DKG-246 - Template Content Fix
 - DKG-261 - Repair of Readme adoc.
@@ -953,3 +954,5 @@ image::{dookug_erd}[DookuG table ERD diagram,link="{imagesdir}/{dookug_erd}",win
 * 1.1.0 Changes:
 - DKG-265 - open source changes
 - DKG-297 - Drop validity_start, validity_end cols from template_part_content, drop template_part_content.template_part_id index, change template_part_content.template_part_id index to unique.
+* 1.2.0 Changes:
+- Technical release: Backend version sync, no changes compared to 1.1.0
