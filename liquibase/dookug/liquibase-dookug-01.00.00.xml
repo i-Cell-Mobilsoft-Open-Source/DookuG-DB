@@ -23,7 +23,7 @@ SPDX-License-Identifier: Apache-2.0
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
 
-    <include file="01.00.00/DKG-207/0032_change_hugo_to_project_in_saxon_template.xml" relativeToChangelogFile="true"/>
+    <include file="01.00.00/DKG-207/0032_change_name_to_project_in_saxon_template.xml" relativeToChangelogFile="true"/>
     <include file="01.00.00/DKG-228/0033_load_xid9_to_template.xml" relativeToChangelogFile="true"/>
     <include file="01.00.00/DKG-228/0034_load_xid9_to_template_part.xml" relativeToChangelogFile="true"/>
     <include file="01.00.00/DKG-228/0035_load_xid9_to_template_part_content.xml" relativeToChangelogFile="true"/>
