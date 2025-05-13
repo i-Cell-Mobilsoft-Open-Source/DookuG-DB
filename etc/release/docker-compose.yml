@@ -56,6 +56,7 @@ services:
       dockerfile: etc/release/Dockerfile
       args:
         LIQUIBASE_BASE_IMAGE: 'icellmobilsoft/db-base-liquibase:${DBDWH_IMAGE_VERSION}'
+        PG_TOOLS_IMAGE: 'icellmobilsoft/db-base-pg_tools:${DBDWH_IMAGE_VERSION}'
         LIQUIBASE_INSTALL_DIR: '/liquibase/dookug'
         LIQUIBASE_INSTALL_COMMON_DIR: '/liquibase/common'
     image: "$DOCKER_LIQUIBASE_DOOKUG:$VERSION"

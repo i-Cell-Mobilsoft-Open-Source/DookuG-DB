@@ -16,4 +16,4 @@ jobs:
         uses: pre-commit/action@v3.0.1
       - name: Run docker-compose
         run: |
-          docker compose -f ./etc/release/docker-compose.yml build --no-cache
+          docker compose --env-file .env -f ./etc/release/docker-compose.yml build --no-cache
