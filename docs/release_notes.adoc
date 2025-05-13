@@ -21,3 +21,5 @@
 - DKG-297 - Drop validity_start, validity_end cols from template_part_content, drop template_part_content.template_part_id index, change template_part_content.template_part_id index to unique.
 * 1.2.0 Changes:
 - Technical release: Backend version sync, no changes compared to 1.1.0
+* 2.0.0 Changes:
+- DKG-319 - Refactoring the installation process.
