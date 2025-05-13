@@ -66,4 +66,6 @@ image::{embedded_dookug_db_in_cron_jobs}[DookuG Service register in CRON,link="{
 
 ** optional environment variable, only needed during password change:
 [source,bash]
-  -e DB_SERVICE_USER_PASSWORD=<service user passw> \  
+----
+  -e DB_SERVICE_USER_PASSWORD=<service user passw>
+----

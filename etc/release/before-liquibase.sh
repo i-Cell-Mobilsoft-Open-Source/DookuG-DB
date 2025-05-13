@@ -100,7 +100,7 @@ if [[ "$AUTO_INSTALL" == "postgresql" ]]; then
         ;;
       2)
         if [[ "$INSTALL_PGTOOLS" == "1" ]]; then         
-          echo "Running step-02 - ${S2_SCHEMA_NAME} pg_tools installation..."
+          echo "Running step-02 - install PG_TOOLS partition manager into ${S2_SCHEMA_NAME} DB..."
           echo "  INSTALL_USERNAME_PROJECT=$INSTALL_USERNAME_PROJECT"
           echo "  INSTALL_URL_PROJECT=$INSTALL_URL_PROJECT"
           liquibase --searchPath=../${DOCKER_REPOSITORY}/liquibase/changelog \
@@ -112,7 +112,7 @@ if [[ "$AUTO_INSTALL" == "postgresql" ]]; then
               update
         fi      
 
-        echo "Running step-02 - ${S2_SCHEMA_NAME} objects creation..."
+        echo "Running step-02 - Objects creation into ${S2_SCHEMA_NAME} schema..."
         echo "  INSTALL_USERNAME_PROJECT=$INSTALL_USERNAME_PROJECT"
         echo "  INSTALL_URL_PROJECT=$INSTALL_URL_PROJECT"
         liquibase --searchPath=../${DOCKER_REPOSITORY}/liquibase/changelog \
@@ -124,7 +124,7 @@ if [[ "$AUTO_INSTALL" == "postgresql" ]]; then
                   update
         ;;          
       3) 
-        echo "Running step-03 - Postgres CRON jobs creation..."
+        echo "Running step-03 - Add the service user to the CRON scheduler..."
         echo "  INSTALL_USERNAME_ADMIN=$INSTALL_USERNAME_ADMIN"
         echo "  INSTALL_URL_ADMIN=$INSTALL_URL_ADMIN"
         liquibase --defaults-file=./postgresql/defaults-step-03.properties \
@@ -135,7 +135,7 @@ if [[ "$AUTO_INSTALL" == "postgresql" ]]; then
                   update
         ;;
       4) 
-        echo "Running step-04 - DEV templates creation..."
+        echo "Running step-04 - install DEV templates into ${S2_SCHEMA_NAME} schema..."
         echo "  INSTALL_USERNAME_PROJECT=$INSTALL_USERNAME_PROJECT"
         echo "  INSTALL_URL_PROJECT=$INSTALL_URL_PROJECT"
         liquibase --searchPath=../${DOCKER_REPOSITORY}/liquibase/changelog \
@@ -164,7 +164,7 @@ elif [[ "$AUTO_INSTALL" == "oracle" ]]; then
                   update
         ;;
       2) 
-        echo "Running step-02 - ${S2_SCHEMA_NAME} objects creation..."
+        echo "Running step-02 - Objects creation into ${S2_SCHEMA_NAME} schema..."
         echo "  INSTALL_USERNAME_PROJECT=$INSTALL_USERNAME_PROJECT"
         echo "  INSTALL_URL_PROJECT=$INSTALL_URL_PROJECT"
         liquibase --searchPath=../${DOCKER_REPOSITORY}/liquibase/changelog \
@@ -185,7 +185,7 @@ elif [[ "$AUTO_INSTALL" == "oracle" ]]; then
                   update
         ;;
       4) 
-        echo "Running step-04 - ${S2_SCHEMA_NAME} DEV templates creation..."
+        echo "Running step-04 - install DEV templates into ${S2_SCHEMA_NAME} schema..."
         echo "  INSTALL_USERNAME_PROJECT=$INSTALL_USERNAME_PROJECT"
         echo "  INSTALL_URL_PROJECT=$INSTALL_URL_PROJECT"
         liquibase --searchPath=../${DOCKER_REPOSITORY}/liquibase/changelog \
