@@ -51,41 +51,9 @@ docker run -it --rm \
   -e INSTALL_PASSWORD_PROJECT=postgres \
   -e CREATE_DATABASE=false \
   -e INSTALL_STEPS=1,2,3,4 \
-  -e INSTALL_SCHEMA=dookug \
+  -e INSTALL_SCHEMA=dookug_schema_name \
   -e INSTALL_PGTOOLS=1 \
   icellmobilsoft/dookug_db:2.0.0-SNAPSHOT
-#---------------------
-#Embed Dookug into Noteefly Postgres DB example:
-docker run -it --rm \
-  --network=noteefly-local-network \
-  -e AUTO_INSTALL=postgresql \
-  -e INSTALL_URL_ADMIN=jdbc:postgresql://module-noteefly-postgredb:5432/postgres \
-  -e INSTALL_URL_PROJECT=jdbc:postgresql://module-noteefly-postgredb:5432/noteefly_db \
-  -e INSTALL_USERNAME_ADMIN=postgres \
-  -e INSTALL_PASSWORD_ADMIN=postgres \
-  -e INSTALL_USERNAME_PROJECT=postgres \
-  -e INSTALL_PASSWORD_PROJECT=postgres \
-  -e CREATE_DATABASE=false \
-  -e INSTALL_STEPS=1,2,3,4 \
-  -e INSTALL_SCHEMA=nf_dookug \
-  -e INSTALL_PGTOOLS=1 \
-  icellmobilsoft/dookug_db:2.0.0-SNAPSHOT
-#---------------------
-#Embed Dookug into Noteefly ORACLE DB example:
-docker run -it --rm \
-  --network=noteefly-local-network \
-  -e AUTO_INSTALL=oracle \
-  -e INSTALL_URL_ADMIN=jdbc:oracle:thin:@module-noteefly-oracle:1521/xepdb1 \
-  -e INSTALL_URL_PROJECT=jdbc:oracle:thin:@module-noteefly-oracle:1521/xepdb1 \
-  -e INSTALL_USERNAME_ADMIN=system \
-  -e INSTALL_PASSWORD_ADMIN=developer \
-  -e INSTALL_USERNAME_PROJECT=nf_dookug \
-  -e INSTALL_PASSWORD_PROJECT=developer \
-  -e CREATE_DATABASE=false \
-  -e INSTALL_STEPS=1,2,3,4 \
-  -e INSTALL_SCHEMA=nf_dookug \
-  -e INSTALL_PGTOOLS=0 \
-  icellmobilsoft/dookug_db:2.0.0-SNAPSHOT  
 ==========      
 
 #on windows: the "\" needs to be changed to "`"!
