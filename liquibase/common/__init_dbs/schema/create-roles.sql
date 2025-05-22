@@ -16,39 +16,25 @@
 --
 -- SPDX-License-Identifier: Apache-2.0
 
---changeset jozsef.holczer:${schema_name}-PG_SCHEMA_ROLES dbms:postgresql endDelimiter:/
+--changeset jozsef.holczer:${schema_name}-PG_SCHEMA_ROLES dbms:postgresql runOnChange:true endDelimiter:/
 --comment Creating Postgresql Schema Roles...
 
 DO $$ 
 BEGIN 
   IF NOT public_role_exists('${schema_name}_read') THEN
-    CREATE ROLE ${schema_name}_read;
-  END IF;
-  IF NOT public_role_exists('${schema_name}_write') THEN
-    CREATE ROLE ${schema_name}_write;
+    CREATE ROLE ${schema_name}_read INHERIT;
   END IF;
   --
-  IF NOT public_role_exists('${schema_name}_sel') THEN
-    CREATE ROLE ${schema_name}_sel;
+  IF NOT public_role_exists('${schema_name}_write') THEN
+    CREATE ROLE ${schema_name}_write INHERIT;
   END IF;
-  -- -- --
-  IF NOT public_role_exists('${schema_name}_mod') THEN
-    CREATE ROLE ${schema_name}_mod;
-  END IF;
-
-  -- -- --
+  --
   IF NOT public_role_exists('${schema_name}_exec') THEN
-    CREATE ROLE ${schema_name}_exec;
+    CREATE ROLE ${schema_name}_exec INHERIT;
   END IF;
-  -- -- --
-  IF NOT public_role_exists('${schema_name}_del') THEN
-    CREATE ROLE ${schema_name}_del;
-  END IF;
-  -- -- --
-  IF NOT public_role_exists('${schema_name}_full') THEN
-    CREATE ROLE ${schema_name}_full;
-  END IF;
-  GRANT ${schema_name}_sel, ${schema_name}_del, ${schema_name}_mod, ${schema_name}_exec TO ${schema_name}_full;
+  --
+  GRANT ${schema_name}_read TO ${schema_name}_write;
+  GRANT ${schema_name}_write TO ${schema_name}_exec;
 END $$;
 /
 

@@ -43,7 +43,5 @@ $FUNCTION$
 
 -- Permissions
 
-ALTER FUNCTION public.public_role_exists(text) OWNER TO ${dba_user_name};
-
 GRANT EXECUTE ON FUNCTION public.public_role_exists(text) TO ${dba_user_name};
 

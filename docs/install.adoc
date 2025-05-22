@@ -8,7 +8,8 @@
 #***Full install***
 #INSTALL_STEPS: The full is 1,2,3,4, or as many as you have, or you can give that step(s) you want!
 #                    if you leave it empty, the default is 1,2,3,4!
-#INSTALL_PGTOOLS: In case of locale development, this installer automatically installs the PG_TOOLS as well in step2!
+#INSTALL_PGTOOLS: In case of locale Postgresql development, this installer automatically installs the PG_TOOLS as well in step2!
+#   You can turn it off with the value=0
 #AUTO_INSTALL: at the moment you can use postgresql or oracle  
 #in case of server install, you must use the DEFAULT and PROJECT parameters (_example of their usage -> below at the embed section_).
 #   INSTALL_URL_ADMIN
@@ -20,8 +21,9 @@
 #=====================
 docker run -it --rm \
   --network=dookug-local-network \
-  -e AUTO_INSTALL=postgresql \    
+  -e AUTO_INSTALL=postgresql \
   -e INSTALL_STEPS=1,2,3,4 \
+  -e INSTALL_USERNAME_PROJECT=project_user_name \
   icellmobilsoft/dookug_db:2.0.0-SNAPSHOT
 ==========
 
@@ -43,16 +45,17 @@ docker run -it --rm \
 docker run -it --rm \
   --network=host-local-network \
   -e AUTO_INSTALL=postgresql \
-  -e INSTALL_URL_ADMIN=jdbc:postgresql://local_host_db-postgredb:port_num/postgres \
-  -e INSTALL_URL_PROJECT=jdbc:postgresql://local_host_db-postgredb:port_num/host_db \
+  -e DATABASE_NAME=host_db \
+  -e INSTALL_URL_ADMIN=jdbc:postgresql://host_db-postgredb:port_num/postgres \
+  -e INSTALL_URL_PROJECT=jdbc:postgresql://host_db-postgredb:port_num/host_db \
   -e INSTALL_USERNAME_ADMIN=postgres \
-  -e INSTALL_PASSWORD_ADMIN=postgres \
-  -e INSTALL_USERNAME_PROJECT=postgres \
-  -e INSTALL_PASSWORD_PROJECT=postgres \
+  -e INSTALL_PASSWORD_ADMIN=passw_from_secret \
+  -e INSTALL_USERNAME_PROJECT=project_user_name \
+  -e INSTALL_PASSWORD_PROJECT=passw_from_secret \
   -e CREATE_DATABASE=false \
   -e INSTALL_STEPS=1,2,3,4 \
   -e INSTALL_SCHEMA=dookug_schema_name \
-  -e INSTALL_PGTOOLS=1 \
+  -e INSTALL_PGTOOLS=0 \
   icellmobilsoft/dookug_db:2.0.0-SNAPSHOT
 ==========      
 

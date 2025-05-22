@@ -27,7 +27,7 @@ SPDX-License-Identifier: Apache-2.0
     <include file="common/__init_dbs/users/postgres.sql" relativeToChangelogFile="true"/>
     <include file="common/_all-modules/db/functions/public_user_exists.sql" relativeToChangelogFile="true"/>
     <include file="common/_all-modules/db/functions/public_role_exists.sql" relativeToChangelogFile="true"/>
-    <include file="common/__init_dbs/users/schema_service.sql" relativeToChangelogFile="true"/>
+    <include file="common/__init_dbs/users/schema_service.sql" relativeToChangelogFile="true"/>    
     <include file="common/__init_dbs/users/read.sql" relativeToChangelogFile="true"/>
     <include file="common/__init_dbs/users/dwh_stream.sql" relativeToChangelogFile="true"/>
     <include file="common/_create_dbs/create-database.sql" relativeToChangelogFile="true"/>
@@ -35,11 +35,12 @@ SPDX-License-Identifier: Apache-2.0
     
     <!-- Postgresql és oracle  -->
     <include file="common/__init_dbs/schema/create-roles.sql" relativeToChangelogFile="true"/>
+    <include file="common/__init_dbs/users/pg_schema_user.sql" relativeToChangelogFile="true"/>
     
     <!-- Oracle -->
     <include file="common/__init_dbs/tablespace/ts_schema.sql" relativeToChangelogFile="true"/>
     <include file="common/__init_dbs/schema/oracle_service_user.sql" relativeToChangelogFile="true"/>
-    <include file="common/__init_dbs/users/schema_user.sql" relativeToChangelogFile="true"/>
+    <include file="common/__init_dbs/users/ora_schema_user.sql" relativeToChangelogFile="true"/>
     <include file="common/grants/oracle_grants.sql" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>
