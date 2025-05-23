@@ -35,7 +35,7 @@ BEGIN
 
   FOR rec IN SELECT schemaname, tablename FROM pg_catalog.pg_tables WHERE schemaname = p_table_schema AND tablename LIKE '%hist'
   LOOP
-	  EXECUTE 'GRANT SELECT ON TABLE '||rec.tablename||' TO '||rec.schemaname||'_sel';
+	  EXECUTE 'GRANT SELECT ON TABLE '||rec.tablename||' TO '||rec.schemaname||'_read';
   END LOOP;
 
 END;
@@ -45,7 +45,7 @@ $procedure$
 /
 
 -- Permissions
-ALTER PROCEDURE ${schema_name}.add_privileges_to_all_tables(text) OWNER TO ${dba_user_name};
+ALTER PROCEDURE ${schema_name}.add_privileges_to_all_tables(text) OWNER TO ${pg_schema_user};
 
 GRANT EXECUTE ON PROCEDURE ${schema_name}.add_privileges_to_all_tables(text) TO ${schema_name}_exec;
 

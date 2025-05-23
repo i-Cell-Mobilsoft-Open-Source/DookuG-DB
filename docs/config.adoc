@@ -9,9 +9,19 @@
   - **LIQUIBASE_BASE_IMAGE**: central, corporate base liquibase image with version, used by dockerfile (_default value: DOCKER_REPOSITORY/db-base-liquibase:${DBDWH_IMAGE_VERSION}_).
   - **liquibase-release/LIQUIBASE_INSTALL_DIR**: local liquibase directory, used by dockerfile (_schema1 default value: ./liquibase/dookug_).
   - **LIQUIBASE_INSTALL_COMMON_DIR**: local liquibase/common directory, used by dockerfile (_default value: ./liquibase/common_).
+  - **PG_TOOLS_IMAGE**: Postgres partition manager installer path, used by dockerfile (_default value: icellmobilsoft/db-base-pg_tools:${DBDWH_IMAGE_VERSION}'_).
 * Before Liquibase variables:  
   - **S2_SCHEMA_NAME**: Step 2 schema name, with default value, can be overridden externally (_default value: dookug_).
+  - **INSTALL_PGTOOLS**: PG partition manager installer switch in Step 2 (_automatically copied in Dockerfile and installed in STEP2_), with default value, can be overridden externally (_default value: true_).
+  - **INSTALL_USERNAME_ADMIN**: The Admin user for the main installs, with default value, can be overridden externally (_default value: postgres/system based on DB type_).
+  - **INSTALL_USERNAME_PROJECT**: Only for Postgres! The Project user for the project schema installs, with default value, can be overridden externally (_default value: S2_SCHEMA_NAME_).
+  - **INSTALL_PASSWORD_ADMIN**: The password of Admin user for the main installs, with default value, can be overridden externally (_default value: postgres_).
+  - **INSTALL_PASSWORD_PROJECT**: The password of Project user for the project schema installs, with default value, can be overridden externally (_default value: postgres/developer based on DB type_).
+  - **INSTALL_URL_ADMIN**: The URL of Admin DB for the main installs, with default value, can be overridden externally (_default value: jdbc:postgresql://module-dookug-postgredb:5432/postgres/jdbc:oracle:thin:@module-dookug-oracle:1521/xepdb1 based on DB type_).
+  - **INSTALL_URL_PROJECT**: The URL of Project DB for the project schema installs, with default value, can be overridden externally (_default value: jdbc:postgresql://module-dookug-postgredb:5432/dookug_db/jdbc:oracle:thin:@module-dookug-oracle:1521/xepdb1 based on DB type_).
   - **CREATE_DATABASE**: PostgreSQL DB. If the current DB needs to be embedded in another DB (_under a specific schema_), this variable prevents an empty DB from being created. Default value is TRUE in the before-liquibase file, can be overridden externally.
+  - **INSTALL_STEPS**: Before install, you can set the step(s) of the install, which you need to run. You can list multiple steps as well. (_default value: 1,2,3,4_), can be overridden externally.
+  - **INSTALL_SCHEMA**: Only for Oracle! The project schema to be installed. (_default value: dookug_), can be overridden externally.
 * Properties variables:
   - Properties file: File belonging to the given DB that provides data for local db access and maps the liquibase changelog file to the given step compose file.
   - **URL**: URL of the DB to be installed, by default local DB access is specified, can be overridden externally. 

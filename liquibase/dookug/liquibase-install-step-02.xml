@@ -25,7 +25,7 @@ SPDX-License-Identifier: Apache-2.0
     
     <!-- postgresql only -->
     <include file="common/__init_dbs/schema/create-schema.sql" relativeToChangelogFile="true"/>
-    <include file="common/__init_dbs/users/schema_role.sql" relativeToChangelogFile="true"/>  
+    <include file="common/__init_dbs/users/schema_role.sql" relativeToChangelogFile="true"/> 
     <!-- ... -->
     <include file="liquibase-dookug.xml" relativeToChangelogFile="true"/>
     

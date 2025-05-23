@@ -20,5 +20,5 @@
 --comment Add missing postgres Schema Grants.
 
 GRANT USAGE ON SCHEMA ${schema_name} TO ${service_name};
-GRANT USAGE ON SCHEMA ${schema_name} TO  ${schema_name}_sel;
-GRANT ${schema_name}_full TO ${service_name};
+GRANT USAGE ON SCHEMA ${schema_name} TO  ${schema_name}_read;
+GRANT ${schema_name}_exec TO ${service_name};

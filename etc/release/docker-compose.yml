@@ -14,7 +14,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-version: "3.8"
+# version: "3.8"  #it has become obsolete.
 
 # build
 # docker-compose --env-file <PATH>/.env -f <PATH>/etc/release/docker-compose.yml build --no-cache
@@ -49,6 +49,7 @@ version: "3.8"
 #    --password=postgres \
 #    --changeLogFile=liquibase-install-db1-step-01.xml \
 #    update
+#in case of Postgres, the installer was refactored in order to use it easier for DevOps, and the details can be seen in before-liquibase.sh
 services:
   liquibase-release:
     build:

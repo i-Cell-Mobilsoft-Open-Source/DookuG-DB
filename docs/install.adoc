@@ -6,10 +6,17 @@
 [source,console]
 #=====================
 #***Full install***
-#INSTALL_STEPS: The full is 1,2,3,4, or as many as you have, or you can give that step(s) you want!
-#                    if you leave it empty, the default is 1,2,3,4!
-#INSTALL_PGTOOLS: In case of locale development, this installer automatically installs the PG_TOOLS as well in step2!
-#AUTO_INSTALL: at the moment you can use postgresql or oracle  
+#INSTALL_STEPS: This is NOT required, the default value: "1,2,3,4".
+#               The full is 1,2,3,4, or as many as you have, or you can give that step(s) you want!
+#INSTALL_PGTOOLS: ONLY in postgresql install!
+#                 This is NOT required, the default value: true.
+#                 In case of locale Postgresql development, this installer automatically installs the PG_TOOLS as well in step2!
+#                 If you turn this parameter on, the 2nd installation step is mandatory in the INSTALL_STEPS env. variable! 
+#                 You can turn it off with the value=false
+#AUTO_INSTALL: This is REQUIRED!    
+#              at the moment you can use postgresql or oracle 
+#INSTALL_SCHEMA: ONLY in oracle install! 
+#                This is NOT required, the default value: "dookug".
 #in case of server install, you must use the DEFAULT and PROJECT parameters (_example of their usage -> below at the embed section_).
 #   INSTALL_URL_ADMIN
 #   INSTALL_URL_PROJECT
@@ -18,10 +25,40 @@
 #   INSTALL_PASSWORD_ADMIN
 #   INSTALL_PASSWORD_PROJECT
 #=====================
+#postgresql default local install:
+#this runs all the 4 steps by default
+#-------------------------
 docker run -it --rm \
   --network=dookug-local-network \
-  -e AUTO_INSTALL=postgresql \    
-  -e INSTALL_STEPS=1,2,3,4 \
+  -e AUTO_INSTALL=postgresql \
+  -e INSTALL_USERNAME_PROJECT=project_user_name \
+  icellmobilsoft/dookug_db:2.0.0-SNAPSHOT
+#-------------------------  
+#If you need only a specific step(s):
+#-------------------------
+docker run -it --rm \
+  --network=dookug-local-network \
+  -e AUTO_INSTALL=postgresql \
+  -e INSTALL_USERNAME_PROJECT=project_user_name \
+  -e INSTALL_STEPS=2,4 \
+  icellmobilsoft/dookug_db:2.0.0-SNAPSHOT
+#-------------------------  
+#oracle local install:
+#this runs all the 4 steps by default
+#-------------------------
+docker run -it --rm \
+  --network=dookug-local-network \
+  -e AUTO_INSTALL=oracle \
+  -e INSTALL_SCHEMA=schema_name \
+  icellmobilsoft/dookug_db:2.0.0-SNAPSHOT
+#-------------------------  
+#If you need only a specific step(s):
+#-------------------------  
+docker run -it --rm \
+  --network=dookug-local-network \
+  -e AUTO_INSTALL=oracle \
+  -e INSTALL_SCHEMA=schema_name \
+  -e INSTALL_STEPS=2,4 \
   icellmobilsoft/dookug_db:2.0.0-SNAPSHOT
 ==========
 
@@ -33,28 +70,55 @@ docker run -it --rm \
 [source,bash]
 #---------------------  
 #Postgres and Linux:
-#in case of locale install, you don't need to use the DEFAULT and PROJECT parameters b/c they have default values in setups.
-#AUTO_INSTALL: at the moment you can use postgresql or oracle  
-#INSTALL_PGTOOLS: if you want to install postgres partition manager (in case of partitioned tables), You need to use this parameter and assign 1, otherwise set it to 0!
-#                 if you use this parameter, the 2nd installation step is mandatory in INSTALL_STEPS env. variable! 
-#                 of course, if you already installed this in the host DB, you don't need to use this parameter once again! 
+#INSTALL_STEPS: This is NOT required, the default value: "1,2,3,4".
+#               The full is 1,2,3,4, or as many as you have, or you can give that step(s) you want!
+#INSTALL_PGTOOLS: ONLY in postgresql install!
+#                 This is NOT required, the default value: true.
+#                 In case of locale Postgresql development, this installer automatically installs the PG_TOOLS as well in step2!
+#                 If you turn this parameter on, the 2nd installation step is mandatory in the INSTALL_STEPS env. variable! 
+#                 You can turn it off with the value=false
+#AUTO_INSTALL: This is REQUIRED!    
+#              at the moment you can use postgresql or oracle 
+#INSTALL_USERNAME_PROJECT: ONLY in postgresql install!
+#                          In case of oracle you have to use the INSTALL_SCHEMA, b/c in oracle, the schema is the user as well.
+#INSTALL_SCHEMA: ONLY in oracle install! 
+#                This is NOT required, the default value: "dookug".
 #CREATE_DATABASE: When embedding this DookuG installer into another (host) DB, set this to false to avoid creating an empty database.
 #---------------------  
+#postgresql:
+#-----------
 docker run -it --rm \
   --network=host-local-network \
   -e AUTO_INSTALL=postgresql \
-  -e INSTALL_URL_ADMIN=jdbc:postgresql://local_host_db-postgredb:port_num/postgres \
-  -e INSTALL_URL_PROJECT=jdbc:postgresql://local_host_db-postgredb:port_num/host_db \
+  -e DATABASE_NAME=host_db \
+  -e INSTALL_URL_ADMIN=jdbc:postgresql://host_db-postgredb:port_num/postgres \
+  -e INSTALL_URL_PROJECT=jdbc:postgresql://host_db-postgredb:port_num/host_db \
   -e INSTALL_USERNAME_ADMIN=postgres \
-  -e INSTALL_PASSWORD_ADMIN=postgres \
-  -e INSTALL_USERNAME_PROJECT=postgres \
-  -e INSTALL_PASSWORD_PROJECT=postgres \
+  -e INSTALL_PASSWORD_ADMIN=passw_from_secret \
+  -e INSTALL_USERNAME_PROJECT=project_user_name \
+  -e INSTALL_PASSWORD_PROJECT=passw_from_secret \
   -e CREATE_DATABASE=false \
   -e INSTALL_STEPS=1,2,3,4 \
   -e INSTALL_SCHEMA=dookug_schema_name \
-  -e INSTALL_PGTOOLS=1 \
+  -e INSTALL_PGTOOLS=false \
   icellmobilsoft/dookug_db:2.0.0-SNAPSHOT
-==========      
+#-----------
+#oracle:
+#-----------
+docker run -it --rm \
+  --network=host-local-network \
+  -e AUTO_INSTALL=oracle \
+  -e DATABASE_NAME=host_db \
+  -e INSTALL_URL_ADMIN=jdbc:oracle:thin:@host_db-oracle:1521/xepdb1 \
+  -e INSTALL_URL_PROJECT=jdbc:oracle:thin:@host_db-oracle:1521/xepdb1 \
+  -e INSTALL_USERNAME_ADMIN=system \
+  -e INSTALL_PASSWORD_ADMIN=passw_from_secret \
+  -e INSTALL_PASSWORD_PROJECT=passw_from_secret \
+  -e CREATE_DATABASE=false \
+  -e INSTALL_STEPS=1,2,3,4 \
+  -e INSTALL_SCHEMA=dookug_schema_name \
+  icellmobilsoft/dookug_db:2.0.0-SNAPSHOT  
+==========     
 
 #on windows: the "\" needs to be changed to "`"!
 

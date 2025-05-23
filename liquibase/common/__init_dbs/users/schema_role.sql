@@ -16,13 +16,13 @@
 --
 -- SPDX-License-Identifier: Apache-2.0
 
---changeset bertalan.pasztor:${schema_name}-AUTH_ROLE dbms:postgresql 
+--changeset bertalan.pasztor:${pg_schema_user}-AUTH_ROLE dbms:postgresql 
 --comment Creating DB schema role..
 
 --preconditions onFail:MARK_RAN onError:HALT
---precondition-sql-check expectedResult:0 SELECT count(*) FROM pg_catalog.pg_roles WHERE rolname = '${schema_name}'
+--precondition-sql-check expectedResult:0 SELECT count(*) FROM pg_catalog.pg_roles WHERE rolname = '${pg_schema_user}'
 
-CREATE ROLE ${schema_name};
+CREATE ROLE ${pg_schema_user};
 
 COMMIT;
 

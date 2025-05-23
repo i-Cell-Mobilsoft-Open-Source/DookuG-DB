@@ -386,15 +386,13 @@ Postgres: int | 0 | Yes | Change versioning
 
 | dookug | SELECT, INSERT, UPDATE, DELETE
 
-| dookug_del | DELETE, TRUNCATE
+| dookug_write | INSERT, UPDATE, DELETE
 
-| dookug_mod | INSERT, UPDATE
+| dookug_read | SELECT
 
-| dookug_sel | SELECT
+| dookug_exec | dookug_read, dookug_write
 
-| dookug_full | SELECT, INSERT, UPDATE, DELETE
-
-| dookug_service | SELECT, INSERT, UPDATE, DELETE
+| dookug_service | dookug_exec
 
 |===
 
@@ -407,6 +405,6 @@ Postgres: int | 0 | Yes | Change versioning
 
 | DOOKUG_READ | SELECT
 
-| DOOKUG_EXEC | NOTEEFLY_READ, NOTEEFLY_WRITE
+| DOOKUG_EXEC | DOOKUG_READ, DOOKUG_WRITE
 
 |===
