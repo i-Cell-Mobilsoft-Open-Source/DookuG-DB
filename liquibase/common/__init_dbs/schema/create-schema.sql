@@ -19,6 +19,8 @@
 --changeset bertalan.pasztor:${schema_name}-CREATE_SCHEMA dbms:postgresql endDelimiter:/
 --comment Creating schema...
 
+SET search_path = public;
+
 DO $$
 BEGIN
 

@@ -19,8 +19,6 @@
 --changeset jozsef.holczer:${pg_schema_user}_USER dbms:postgresql runOnChange:true endDelimiter:/
 --comment Creating user of the DB project schema...
 
-SET search_path = public;
-
 DO $$
 BEGIN 
   
@@ -32,7 +30,7 @@ BEGIN
     So it cannot handle the liquichangelock table without the superuser option
     */
     CREATE USER ${pg_schema_user} WITH SUPERUSER PASSWORD '${pg_schema_password}';
-    --the following needs later in schema installs (2nd step).
+    --the following needs later in schema installs.
     GRANT CREATE ON DATABASE ${database_name} TO ${pg_schema_user};
     GRANT ${schema_name}_exec TO ${pg_schema_user} WITH ADMIN OPTION;   
   END IF;

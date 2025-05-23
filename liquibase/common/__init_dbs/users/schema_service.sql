@@ -19,8 +19,6 @@
 --changeset jozsef.holczer:${schema_name}-SERVICE_USER dbms:postgresql endDelimiter:/
 --comment Creating service user of the DB schema...
 
-SET search_path = public;
-
 DO $$
 DECLARE
   v_user_name  text := '${service_name}';
@@ -37,7 +35,6 @@ END$$;
 --changeset bertalan.pasztor:${schema_name}-SERVICE_USER_SETPASS dbms:postgresql runOnChange:true endDelimiter:/
 --comment DB Service Use password change...
 ---------------------------------------------------------------------------------------------------
-SET search_path = public;
 
 DO $$
 BEGIN

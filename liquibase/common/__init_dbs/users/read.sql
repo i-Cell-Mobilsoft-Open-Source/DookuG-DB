@@ -19,8 +19,6 @@
 --changeset endre.balazs:${schema_name}-READ_USER dbms:postgresql runOnChange:true endDelimiter:/
 --comment Creating Read user with limited rights...
 
-SET search_path = public;
-
 DO $$
 DECLARE
   v_user_name  text := '${schema_name}_read';
