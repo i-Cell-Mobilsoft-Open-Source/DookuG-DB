@@ -21,8 +21,14 @@ set -e
 
 #in case of local development, you don't need to fill the INSTALL_SCHEMA.
 S2_SCHEMA_NAME=${INSTALL_SCHEMA:-dookug}
-echo "S2_SCHEMA_NAME=$S2_SCHEMA_NAME"
+echo "PROJECT SCHEMA=$S2_SCHEMA_NAME"
 export S2_SCHEMA_NAME
+
+# in case of embedding, the database_name comes from the last tag (host_db) of the project url (e.g.: jdbc:postgresql://module-host-postgredb:5432/host_db) if it is not set explicitly.
+#it is required here in Oracle as well, b/c without it a Java Exception occurs.
+DATABASE_NAME=${DATABASE_NAME:-$(basename "${INSTALL_URL_PROJECT:-dookug_db}")}
+echo "PROJECT DATABASE=$DATABASE_NAME"
+export DATABASE_NAME
 
 echo "AUTO_INSTALL=$AUTO_INSTALL"  
 
@@ -143,7 +149,7 @@ if [[ "$AUTO_INSTALL" == "postgresql" ]]; then
     esac
 
     #only for step2 without pg_tools installation
-    if [[ ("$PG_TOOLS_INSTALLED" == true && ${step} == 2) || ("$INSTALL_PGTOOLS" == false) ]]; then
+    if [[ ("$PG_TOOLS_INSTALLED" == true && ${step} == 2) || ("$INSTALL_PGTOOLS" == false && ${step} == 2) ]]; then
       echo "  step-0${step} - Objects creation into ${S2_SCHEMA_NAME} schema..."
     fi
 
