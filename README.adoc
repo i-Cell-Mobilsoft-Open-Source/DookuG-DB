@@ -1,1 +1,611 @@
-https://i-cell-mobilsoft-open-source.github.io/DookuG-DB/[DookuG Documentation]
+https://i-cell-mobilsoft-open-source.github.io/DookuG-DB/[DookuG GitHub Pages Documentation]
+
+== Development guide
+
+=== Using Compose Commands
+
+You need to use these compose commands during development. You can develop and test the installation process step by step.
+====
+.First command: docker-compose up with build (_click here_)
+[%collapsible]
+======
+.Postgresql (_click here_)
+[%collapsible]
+========
+[source,shell]
+docker compose --env-file .env -f etc/docker-compose/postgresql/docker-compose.local.postgredb.yml up --build --force-recreate --remove-orphans
+
+* This command is based on "docker-compose.local.postgredb.yml" file located in etc/docker-compose folder (_under the related database_).
+*** This command downloads and builds PostgreSQL and Liquibase images, then starts the database.
+**** The Postgres image is our corporate image (contains PG 14 and already includes PG_CRON extension needed for partitioning), located in Github: https://github.com/i-Cell-Mobilsoft-Open-Source/docker-db-dwh/tree/main/dockerfile/postgres_14[GitHub-Postgres_14]
+**** The Liquibase image is our corporate image (_contains some predefined settings and installation steps, including OJDBC_), located in Github: https://github.com/i-Cell-Mobilsoft-Open-Source/docker-db-dwh/tree/main/dockerfile/liquibase[GitHub-liquibase]
+
+.The possible result of the command execution (_click here_)
+[%collapsible]
+==========
+[source,console]
+jholczer@jholczer-Latitude-5520:~/git/modul/dookug-db$ docker compose --env-file .env -f etc/docker-compose/postgresql/docker-compose.local.postgredb.yml up --build --force-recreate --remove-orphans
+WARN[0000] network default: network.external.name is deprecated. Please set network.name with external: true 
+[+] Running 2/0
+ ✔ Volume "module-dookug-postgredb-data"  Created                                                              0.0s 
+ ✔ Container module-dookug-postgredb      Created                                                              0.0s 
+Attaching to module-dookug-postgredb
+module-dookug-postgredb  | The files belonging to this database system will be owned by user "postgres".
+module-dookug-postgredb  | This user must also own the server process.
+module-dookug-postgredb  | 
+module-dookug-postgredb  | The database cluster will be initialized with locale "en_US.utf8".
+module-dookug-postgredb  | The default database encoding has accordingly been set to "UTF8".
+module-dookug-postgredb  | The default text search configuration will be set to "english".
+module-dookug-postgredb  | 
+module-dookug-postgredb  | Data page checksums are disabled.
+module-dookug-postgredb  | 
+module-dookug-postgredb  | fixing permissions on existing directory /var/lib/postgresql/data ... ok
+module-dookug-postgredb  | creating subdirectories ... ok
+module-dookug-postgredb  | selecting dynamic shared memory implementation ... posix
+module-dookug-postgredb  | selecting default max_connections ... 100
+module-dookug-postgredb  | selecting default shared_buffers ... 128MB
+module-dookug-postgredb  | selecting default time zone ... Etc/UTC
+module-dookug-postgredb  | creating configuration files ... ok
+module-dookug-postgredb  | running bootstrap script ... ok
+module-dookug-postgredb  | performing post-bootstrap initialization ... ok
+module-dookug-postgredb  | syncing data to disk ... ok
+module-dookug-postgredb  | 
+module-dookug-postgredb  | 
+module-dookug-postgredb  | Success. You can now start the database server using:
+module-dookug-postgredb  | 
+module-dookug-postgredb  |     pg_ctl -D /var/lib/postgresql/data -l logfile start
+module-dookug-postgredb  | 
+module-dookug-postgredb  | initdb: warning: enabling "trust" authentication for local connections
+module-dookug-postgredb  | You can change this by editing pg_hba.conf or using the option -A, or
+module-dookug-postgredb  | --auth-local and --auth-host, the next time you run initdb.
+module-dookug-postgredb  | waiting for server to start....2024-01-05 09:31:06.546 UTC [35] LOG:  starting PostgreSQL 14.8 (Debian 14.8-1.pgdg110+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 10.2.1-6) 10.2.1 20210110, 64-bit
+module-dookug-postgredb  | 2024-01-05 09:31:06.548 UTC [35] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+module-dookug-postgredb  | 2024-01-05 09:31:06.554 UTC [36] LOG:  database system was shut down at 2024-01-05 09:31:06 UTC
+module-dookug-postgredb  | 2024-01-05 09:31:06.558 UTC [35] LOG:  database system is ready to accept connections
+module-dookug-postgredb  |  done
+module-dookug-postgredb  | server started
+module-dookug-postgredb  | 
+module-dookug-postgredb  | /usr/local/bin/docker-entrypoint.sh: running /docker-entrypoint-initdb.d/pg-cron.sh
+module-dookug-postgredb  | 
+module-dookug-postgredb  | waiting for server to shut down...2024-01-05 09:31:06.659 UTC [35] LOG:  received fast shutdown request
+module-dookug-postgredb  | .2024-01-05 09:31:06.662 UTC [35] LOG:  aborting any active transactions
+module-dookug-postgredb  | 2024-01-05 09:31:06.663 UTC [35] LOG:  background worker "logical replication launcher" (PID 42) exited with exit code 1
+module-dookug-postgredb  | 2024-01-05 09:31:06.663 UTC [37] LOG:  shutting down
+module-dookug-postgredb  | 2024-01-05 09:31:06.680 UTC [35] LOG:  database system is shut down
+module-dookug-postgredb  |  done
+module-dookug-postgredb  | server stopped
+module-dookug-postgredb  | 
+module-dookug-postgredb  | PostgreSQL init process complete; ready for start up.
+module-dookug-postgredb  | 
+module-dookug-postgredb  | 2024-01-05 09:31:06.780 UTC [1] LOG:  starting PostgreSQL 14.8 (Debian 14.8-1.pgdg110+1) on x86_64-pc-linux-gnu, compiled by gcc (Debian 10.2.1-6) 10.2.1 20210110, 64-bit
+module-dookug-postgredb  | 2024-01-05 09:31:06.780 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+module-dookug-postgredb  | 2024-01-05 09:31:06.780 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+module-dookug-postgredb  | 2024-01-05 09:31:06.784 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+module-dookug-postgredb  | 2024-01-05 09:31:06.789 UTC [52] LOG:  database system was shut down at 2024-01-05 09:31:06 UTC
+module-dookug-postgredb  | 2024-01-05 09:31:06.794 UTC [1] LOG:  database system is ready to accept connections
+module-dookug-postgredb  | 2024-01-05 09:31:06.797 UTC [58] LOG:  pg_cron scheduler started
+
+==========
+
+If you need to reset the DB to its initial state:
+[source,bash]
+docker compose --env-file .env -f ./etc/docker-compose/postgresql/docker-compose.liquibase.install.step-01.yml down -v
+
+** This command will delete the created DB - t
+
+.The possible result of the command execution (_click here_)
+[%collapsible]
+==========
+[source,console]
+PS Git Client\modul\dookug-db> docker-compose -f etc/docker-compose/postgresql/docker-compose.local.postgredb.yml down -v
+time="2023-08-16T14:52:23+02:00" level=warning msg="network default: network.external.name is deprecated. Please set network.name with external: true"
+[+] Running 1/0
+ ✔ Volume module-dookug-postgredb-data  Removed                                                                                                                  0.0s
+PS Git Client\modul\dookug-db>
+==========
+
+========
+
+.Oracle (_click here_)
+[%collapsible]
+========
+[source,shell]
+docker-compose -f etc/docker-compose/oracle/docker-compose.local.oracle.yml up --build --force-recreate --remove-orphans
+
+** This command is based on the "docker-compose.local.oracle.yml" file located in the etc/docker-compose folder (_under the relevant database_).
+*** This command downloads and builds the Oracle and Liquibase images.
+**** The Oracle image is the standard Oracle XE image, which can be downloaded from here: https://github.com/oracle/docker-images/tree/main/OracleDatabase/SingleInstance[container-registry.oracle.com/database/express:21.3.0-xe]
+**** The Liquibase image is our own image (which contains OJDBC and some predefined settings and the installation steps) and can be found in Github: https://github.com/i-Cell-Mobilsoft-Open-Source/docker-db-dwh/tree/main/dockerfile/liquibase[GitHub-liquibase]
+
+. The posssible result of the command execution (_click here_)
+[%collapsible]
+==========
+[source,console]
+PS Git Client\modul\dookug-db> docker compose --env-file .env -f etc/docker-compose/oracle/docker-compose.local.oracle.yml up --build --force-recreate --remove-orphans
+time="2023-08-16T14:54:53+02:00" level=warning msg="network default: network.external.name is deprecated. Please set network.name with external: true"
+[+] Running 4/4
+ ✔ Volume "dookug-db-oracle-data"            Created                                                                                                             0.0s
+ ✔ Container module-document-oracle-step-01  Removed                                                                                                             0.0s
+ ✔ Container module-document-oracle-step-02  Removed                                                                                                             0.0s
+ ✔ Container module-dookug-oracle            Created                                                                                                            37.2s
+Attaching to module-dookug-oracle
+module-dookug-oracle  | Starting Oracle Net Listener.
+module-dookug-oracle  | Oracle Net Listener started.
+module-dookug-oracle  | Starting Oracle Database instance XE.
+module-dookug-oracle  | Oracle Database instance XE started.
+module-dookug-oracle  |
+module-dookug-oracle  |
+module-dookug-oracle  | The Oracle base remains unchanged with value /opt/oracle
+module-dookug-oracle  |
+module-dookug-oracle  | SQL*Plus: Release 21.0.0.0.0 - Production on Wed Aug 16 12:55:36 2023
+module-dookug-oracle  | Version 21.3.0.0.0
+module-dookug-oracle  |
+module-dookug-oracle  | Copyright (c) 1982, 2021, Oracle.  All rights reserved.
+module-dookug-oracle  |
+module-dookug-oracle  |
+module-dookug-oracle  |
+module-dookug-oracle  | Connected to:
+module-dookug-oracle  | Oracle Database 21c Express Edition Release 21.0.0.0.0 - Production
+module-dookug-oracle  | Version 21.3.0.0.0
+module-dookug-oracle  |
+module-dookug-oracle  | SQL>
+module-dookug-oracle  |
+module-dookug-oracle  | User altered.
+module-dookug-oracle  |
+module-dookug-oracle  | SQL>
+module-dookug-oracle  |
+module-dookug-oracle  | User altered.
+module-dookug-oracle  |
+module-dookug-oracle  | SQL>
+module-dookug-oracle  |
+module-dookug-oracle  | Session altered.
+module-dookug-oracle  |
+module-dookug-oracle  | SQL>
+module-dookug-oracle  |
+module-dookug-oracle  | User altered.
+module-dookug-oracle  |
+module-dookug-oracle  | SQL>
+module-dookug-oracle  | Disconnected from Oracle Database 21c Express Edition Release 21.0.0.0.0 - Production
+module-dookug-oracle  | Version 21.3.0.0.0
+module-dookug-oracle  | The Oracle base remains unchanged with value /opt/oracle
+module-dookug-oracle  | #########################
+module-dookug-oracle  | DATABASE IS READY TO USE!
+module-dookug-oracle  | #########################
+module-dookug-oracle  | The following output is now a tail of the alert.log:
+module-dookug-oracle  | Pluggable database XEPDB1 opened read write
+module-dookug-oracle  | Starting background process CJQ0
+module-dookug-oracle  | 2023-08-16T12:55:36.441712+00:00
+module-dookug-oracle  | CJQ0 started with pid=52, OS id=167
+module-dookug-oracle  | Completed: ALTER DATABASE OPEN
+module-dookug-oracle  | 2023-08-16T12:55:36.584647+00:00
+module-dookug-oracle  | Using default pga_aggregate_limit of 2048 MB
+module-dookug-oracle  | 2023-08-16T12:55:36.674010+00:00
+module-dookug-oracle  | TABLE AUDSYS.AUD$UNIFIED: ADDED INTERVAL PARTITION SYS_P328 (3334) VALUES LESS THAN (TIMESTAMP' 2023-08-17 00:00:00')
+module-dookug-oracle  | XEPDB1(3):TABLE AUDSYS.AUD$UNIFIED: ADDED INTERVAL PARTITION SYS_P348 (3334) VALUES LESS THAN (TIMESTAMP' 2023-08-17 00:00:00')
+module-dookug-oracle  | 2023-08-16T12:55:38.956693+00:00
+module-dookug-oracle  | Shared IO Pool defaulting to 80MB. Trying to get it from Buffer Cache for process 124.
+module-dookug-oracle  | ===========================================================
+module-dookug-oracle  | Dumping current patch information
+module-dookug-oracle  | ===========================================================
+module-dookug-oracle  | No patches have been applied
+module-dookug-oracle  | ===========================================================
+module-dookug-oracle  | 2023-08-16T12:55:39.212445+00:00
+module-dookug-oracle  | XEPDB1(3):Resize operation completed for file# 10, fname /opt/oracle/oradata/XE/XEPDB1/sysaux01.dbf, old size 337920K, new size 358400K
+
+==========
+
+If you need to reset the DB to its initial state:
+[source,bash]
+docker compose --env-file .env -f etc/docker-compose/oracle/docker-compose.local.oracle.yml down -v
+
+** This command deletes
+
+.The possible result of the command execution (_click here_)
+[%collapsible]
+==========
+[source,console]
+PS Git Client\modul\dookug-db> docker compose --env-file .env -f etc/docker-compose/oracle/docker-compose.local.oracle.yml down -v
+time="2023-08-16T14:54:19+02:00" level=warning msg="network default: network.external.name is deprecated. Please set network.name with external: true"
+[+] Running 1/0
+ ✔ Volume dookug-db-oracle-data  Removed                                                                                                                         0.0s
+PS Git Client\modul\dookug-db>
+==========
+
+========
+
+======
+====
+
+====
+.Second command: docker-compose steps (_click here_)
+[%collapsible]
+======
+The "compose up" command contains 2 steps (_in case of multiple schemas, you may need as many steps as schemas_).
+
+[source,bash]
+docker compose --env-file .env -f ./etc/docker-compose/postgresql/docker-compose.liquibase.install.step-01.yml up --build --force-recreate
+
+** This command is based on "docker-compose.liquibase.install.step-01.yml" file located in etc/docker-compose folder (_under the related database_). 
+** It creates and initializes the database, schema(s), roles and other system objects. 
+** In this step, configuration files are used from additional folders: etc/release and liquibase.
+
+[source,bash]
+docker compose --env-file .env -f ./etc/docker-compose/postgresql/docker-compose.liquibase.install.step-02.yml up --build --force-recreate
+
+** This command is based on "docker-compose.liquibase.install.step-02.yml" file located in etc/docker-compose folder (_under the related database_).
+** We use configuration files from additional folders here: etc/release and liquibase.
+** We use the Liquibase change log files (_changelog_) to run the DDL/DML commands.
+
+[source,bash]
+docker compose --env-file .env -f ./etc/docker-compose/postgresql/docker-compose.liquibase.install.step-03.yml up --build --force-recreate
+
+** This file calls the "liquibase-install-step-03.xml" file indirectly, which only inserts the "dookug_service" command into the CRON.job table so that the CRON scheduler can work with it later.
+
+[source,bash]
+docker compose --env-file .env -f ./etc/docker-compose/postgresql/docker-compose.liquibase.install.step-04.yml up --build --force-recreate
+
+** This file calls the "liquibase-install-step-04.xml" file indirectly, which only installs the default (dev/test) templates.
+======
+====
+
+=== Development
+==== Used tools, scripts
+
+TIP: The Github license will be added to the chosen file extensions automatically, by the https://github.com/ansys/pre-commit-hooks[pre-commit-hook], if you set the extensions in the ".pre-commit-config.yaml" file.
+Currently, the following extensions are set in this file: sql, xml, yaml, shell, dtd, and only in the following folders: etc, liquibase.
+All the usable extensions can be found in the ".sourceheaders.toml" file.
+The above info means, you need to install it.
+
+====
+.Available Liquibase changefile types (_click here_) 
+[%collapsible]
+======
+*Liquibase header:*
+
+. Postgres/Oracle liquibase header XML version:
+[source,xml]
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE defaultProperties SYSTEM "common/params.dtd">
+    <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">        
+    <!-- include the default properties -->
+    &propertiesAll;
+   <changeSet id="0007" author="jozsef.holczer" labels="0.1.0">
+   <comment>UM-116-Creating UM_GROUP table...</comment>
+
+. Oracle liquibase header SQL version:
+[source,sql]
+--liquibase formatted sql
+--changeset developer.name:0002 labels:0.3.0 dbms:oracle
+--comment PROJECT-504 Creating INTERVAL_DECLARATION_DATA table
+
+. Postgresql liquibase header SQL version:
+[source,sql]
+--liquibase formatted sql
+--changeset developer.name:0002 labels:0.3.0 dbms:postgresql
+--comment PROJECT-504 Creating INTERVAL_DECLARATION_DATA table
+
+*Create Table part without BLOB or Partition:*
+//A paragraph with the [%hardbreaks] option preserves line breaks
+[%hardbreaks]
+IMPORTANT: The global DB specific variables, e.g. "${schema_name}", are taken from the "params.dtd" file in the above XML header and are dynamically substituted at runtime.
+
+. Postgres/Oracle create table XML version:
+[source,xml]
+<createTable tableName = "um_group" remarks = "Group storage table." schemaName = "${schema_name}">
+    <column name = "x__id" type = "varchar2(30 ${char})"  remarks = "PK"><constraints nullable = "false" /></column>
+    <column name = "group_type" type = "varchar2(30 ${char})"  remarks = "The field indicates whether it's a group created in LDAP or individually on the project page. A check constraint should be placed on the field, with values: LDAP, CUSTOM"><constraints nullable = "false" /></column>
+    <column name = "group_name" type = "varchar2(255 ${char})"  remarks = "Name of the group"><constraints nullable = "false" /></column>
+    <column name = "x__insdate" type = "${datetime}" defaultValueComputed = "${sysdate}"  remarks = "Insert timestamp"><constraints nullable = "false" /></column>
+    <column name = "x__insuser" type = "varchar2(30 ${char})" defaultValue = "0"  remarks = "ID of the User who created the record (X__ID)"><constraints nullable =false" /></column>
+    <column name = "x__moddate" type = "${datetime}"  remarks = "Modification timestamp"></column>
+    <column name = "x__moduser" type = "varchar2(30 ${char})"  remarks = "ID of the User who modified the record (X__ID)"></column>
+    <column name = "x__version" type = "${versionDataType}" defaultValueNumeric = "0"  remarks = "Change version"><constraints nullable = "false" /></column>
+</createTable>
+<createIndex indexName="ix_nf_processing_data_id" tableName="nf_processing" schemaName="${schema_name}">
+    <column name="nf_data_id"/>
+</createIndex>  
+<addPrimaryKey columnNames="x__id" constraintName="pk_um_group_to_role" tableName="um_group_to_role" schemaName="${schema_name}" />
+<addForeignKeyConstraint                                         
+    baseColumnNames="um_group_id"                             
+    baseTableName="um_group_to_role"                           
+    baseTableSchemaName="${schema_name}"                         
+    constraintName="fk_um_group_to_role_um_group"   
+    referencedColumnNames="x__id"                                  
+    referencedTableName="um_group"                      
+    referencedTableSchemaName="${schema_name}"/>                 
+<addForeignKeyConstraint                                         
+    baseColumnNames="um_role_id"                             
+    baseTableName="um_group_to_role"                           
+    baseTableSchemaName="${schema_name}"                         
+    constraintName="fk_um_group_to_role_um_role"   
+    referencedColumnNames="x__id"                                  
+    referencedTableName="um_role"                      
+    referencedTableSchemaName="${schema_name}"/>                 
+<createIndex indexName = "ix_um_group_to_role_um_group_id" tableName = "um_group_to_role" schemaName = "${schema_name}">
+    <column name = "um_group_id"/>
+ </createIndex>
+<createIndex indexName = "ix_um_group_to_role_um_role_id" tableName = "um_group_to_role" schemaName = "${schema_name}">
+    <column name = "um_role_id"/>
+ </createIndex>
+
+. Oracle create table SQL version:
+[source,sql]
+create table INTERVAL_DECLARATION_DATA
+(
+   x__id                            VARCHAR2(30 CHAR) not null,
+   interval_declaration_id          VARCHAR2(30 CHAR) not null,
+   x__insdate                       DATE default SYSDATE not null,
+   x__insuser                       VARCHAR2(30 CHAR) default '0' not null,
+   x__moddate                       DATE,
+   x__moduser                       VARCHAR2(30 CHAR),
+   x__version                       NUMBER default 0 not null
+);
+comment on table INTERVAL_DECLARATION_DATA is 'Field-level aggregated data of declarations as BLOB';
+comment on column INTERVAL_DECLARATION_DATA.x__id is 'PK (generated)';
+--.....
+alter table INTERVAL_DECLARATION_DATA add constraint PK_INTERVAL_DECLARATION_DATA primary key (x__id);
+alter table INTERVAL_DECLARATION_DATA add constraint FK_INTERVAL_DECLARATION_DATA_INTERVAL_DECLARATION foreign key (interval_declaration_id) references INTERVAL_DECLARATION (x__id);
+create index IX_INTERVAL_DECLARATION_DATA_INTERVAL_DECLARATION ON INTERVAL_DECLARATION_DATA (interval_declaration_id);
+
+. Postgresql create table SQL version:
+[source,sql]
+CREATE TABLE INTERVAL_DECLARATION_DATA
+(
+   x__id                    VARCHAR(30) PRIMARY KEY NOT NULL,
+   interval_declaration_id   VARCHAR(30) NOT NULL,
+   x__insdate               DATE DEFAULT current_date NOT NULL,
+   x__insuser               VARCHAR(30) DEFAULT '0' NOT NULL,
+   x__moddate               DATE,
+   x__moduser               VARCHAR(30),
+   x__version               INTEGER DEFAULT 0 NOT NULL
+);
+COMMENT ON TABLE INTERVAL_DECLARATION_DATA IS 'Field-level aggregated data of declarations as BLOB';
+COMMENT ON COLUMN INTERVAL_DECLARATION_DATA.x__id IS 'PK (generált)';
+--.....
+ALTER TABLE INTERVAL_DECLARATION_DATA ADD CONSTRAINT PK_INTERVAL_DECLARATION_DATA PRIMARY KEY (x__id);
+ALTER TABLE INTERVAL_DECLARATION_DATA ADD CONSTRAINT FK_INTERVAL_DECLARATION_DATA_INTERVAL_DECLARATION FOREIGN KEY (interval_declaration_id)
+REFERENCES INTERVAL_DECLARATION (x__id);
+CREATE INDEX IX_INTERVAL_DECLARATION_DATA_INTERVAL_DECLARATION ON INTERVAL_DECLARATION_DATA (interval_declaration_id);
+
+*Create Table part with BLOB or/and Partition:*
+//A paragraph with the [%hardbreaks] option preserves line breaks
+[%hardbreaks]
+IMPORTANT: If your table has a BLOB or partition, you must place the remarks or other key/constraint generating parts in a separate XML file! Global database-specific variables, such as "${schema_name}", come from the "params.dtd" included in the previous XML header and are dynamically replaced at runtime.
+
+. Postgres/Oracle create table + BLOB + Partition XML version:
+[source,xml]
+<createTable tableName = "taxi_invoice_data" schemaName = "${schema_name}">
+    <column name = "x__id" type = "varchar2(30 ${char})"  ><constraints nullable = "false" /></column>
+    <column name = "taxi_invoice_id" type = "varchar2(30 ${char})"  ><constraints nullable = "false" /></column>
+    <column name = "invoice_data" type = "${blob}"  ><constraints nullable = "false" /></column>
+    <column name = "insdate_month" type = "${datetime}" defaultValueComputed = "to_date(to_char(${sysdate}, 'YYYY.MM'), 'YYYY.MM')"  ><constraints nullable = "false" /><olumn>
+    <column name = "x__insdate" type = "${datetime}" defaultValueComputed = "${sysdate}"  ><constraints nullable = "false" /></column>
+    <column name = "x__insuser" type = "varchar2(30 ${char})" defaultValue = "0"  ><constraints nullable = "false" /></column>
+    <column name = "x__moddate" type = "${datetime}"  ></column>
+    <column name = "x__moduser" type = "varchar2(30 ${char})"  ></column>
+    <column name = "x__version" type = "${versionDataType}" defaultValueNumeric = "0"  ><constraints nullable = "false" /></column>
+</createTable>
+<modifySql dbms = "oracle">
+    <append value = "lob(invoice_data) store as securefile "/>
+    <append  value = " PARTITION BY RANGE (x__insdate) INTERVAL( NUMTOYMINTERVAL(1, 'MONTH') )( PARTITION p_start VALUES LESS THAN (TO_DATE('2023-01-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN')) )"/>
+</mofySql>
+<modifySql dbms = "postgresql">
+    <append  value = " PARTITION BY RANGE (insdate_month); "/>
+    <append  value = " SELECT partman.create_parent( 
+        p_parent_table    => '${schema_name}.taxi_invoice_data',
+        p_control         => 'insdate_month',
+        p_type            => 'native',
+        p_interval        => 'monthly',
+        p_premake         => 4,
+        p_start_partition => (now())::text
+    ); "/>
+</modifySql>
+
+IMPORTANT: All other objects, including column and table comments, must be in a separate XML file (_with the same XML header_).
+
+. Oracle create table + BLOB + Partition SQL version:
+[source,sql]
+create table AMENDMENT_CATALOG
+(
+  x__id             VARCHAR2(30 CHAR) not null,
+  amendment_catalog BLOB not null,
+  valid_from        DATE default trunc(sysdate) not null,
+  valid_to          DATE default to_date('9999.12.31','YYYY.MM.DD') not null,
+  x__insdate        DATE default sysdate not null,
+  x__insuser        VARCHAR2(30 CHAR) default '0' not null,
+  x__moddate        DATE,
+  x__moduser        VARCHAR2(30 CHAR),
+  x__version        NUMBER default 0 not null
+) LOB(amendment_catalog) STORE AS SECUREFILE(
+    DEDUPLICATE
+    COMPRESS LOW
+)
+partition by range (x__insdate)
+   interval( numtoyminterval(1,'MONTH'))(
+      partition p_start values less than (to_date('2021-01-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS', 'NLS_CALENDAR=GREGORIAN'))
+);
+
+. Postgresql create table + BLOB + Partition SQL version:
+[source,sql]
+create table AMENDMENT_CATALOG
+(
+  x__id             VARCHAR(30) not null,
+  amendment_catalog bytea not null,
+  valid_from        timestamptz(6) default trunc(sysdate) not null,
+  valid_to          timestamptz(6) default to_date('9999.12.31','YYYY.MM.DD') not null,
+  insdate_month     timestamptz(6) default to_date(to_char(now(), 'YYYY.MM'), 'YYYY.MM') not null,
+  x__insdate        timestamptz(6) default now() not null,
+  x__insuser        VARCHAR(30) default '0' not null,
+  x__moddate        timestamptz(6),
+  x__moduser        VARCHAR(30),
+  x__version        INT default 0 not null
+);
+PARTITION BY RANGE (insdate_month);
+SELECT partman.create_parent( 
+        p_parent_table    => 'AMENDMENT_CATALOG',
+        p_control         => 'insdate_month',
+        p_type            => 'native',
+        p_interval        => 'monthly',
+        p_premake         => 4,
+        p_start_partition => (now())::text
+);
+
+*Separated remarks examples in case of XML BLOB or Partition:*
+[source,xml]
+<setTableRemarks remarks="Control tables for status modification and process operation/correction" schemaName="${schema_name}" tableName="nf_push"/>
+<setColumnRemarks columnName="x__id" remarks="PK" tableName="nf_push" schemaName="${schema_name}"/>
+<setColumnRemarks columnName="nf_data_id" remarks="FK - NF_DATA.X__ID" tableName="nf_push" schemaName="${schema_name}"/>
+<setColumnRemarks columnName="device_token" remarks="The device token to which the message should be sent." tableName="nf_push" schemaName="${schema_name}"/>
+<setColumnRemarks columnName="channel_id" remarks="Collector ID of devices subscribed to a specified channel." tableName="nf_push" schemaName="${schema_name"/>
+<setColumnRemarks columnName="data" remarks="JSON formatted data containing unique key-value pairs." tableName="nf_push" schemaName="${schema_name}"/>
+<setColumnRemarks columnName="x__insdate" remarks="The timestamp of insertion" tableName="nf_push" schemaName="${schema_name}"/>
+<setColumnRemarks columnName="x__insuser" remarks="The identifier of the user performing the insertion (X__ID)" tableName="nf_push" schemaName="${schema_name}"/>
+<setColumnRemarks columnName="x__moddate" remarks="The timestamp of modification" tableName="nf_push" schemaName="${schema_name}"/>
+<setColumnRemarks columnName="x__moduser" remarks="The identifier of the user performing the modification (X__ID)" tableName="nf_push" schemaName="${schema_name}"/>
+<setColumnRemarks columnName="x__version" remarks="Versioning of changes" tableName="nf_push" schemaName="${schema_name}"/>
+<createIndex indexName="ix_nf_push_nf_data_id" tableName="nf_push" schemaName="${schema_name}">
+    <column name="nf_data_id"/>
+</createIndex>    
+<addPrimaryKey columnNames="x__id" constraintName="pk_nf_push" tableName="nf_push" schemaName="${schema_name}" />
+<addForeignKeyConstraint  baseColumnNames="nf_data_id"                                  
+                          baseTableName="nf_push"
+                          baseTableSchemaName="${schema_name}"
+                          constraintName="fk_nf_push_nf_data"
+                          referencedColumnNames="x__id"
+                          referencedTableName="nf_data"
+                          referencedTableSchemaName="${schema_name}"/>
+
+IMPORTANT: FK indexes must be in a separate XML file (_with the same XML header_) in case of LOB or Partition and if there is a foreign key.
+
+*FK index in case of XML BLOB or Partition:*
+[source,xml]
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE defaultProperties SYSTEM "common/params.dtd">
+    <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    <!-- include the default properties -->
+    &propertiesAll;
+    <changeSet id="0005" author="jozsef.holczer" labels="0.1.0">
+        <comment>PROJECT-44-Creating TAXI_INVOICE table, Foreign Key index.</comment>
+        <!-- FK Index -->
+        <createIndex indexName = "ix_taxi_invoice_taxi_transaction_id" tableName = "taxi_invoice" schemaName = "${schema_name}">
+            <column name = "taxi_transaction_id"/>
+        </createIndex>
+        <modifySql dbms = "oracle">
+            <append  value = " LOCAL"/>
+        </modifySql>
+    </changeSet>
+</databaseChangeLog>
+
+======   
+====
+
+====
+.Local Postgres DB (_click here_)
+[%collapsible]
+======
+[source,console]
+docker volume module-dookug-postgredb-data
+
+TIP: It creates a volume where the Postgres data is stored. This is a separate Docker volume (_volume_), which will persist even after the Docker containers are removed. You only need to use this command once.
+
+[source,console]
+docker network create dookug-local-network
+
+TIP: This creates a network so that the containers can reach each other when the Docker run starts. You only need to use this command once.
+
+[source,console]
+docker compose --env-file .env -f ./etc/docker-compose/postgresql/docker-compose.local.postgredb.yml up --build --force-recreate --remove-orphans
+
+TIP: This command starts the local Postgres database, which will become a daily routine when you want to work with the local database. You need to run this command in a separate command window and leave it running on the taskbar (_or on a separate command window tab_).
+It downloads the whole Postgres image (_which is configured in the configuration files_) during the first run, so it may take a while, because it may need to download several gigabytes.
+If you want to restart (_delete and restart_) this image, you can use this command: docker compose --env-file .env -f ./etc/docker-compose/postgresql/docker-compose.local.postgredb.yml down -v
+
+[source,bash]
+docker compose --env-file .env \
+    -f ./etc/docker-compose/postgresql/docker-compose.liquibase.install.step-01.yml up \
+    --build --force-recreate module-dookug-postgredb-step-01 
+
+TIP: The service name runs the step-01 of DookuG DB after the command.
+This will initialize in the "default" Postgres DB.
+It downloads the standard Liquibase image and initializes the DB.
+If the Error: "no basic auth credentials" error occurs, use the "docker login" DOCKER_REPOSITORY command, then log in. You only need to use this command once.
+
+[source,bash]
+docker compose --env-file .env \
+    -f ./etc/docker-compose/postgresql/docker-compose.liquibase.install.step-02.yml up \
+    --build --force-recreate module-dookug-pg_tools-step-01B
+
+TIP: This is the "sub-step" of the "step-02", which installs the pg_partman partition manager extension in the "partman" schema of the DookuG DB. This is only available in Postgresql.
+
+[source,bash]
+docker compose --env-file .env \
+    -f ./etc/docker-compose/postgresql/docker-compose.liquibase.install.step-02.yml up \
+    --build --force-recreate module-dookug-postgredb-step-02
+
+TIP: This is the "sub-step" of the "step-2", which logs in to the "dookug" schema user and creates the Liquibase objects (_e.g. databasechangelog table_) during the first run, and other object installations.
+
+[source,bash]
+docker compose --env-file .env \
+    -f ./etc/docker-compose/postgresql/docker-compose.liquibase.install.step-03.yml up \
+    --build --force-recreate module-dookug-postgredb-step-03
+
+TIP: This logs in with postgres user and creates the dookug entry in the CRON scheduler table, which is only available in Postgresql.
+
+[source,bash]
+docker compose --env-file .env \
+    -f ./etc/docker-compose/postgresql/docker-compose.liquibase.install.step-04.yml up \
+    --build --force-recreate module-dookug-postgredb-step-04
+
+TIP: This logs in with dookug (_schema_) user and creates the default (dev/test) template objects.
+
+======
+
+.Local Oracle DB (_click here_)
+[%collapsible]
+======
+[source,console]
+docker volume create dookug-db-oracle-data
+
+TIP: It creates a volume where the Oracle data is stored. This is a separate Docker volume (_volume_), which will persist even after the Docker containers are removed. You only need to use this command once.
+
+[source,console]
+docker network create dookug-local-network
+
+TIP: This creates a network so that the containers can reach each other when the Docker run starts. You only need to use this command once.
+
+[source,console]
+docker compose --env-file .env -f ./etc/docker-compose/oracle/docker-compose.local.oracle.yml up --build --force-recreate --remove-orphans
+
+TIP: This command starts the local Oracle database, which will become a daily routine when you want to work with the local database. You need to run this command in a separate command window and leave it running on the taskbar (_or on a separate command window tab_).
+It downloads the whole Oracle image (_which is configured in the configuration files_) during the first run, so it may take a while, because it may need to download several (10 GB) gigabytes.
+If you want to restart (_delete and restart_) this image, you can use this command: docker compose --env-file .env -f ./etc/docker-compose/oracle/docker-compose.local.oracle.yml down -v
+
+[source,console]
+docker compose --env-file .env -f ./etc/docker-compose/oracle/docker-compose.liquibase.install.step-01.yml up --build --force-recreate
+
+TIP: This command downloads the standard Liquibase image and initializes the DB.
+If the Error: "no basic auth credentials" error occurs, use the "docker login" DOCKER_REPOSITORY command, then log in. You only need to use this command once.
+
+[source,console]
+docker compose --env-file .env -f ./etc/docker-compose/oracle/docker-compose.liquibase.install.step-02.yml up --build --force-recreate module-dookug-oracle-step-02
+
+TIP: This command logs in with dookug (_schema_) user and creates the Liquibase objects (_e.g. databasechangelog table_) during the first run.
+
+[source,console]
+docker compose --env-file .env -f ./etc/docker-compose/oracle/docker-compose.liquibase.install.step-03.yml up --build --force-recreate module-dookug-oracle-step-03
+
+TIP: This step-3 does not do anything in the Oracle installation, it is only included to avoid errors. Since there is a step-4, the Liquibase installer does not like "gaps", so it tries to run the Postgres step-3 on the Oracle DB, which of course fails. So this just calls the Postgres step-3, and since it only runs on the Postgres DB, the installer bypasses it on the Oracle side.
+
+[source,console]
+docker compose --env-file .env -f ./etc/docker-compose/oracle/docker-compose.liquibase.install.step-04.yml up --build --force-recreate module-dookug-oracle-step-04
+
+TIP: This logs in with dookug (_schema_) user and creates the default (dev/test) template objects.
+
+======
+====

@@ -17,13 +17,6 @@
 #              at the moment you can use postgresql or oracle 
 #INSTALL_SCHEMA: ONLY in oracle install! 
 #                This is NOT required, the default value: "dookug".
-#in case of server install, you must use the DEFAULT and PROJECT parameters (_example of their usage -> below at the embed section_).
-#   INSTALL_URL_ADMIN
-#   INSTALL_URL_PROJECT
-#   INSTALL_USERNAME_ADMIN
-#   INSTALL_USERNAME_PROJECT
-#   INSTALL_PASSWORD_ADMIN
-#   INSTALL_PASSWORD_PROJECT
 #=====================
 #postgresql default local install:
 #this runs all the 4 steps by default
@@ -31,7 +24,7 @@
 docker run -it --rm \
   --network=dookug-local-network \
   -e AUTO_INSTALL=postgresql \
-  -e INSTALL_USERNAME_PROJECT=project_user_name \
+  -e INSTALL_USERNAME_PROJECT=dookug_user \
   icellmobilsoft/dookug_db:2.0.0-SNAPSHOT
 #-------------------------  
 #If you need only a specific step(s):
@@ -39,7 +32,7 @@ docker run -it --rm \
 docker run -it --rm \
   --network=dookug-local-network \
   -e AUTO_INSTALL=postgresql \
-  -e INSTALL_USERNAME_PROJECT=project_user_name \
+  -e INSTALL_USERNAME_PROJECT=dookug_user \
   -e INSTALL_STEPS=2,4 \
   icellmobilsoft/dookug_db:2.0.0-SNAPSHOT
 #-------------------------  
@@ -49,7 +42,6 @@ docker run -it --rm \
 docker run -it --rm \
   --network=dookug-local-network \
   -e AUTO_INSTALL=oracle \
-  -e INSTALL_SCHEMA=schema_name \
   icellmobilsoft/dookug_db:2.0.0-SNAPSHOT
 #-------------------------  
 #If you need only a specific step(s):
@@ -84,13 +76,19 @@ docker run -it --rm \
 #INSTALL_SCHEMA: ONLY in oracle install! 
 #                This is NOT required, the default value: "dookug".
 #CREATE_DATABASE: When embedding this DookuG installer into another (host) DB, set this to false to avoid creating an empty database.
+#in case of server install, you must use the DEFAULT and PROJECT parameters.
+#   INSTALL_URL_ADMIN
+#   INSTALL_URL_PROJECT
+#   INSTALL_USERNAME_ADMIN
+#   INSTALL_USERNAME_PROJECT
+#   INSTALL_PASSWORD_ADMIN
+#   INSTALL_PASSWORD_PROJECT
 #---------------------  
 #postgresql:
 #-----------
 docker run -it --rm \
   --network=host-local-network \
   -e AUTO_INSTALL=postgresql \
-  -e DATABASE_NAME=host_db \
   -e INSTALL_URL_ADMIN=jdbc:postgresql://host_db-postgredb:port_num/postgres \
   -e INSTALL_URL_PROJECT=jdbc:postgresql://host_db-postgredb:port_num/host_db \
   -e INSTALL_USERNAME_ADMIN=postgres \
@@ -108,7 +106,6 @@ docker run -it --rm \
 docker run -it --rm \
   --network=host-local-network \
   -e AUTO_INSTALL=oracle \
-  -e DATABASE_NAME=host_db \
   -e INSTALL_URL_ADMIN=jdbc:oracle:thin:@host_db-oracle:1521/xepdb1 \
   -e INSTALL_URL_PROJECT=jdbc:oracle:thin:@host_db-oracle:1521/xepdb1 \
   -e INSTALL_USERNAME_ADMIN=system \

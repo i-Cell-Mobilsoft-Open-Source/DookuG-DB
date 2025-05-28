@@ -25,7 +25,7 @@ SPDX-License-Identifier: Apache-2.0
     <property name="dba_user_name"      value="system"   dbms="oracle"/>
 
     <!-- postgresql -->
-    <property name="database_name"      value="dookug_db"/>
+    <property name="database_name"      value="${DATABASE_NAME}"/>
     
     <property name="schema_name"        value="${S2_SCHEMA_NAME}"/>
     <property name="schema_password"    value="developer"/>
