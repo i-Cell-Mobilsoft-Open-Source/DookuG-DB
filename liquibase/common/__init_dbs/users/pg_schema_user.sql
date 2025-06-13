@@ -22,7 +22,7 @@
 DO $$
 BEGIN 
   
-  IF not public.public_user_exists('${pg_schema_user}') THEN
+  IF not public.public_role_exists('${pg_schema_user}') THEN
     /*why superuser option?
     If we embed this db (this is the most common scenario) to other host db, then we get the following error without the superuser option:
     Unexpected error running Liquibase: ERROR: relation "databasechangeloglock" already exists
@@ -30,10 +30,17 @@ BEGIN
     So it cannot handle the liquichangelock table without the superuser option
     */
     CREATE USER ${pg_schema_user} WITH SUPERUSER PASSWORD '${pg_schema_password}';
-    --the following needs later in schema installs.
-    GRANT CREATE ON DATABASE ${database_name} TO ${pg_schema_user};
-    GRANT ${schema_name}_exec TO ${pg_schema_user} WITH ADMIN OPTION;   
+  ELSE
+    -- this part is required, b/c though the user exists, but it cannot create the project schema.
+    -- User already exists, ensure its password is correct AND it can log in.
+    -- We explicitly add LOGIN and SUPERUSER here to ensure the required attributes are set.
+    ALTER ROLE ${pg_schema_user} WITH SUPERUSER LOGIN PASSWORD '${pg_schema_password}'; 
   END IF;
+  
+  -- the following needs later in schema installs.
+  -- The following grants are idempotent and can be run unconditionally
+  GRANT CREATE ON DATABASE ${database_name} TO ${pg_schema_user};
+  GRANT ${schema_name}_exec TO ${pg_schema_user} WITH ADMIN OPTION;  
   
 END$$;
 /

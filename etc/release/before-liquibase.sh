@@ -158,6 +158,7 @@ if [[ "$AUTO_INSTALL" == "postgresql" ]]; then
       changelog_file="liquibase-install-step-0${step}.xml"
       liquibase \
         --searchPath=../${DOCKER_REPOSITORY}/liquibase/changelog \
+        --liquibaseSchemaName=public \
         --defaults-file="${defaults_file}" \
         --changeLogFile="${changelog_file}" \
         --url="${liqui_url}" \
