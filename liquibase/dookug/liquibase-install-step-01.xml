@@ -29,7 +29,6 @@ SPDX-License-Identifier: Apache-2.0
     <include file="common/_all-modules/db/functions/public_role_exists.sql" relativeToChangelogFile="true"/>
     <include file="common/__init_dbs/users/schema_service.sql" relativeToChangelogFile="true"/>    
     <include file="common/__init_dbs/users/read.sql" relativeToChangelogFile="true"/>
-    <include file="common/__init_dbs/users/dwh_stream.sql" relativeToChangelogFile="true"/>
     <include file="common/_create_dbs/create-database.sql" relativeToChangelogFile="true"/>
     <include file="common/cron_jobs/init_cron_jobs.sql" relativeToChangelogFile="true"/>
     
