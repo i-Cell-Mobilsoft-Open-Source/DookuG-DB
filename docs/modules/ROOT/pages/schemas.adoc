@@ -1,0 +1,10 @@
+:sectnums:
+:sectnumlevels: 4
+
+= Schemas
+
+== dookug
+
+include::dookug_erd.adoc[leveloffset=+2]
+include::dookug_tables_attributes.adoc[leveloffset=+2]
+include::dookug_permissions.adoc[leveloffset=+2]

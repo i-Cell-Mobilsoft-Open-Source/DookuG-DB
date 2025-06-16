@@ -26,15 +26,7 @@ include::summary.adoc[leveloffset=+1]
 include::technology.adoc[leveloffset=+1]
 
  
-== Schemas
-=== dookug
-==== ERD:
 
-include::dookug_erd.adoc[leveloffset=+1]
-
-==== Tables:
-
-include::dookug_tables_attributes.adoc[leveloffset=+1]
 
 include::config.adoc[leveloffset=+1]
 

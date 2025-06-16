@@ -119,12 +119,6 @@ docker run -it --rm \
 
 #on windows: the "\" needs to be changed to "`"!
 
-:embedded_dookug_db_into_taxi_db: embedded_dookug_db_into_taxi_db.png
-image::{embedded_dookug_db_into_taxi_db}[DookuG is embedded in to Taxi DB,link="{imagesdir}/{embedded_dookug_db_into_taxi_db}",window=_blank]
-
-:embedded_dookug_db_in_cron_jobs: embedded_dookug_db_in_cron_jobs.png
-image::{embedded_dookug_db_in_cron_jobs}[DookuG Service register in CRON,link="{imagesdir}/{embedded_dookug_db_in_cron_jobs}",window=_blank]
-
 ** optional environment variable, only needed during password change:
 [source,bash]
 ----

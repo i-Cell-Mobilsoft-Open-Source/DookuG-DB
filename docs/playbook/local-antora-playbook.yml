@@ -1,0 +1,15 @@
+site:
+  title: DookuG - DB Liquibase
+  start_page: DookuG-DB::summary.adoc
+content:
+  sources:
+    - url: ./../..
+      branches: HEAD
+      start_path: docs
+ui:
+  bundle:
+    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
+    snapshot: true
+runtime:
+  # force to don't use cache
+  fetch: true

@@ -1,0 +1,31 @@
+= Permissions
+
+.Postgres permissions
+
+|===
+| Users | Permissions
+
+| dookug | SELECT, INSERT, UPDATE, DELETE
+
+| dookug_write | INSERT, UPDATE, DELETE
+
+| dookug_read | SELECT
+
+| dookug_exec | dookug_read, dookug_write
+
+| dookug_service | dookug_exec
+
+|===
+
+.Oracle permissions
+
+|===
+| Users | Permissions
+
+| DOOKUG_WRITE | INSERT, UPDATE, DELETE
+
+| DOOKUG_READ | SELECT
+
+| DOOKUG_EXEC | DOOKUG_READ, DOOKUG_WRITE
+
+|===

@@ -1,0 +1,6 @@
+name: DookuG-DB
+title: DookuG Database
+version: true
+start_page: summary.adoc
+nav:
+  - modules/ROOT/nav.adoc
