@@ -19,12 +19,12 @@ ifndef::imagesdir[:imagesdir: ./images]
 
 [%hardbreaks]
 
-include::summary.adoc[leveloffset=+1]
+include::pages/summary.adoc[leveloffset=+1]
 
-include::schemas.adoc[leveloffset=+1]
+include::pages/schemas.adoc[leveloffset=+1]
 
-include::config.adoc[leveloffset=+1]
+include::pages/config.adoc[leveloffset=+1]
 
-include::install.adoc[leveloffset=+1]
+include::pages/install.adoc[leveloffset=+1]
 
-include::release_notes.adoc[leveloffset=+1]
+include::pages/release_notes.adoc[leveloffset=+1]
