@@ -17,16 +17,11 @@ endif::[]
 
 ifndef::imagesdir[:imagesdir: ./images]
 
-== Overview
-
 [%hardbreaks]
 
 include::summary.adoc[leveloffset=+1]
 
-include::technology.adoc[leveloffset=+1]
-
- 
-
+include::schemas.adoc[leveloffset=+1]
 
 include::config.adoc[leveloffset=+1]
 
