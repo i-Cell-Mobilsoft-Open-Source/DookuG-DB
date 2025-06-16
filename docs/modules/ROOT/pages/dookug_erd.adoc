@@ -1,4 +1,6 @@
 ifndef::imagesdir[:imagesdir: ./images]
 
+= ERD
+
 :dookug_erd: dookug_erd.png
 image::{dookug_erd}[Dookug schema ERD,link="{imagesdir}/{dookug_erd}",window=_blank]

@@ -4,4 +4,4 @@
 
 [%hardbreaks]
 
-include::../docs/summary.adoc[]
+include::../docs/modules/ROOT/pages/summary.adoc[]

@@ -124,9 +124,9 @@ IMPORTANT: If your table has a BLOB or partition, you must place the remarks or 
 
 . Postgres/Oracle create table + BLOB + Partition XML version:
 [source,xml]
-<createTable tableName = "taxi_invoice_data" schemaName = "${schema_name}">
+<createTable tableName = "project_invoice_data" schemaName = "${schema_name}">
     <column name = "x__id" type = "varchar2(30 ${char})"  ><constraints nullable = "false" /></column>
-    <column name = "taxi_invoice_id" type = "varchar2(30 ${char})"  ><constraints nullable = "false" /></column>
+    <column name = "project_invoice_id" type = "varchar2(30 ${char})"  ><constraints nullable = "false" /></column>
     <column name = "invoice_data" type = "${blob}"  ><constraints nullable = "false" /></column>
     <column name = "insdate_month" type = "${datetime}" defaultValueComputed = "to_date(to_char(${sysdate}, 'YYYY.MM'), 'YYYY.MM')"  ><constraints nullable = "false" /><olumn>
     <column name = "x__insdate" type = "${datetime}" defaultValueComputed = "${sysdate}"  ><constraints nullable = "false" /></column>
@@ -142,7 +142,7 @@ IMPORTANT: If your table has a BLOB or partition, you must place the remarks or 
 <modifySql dbms = "postgresql">
     <append  value = " PARTITION BY RANGE (insdate_month); "/>
     <append  value = " SELECT partman.create_parent( 
-        p_parent_table    => '${schema_name}.taxi_invoice_data',
+        p_parent_table    => '${schema_name}.project_invoice_data',
         p_control         => 'insdate_month',
         p_type            => 'native',
         p_interval        => 'monthly',
@@ -238,10 +238,10 @@ IMPORTANT: FK indexes must be in a separate XML file (_with the same XML header_
     <!-- include the default properties -->
     &propertiesAll;
     <changeSet id="0005" author="jozsef.holczer" labels="0.1.0">
-        <comment>PROJECT-44-Creating TAXI_INVOICE table, Foreign Key index.</comment>
+        <comment>PROJECT-44-Creating project_INVOICE table, Foreign Key index.</comment>
         <!-- FK Index -->
-        <createIndex indexName = "ix_taxi_invoice_taxi_transaction_id" tableName = "taxi_invoice" schemaName = "${schema_name}">
-            <column name = "taxi_transaction_id"/>
+        <createIndex indexName = "ix_project_invoice_project_transaction_id" tableName = "project_invoice" schemaName = "${schema_name}">
+            <column name = "project_transaction_id"/>
         </createIndex>
         <modifySql dbms = "oracle">
             <append  value = " LOCAL"/>
