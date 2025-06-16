@@ -5,4 +5,4 @@
 ** The module is designed to generate output documents (PDF, XLSX, HTML, TXT, ...) from various template formats with identifiers (TXT, HTML, object, JRXML, ...) by inserting the received parameter(s) into the received template.
 ** The solution is based on a microservice architecture.
 
-
+include::technology.adoc[leveloffset=+1]
