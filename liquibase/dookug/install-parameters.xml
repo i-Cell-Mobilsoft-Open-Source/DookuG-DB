@@ -26,11 +26,10 @@ SPDX-License-Identifier: Apache-2.0
 
     <!-- postgresql -->
     <property name="database_name"      value="${DATABASE_NAME}"/>
+    <property name="pg_schema_user"     value="${INSTALL_USERNAME_PROJECT}"/>
     
     <property name="schema_name"        value="${S2_SCHEMA_NAME}"/>
-    <property name="schema_password"    value="developer"/>
-    <property name="pg_schema_user"     value="${INSTALL_USERNAME_PROJECT}"/>
-    <property name="pg_schema_password" value="${INSTALL_PASSWORD_PROJECT}"/>
+    <property name="schema_password"    value="${INSTALL_PASSWORD_PROJECT}"/>
     
     <property name="service_name"       value="${S2_SCHEMA_NAME}_service"/>
 
