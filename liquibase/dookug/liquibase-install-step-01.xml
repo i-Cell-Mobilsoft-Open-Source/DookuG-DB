@@ -41,5 +41,6 @@ SPDX-License-Identifier: Apache-2.0
     <include file="common/__init_dbs/schema/oracle_service_user.sql" relativeToChangelogFile="true"/>
     <include file="common/__init_dbs/users/ora_schema_user.sql" relativeToChangelogFile="true"/>
     <include file="common/grants/oracle_grants.sql" relativeToChangelogFile="true"/>
+    <include file="common/__init_dbs/schema/add_oracle_connect_grant_to_service.sql" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

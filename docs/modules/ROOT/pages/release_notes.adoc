@@ -23,3 +23,5 @@
 - Technical release: Backend version sync, no changes compared to 1.1.0
 * 2.0.0 Changes:
 - DKG-319 - Refactoring the installation process.
+* 2.1.0 Changes:
+- DKG-351 - Giving connect grant to oracle service user. Project password fix for project and service user.

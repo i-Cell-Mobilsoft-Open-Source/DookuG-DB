@@ -29,12 +29,12 @@ BEGIN
     [Failed SQL: (0) CREATE TABLE public.databasechangeloglock (...);
     So it cannot handle the liquichangelock table without the superuser option
     */
-    CREATE USER ${pg_schema_user} WITH SUPERUSER PASSWORD '${pg_schema_password}';
+    CREATE USER ${pg_schema_user} WITH SUPERUSER PASSWORD '${schema_password}';
   ELSE
     -- this part is required, b/c though the user exists, but it cannot create the project schema.
     -- User already exists, ensure its password is correct AND it can log in.
     -- We explicitly add LOGIN and SUPERUSER here to ensure the required attributes are set.
-    ALTER ROLE ${pg_schema_user} WITH SUPERUSER LOGIN PASSWORD '${pg_schema_password}'; 
+    ALTER ROLE ${pg_schema_user} WITH SUPERUSER LOGIN PASSWORD '${schema_password}'; 
   END IF;
   
   -- the following needs later in schema installs.

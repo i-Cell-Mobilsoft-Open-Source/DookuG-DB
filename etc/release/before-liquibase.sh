@@ -24,15 +24,26 @@ S2_SCHEMA_NAME=${INSTALL_SCHEMA:-dookug}
 echo "PROJECT SCHEMA=$S2_SCHEMA_NAME"
 export S2_SCHEMA_NAME
 
+echo "AUTO_INSTALL=$AUTO_INSTALL"  
+
+
 # in case of embedding, the database_name comes from the last tag (host_db) of the project url (e.g.: jdbc:postgresql://module-host-postgredb:5432/host_db) if it is not set explicitly.
 #it is required here in Oracle as well, b/c without it a Java Exception occurs.
 DATABASE_NAME=${DATABASE_NAME:-$(basename "${INSTALL_URL_PROJECT:-dookug_db}")}
-echo "PROJECT DATABASE=$DATABASE_NAME"
 export DATABASE_NAME
 
-echo "AUTO_INSTALL=$AUTO_INSTALL"  
-
 if [[ "$AUTO_INSTALL" == "postgresql" ]]; then
+
+  #The following parameter needed for Postgres, if our current repo is embedded in to another repo. 
+  # The default CREATE_DATABASE is initialized in step1, and needs to be overwritten during runtime.
+  # If you need to embed it, then CREATE_DATABASE=false, and with this, we can avoid to create an empty DB within the "parent (host)" DB. 
+  # This parameter is used in "dookug-db/liquibase/common/_create_dbs/create-database.sql"
+  CREATE_DATABASE=${CREATE_DATABASE:-true}
+  echo "CREATE_DATABASE=$CREATE_DATABASE"
+  export CREATE_DATABASE
+  
+  echo "PROJECT DATABASE=$DATABASE_NAME"
+  
   #in case of local development, you don't need to fill the INSTALL_PGTOOLS, but id you don't need it, you need to fill it with 0.
   INSTALL_PGTOOLS=${INSTALL_PGTOOLS:-true}
   export INSTALL_PGTOOLS
@@ -61,14 +72,6 @@ export INSTALL_PASSWORD_ADMIN
 export INSTALL_PASSWORD_PROJECT
 export INSTALL_URL_ADMIN
 export INSTALL_URL_PROJECT
-
-#The following parameter needed for Postgres, if our current repo is embedded in to another repo. 
-# The default CREATE_DATABASE is initialized in step1, and needs to be overwritten during runtime.
-# If you need to embed it, then CREATE_DATABASE=false, and with this, we can avoid to create an empty DB within the "parent (host)" DB. 
-# This parameter is used in "dookug-db/liquibase/common/_create_dbs/create-database.sql"
-CREATE_DATABASE=${CREATE_DATABASE:-true}
-echo "CREATE_DATABASE=$CREATE_DATABASE"
-export CREATE_DATABASE
 
 # The following parameter is used to set the order of the install steps.
 # The default order is 1,2,3,4.
