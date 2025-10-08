@@ -36,6 +36,7 @@ services:
     environment:
       AUTO_INSTALL: postgresql
       INSTALL_STEP: STEP_3
+      INSTALL_CONTEXT: compose
 networks:
   default:
     external: true
