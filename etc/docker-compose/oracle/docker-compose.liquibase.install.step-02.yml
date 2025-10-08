@@ -37,6 +37,7 @@ services:
     environment:
       AUTO_INSTALL: oracle
       INSTALL_STEP: STEP_2
+      INSTALL_CONTEXT: compose
 networks:
   default:
     external: true
