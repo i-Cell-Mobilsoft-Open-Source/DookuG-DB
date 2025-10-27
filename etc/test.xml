@@ -1,0 +1,14 @@
+<test>
+    <name>Sample Test</name>
+    <description>This is a sample test case.</description>
+    <steps>
+        <step>
+            <action>Open the application</action>
+            <expectedResult>The application opens successfully</expectedResult>
+        </step>
+        <step>
+            <action>Login with valid credentials</action>
+            <expectedResult>User is logged in successfully</expectedResult>
+        </step>
+    </steps>
+</test>
