@@ -11,4 +11,4 @@ repos:
     - shell
     - dtd
 #    - asciidoc
-    files: '^(etc|liquibase)/.*(\.sh)?$'
+    files: '^(etc|liquibase)/.*'
