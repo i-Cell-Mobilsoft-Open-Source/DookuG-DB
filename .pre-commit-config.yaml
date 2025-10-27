@@ -10,5 +10,4 @@ repos:
     - yaml
     - shell
     - dtd
-#    - asciidoc
     files: '^(etc|liquibase)/.*'

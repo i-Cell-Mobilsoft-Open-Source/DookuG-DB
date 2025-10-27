@@ -7,6 +7,10 @@ on:
         description: 'test check licence'
         default: 'test check licence'
         required: true
+  pull_request:
+    branches-ignore:
+      - 'gh-pages'
+      - 'dependabot/**'
 
 jobs:
   check-licence:
