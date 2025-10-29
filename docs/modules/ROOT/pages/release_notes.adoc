@@ -25,3 +25,4 @@
 - DKG-319 - Refactoring the installation process.
 * 2.1.0 Changes:
 - DKG-351 - Giving connect grant to oracle service user. Project password fix for project and service user.
+- Added pre-commit configuration for license headers for docs files.
