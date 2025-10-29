@@ -15,6 +15,7 @@ include_spdx_license_identifier = "auto"
 
 [language.asciidoc]
 extensions = [".adoc"]
+block_comment = { start = "////\n", end = "\n////" }
 inline_comment = "// "
 
 [language.c]
