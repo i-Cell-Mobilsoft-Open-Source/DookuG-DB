@@ -249,12 +249,42 @@ docker compose --env-file .env -f ./etc/docker-compose/postgresql/docker-compose
 ====
 
 === Development
-==== Used tools, scripts
 
-TIP: The Github license will be added to the chosen file extensions automatically, by the https://github.com/ansys/pre-commit-hooks[pre-commit-hook], if you set the extensions in the ".pre-commit-config.yaml" file.
-Currently, the following extensions are set in this file: sql, xml, yaml, shell, dtd, and only in the following folders: etc, liquibase.
-All the usable extensions can be found in the ".sourceheaders.toml" file.
-The above info means, you need to install it.
+==== Generating license headers
+
+For generating license headers in newly added asciidoc, shell and yaml files https://pre-commit.com/[pre-commit] should be used.
+It only has to be set up once, then the hook will run automatically on every commit.
+
+`.pre-commit-config.yaml` holds the configuration for the hooks.
+It defines the hook for adding license headers, the file types to check in a specific folder.
+
+`.sourceheaders.toml` holds the license header template, which will be added to the files, and the configuration for each file type.
+
+===== Local setup
+
+Before setting up pre-commit, make sure that you have the following installed:
+
+* https://www.python.org/[python 3]
+* https://pypi.org/project/pip/[pip]
+
+[source, bash]
+----
+# Install pre-commit
+pip install pre-commit
+
+# Set up the git hook scripts
+pre-commit install
+----
+
+Now `pre-commit` will run automatically on `git commit`
+
+Optionally, you can run the hook manually with the following command executed from the root of the project: `pre-commit run --all-files`
+
+IMPORTANT: You will experience that on newly added files the license header will be added automatically on commit,
+but at the same time the commit will fail with error. This is because the hook adds the license header, but the commit was made without it.
+Thus, you have to re-commit the changes. This is a one-time action per newly added files.
+
+==== Used tools, scripts
 
 ====
 .Available Liquibase changefile types (_click here_) 

@@ -13,6 +13,10 @@ license = "Apache-2.0"
 #spdx_license_identifier = "MIT"
 include_spdx_license_identifier = "auto"
 
+[language.asciidoc]
+extensions = [".adoc"]
+inline_comment = "// "
+
 [language.c]
 extensions = [".c", ".h", ".cc", ".cpp", ".cxx", ".hpp", ".hxx"]
 block_comment = { start = "/* ", line = " * ", end = " */" }
