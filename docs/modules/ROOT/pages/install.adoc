@@ -41,7 +41,7 @@ docker run -it --rm \
   --network=dookug-local-network \
   -e AUTO_INSTALL=postgresql \
   -e INSTALL_USERNAME_PROJECT=dookug \
-  icellmobilsoft/dookug_db:2.1.0-SNAPSHOT
+  icellmobilsoft/dookug_db:2.2.0-SNAPSHOT
 #-------------------------  
 #If you need only a specific step(s):
 #-------------------------
@@ -50,7 +50,7 @@ docker run -it --rm \
   -e AUTO_INSTALL=postgresql \
   -e INSTALL_USERNAME_PROJECT=dookug_user \
   -e INSTALL_STEPS=2,4 \
-  icellmobilsoft/dookug_db:2.0.0-SNAPSHOT
+  icellmobilsoft/dookug_db:2.2.0-SNAPSHOT
 #-------------------------  
 #oracle local install:
 #this runs all the 4 steps by default
@@ -58,8 +58,9 @@ docker run -it --rm \
 docker run -it --rm \
   --network=dookug-local-network \
   -e AUTO_INSTALL=oracle \
-  -e INSTALL_PASSWORD_PROJECT=dookug_123 \
-  icellmobilsoft/dookug_db:2.1.0-SNAPSHOT
+  -e INSTALL_SCHEMA=schema_name \
+  -e INSTALL_PASSWORD_PROJECT=dookug_pwd \
+  icellmobilsoft/dookug_db:2.2.0-SNAPSHOT
 #-------------------------  
 #If you need only a specific step(s):
 #-------------------------  
@@ -68,7 +69,7 @@ docker run -it --rm \
   -e AUTO_INSTALL=oracle \
   -e INSTALL_SCHEMA=schema_name \
   -e INSTALL_STEPS=2,4 \
-  icellmobilsoft/dookug_db:2.0.0-SNAPSHOT
+  icellmobilsoft/dookug_db:2.2.0-SNAPSHOT
 ==========
 
 ** How "embed" Dookug DB into other "host" DB (_install Dookug-db dookug schema into other DB_):    
@@ -116,7 +117,7 @@ docker run -it --rm \
   -e INSTALL_STEPS=1,2,3,4 \
   -e INSTALL_SCHEMA=dookug_schema_name \
   -e INSTALL_PGTOOLS=false \
-  icellmobilsoft/dookug_db:2.0.0-SNAPSHOT
+  icellmobilsoft/dookug_db:2.2.0-SNAPSHOT
 #-----------
 #oracle:
 #-----------
@@ -131,7 +132,7 @@ docker run -it --rm \
   -e CREATE_DATABASE=false \
   -e INSTALL_STEPS=1,2,3,4 \
   -e INSTALL_SCHEMA=dookug_schema_name \
-  icellmobilsoft/dookug_db:2.0.0-SNAPSHOT  
+  icellmobilsoft/dookug_db:2.2.0-SNAPSHOT  
 ==========     
 
 #on windows: the "\" needs to be changed to "`"!
