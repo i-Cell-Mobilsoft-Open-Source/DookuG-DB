@@ -44,3 +44,5 @@
 - Added pre-commit configuration for license headers for docs files.
 * 2.2.0 Changes:
 - Drop template_engine, generator_engine columns from template_part.
+- remove these columns from default templates part.
+- Added EDB install specific changes.
