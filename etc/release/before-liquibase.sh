@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (c) 2025 i-Cell Mobilsoft Zrt.
+# Copyright (c) 2026 i-Cell Mobilsoft Zrt.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you
 # may not use this file except in compliance with the License. You may
@@ -141,7 +141,7 @@ if [[ "$INSTALL_CONTEXT" == "docker_run" ]]; then
               update
       done
       exit 0 
-      
+
     # ----------Postgres install------------------
     elif [[ "$AUTO_INSTALL" == "postgresql" ]]; then
 
