@@ -141,6 +141,7 @@ if [[ "$INSTALL_CONTEXT" == "docker_run" ]]; then
               update
       done
       exit 0 
+      
     # ----------Postgres install------------------
     elif [[ "$AUTO_INSTALL" == "postgresql" ]]; then
 
