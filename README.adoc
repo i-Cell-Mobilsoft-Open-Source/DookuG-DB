@@ -276,7 +276,7 @@ pip install pre-commit
 pre-commit install
 ----
 
-Now `pre-commit` will run automatically on `git commit`
+Now `pre-commit` will run automatically on `git commit`.
 
 Optionally, you can run the hook manually with the following command executed from the root of the project: `pre-commit run --all-files`
 
