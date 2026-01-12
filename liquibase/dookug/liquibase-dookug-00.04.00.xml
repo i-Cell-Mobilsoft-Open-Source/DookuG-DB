@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-Copyright (c) 2025 i-Cell Mobilsoft Zrt.
+Copyright (c) 2026 i-Cell Mobilsoft Zrt.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you
 may not use this file except in compliance with the License. You may
@@ -23,7 +23,6 @@ SPDX-License-Identifier: Apache-2.0
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
 
-    <include file="00.04.00/DKG-168/0024_add_postgres_grants.sql" relativeToChangelogFile="true"/>    
     <include file="00.04.00/DKG-174/0025_template_part_content_fix-DML.xml" relativeToChangelogFile="true"/>    
     <include file="00.04.00/DKG-175/0026_template_part_content_fix_xslt-DML.xml" relativeToChangelogFile="true"/>    
     

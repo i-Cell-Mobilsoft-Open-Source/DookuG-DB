@@ -1,4 +1,4 @@
-// Copyright (c) 2025 i-Cell Mobilsoft Zrt.
+// Copyright (c) 2026 i-Cell Mobilsoft Zrt.
 //
 // Licensed under the Apache License, Version 2.0 (the "License"); you
 // may not use this file except in compliance with the License. You
@@ -48,8 +48,9 @@ docker run -it --rm \
 docker run -it --rm \
   --network=dookug-local-network \
   -e AUTO_INSTALL=postgresql \
-  -e INSTALL_USERNAME_PROJECT=dookug_user \
-  -e INSTALL_STEPS=2,4 \
+  -e INSTALL_USERNAME_PROJECT=dookug \
+  -e INSTALL_PASSWORD_PROJECT=dookug_pwd \
+  -e INSTALL_STEPS=2,3,4 \
   icellmobilsoft/dookug_db:2.2.0-SNAPSHOT
 #-------------------------  
 #oracle local install:
@@ -133,6 +134,28 @@ docker run -it --rm \
   -e INSTALL_STEPS=1,2,3,4 \
   -e INSTALL_SCHEMA=dookug_schema_name \
   icellmobilsoft/dookug_db:2.2.0-SNAPSHOT  
+
+. AKP - EDB:
+* EDB init script must be run first as superuser on postgres db:
+** This creates project db owner, service user, project db and grants.
+[source,console]
+sudo -u app_deployer PGPASSWORD='pass' psql \
+    -p 5445 -h <SERVER_IP_OR_HOSTNAME> \
+    -d postgres \
+    -f ./liquibase/common/__init_dbs/manual/pg_dookug_edb_init.sql
+
+* Then run the liquibase installer with only project credentials:    
+** This installs all project schema related objects.
+[source,console]
+docker run -it --rm \
+  --network=host \
+  -e AUTO_INSTALL=edb \
+  -e INSTALL_URL_PROJECT=jdbc:postgresql://<SERVER_IP_OR_HOSTNAME>:5445/dookug_db \
+  -e INSTALL_USERNAME_PROJECT=dookug \
+  -e INSTALL_PASSWORD_PROJECT=dookug_pwd \
+  -e INSTALL_STEPS=2,4 \
+  icellmobilsoft/dookug_db:2.2.0-SNAPSHOT 
+
 ==========     
 
 #on windows: the "\" needs to be changed to "`"!

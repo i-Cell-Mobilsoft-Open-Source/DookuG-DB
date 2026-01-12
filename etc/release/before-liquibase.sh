@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (c) 2025 i-Cell Mobilsoft Zrt.
+# Copyright (c) 2026 i-Cell Mobilsoft Zrt.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you
 # may not use this file except in compliance with the License. You may
@@ -65,6 +65,10 @@ elif [[ "$AUTO_INSTALL" == "oracle" ]]; then
   INSTALL_PASSWORD_PROJECT=${INSTALL_PASSWORD_PROJECT:-developer}
   INSTALL_URL_ADMIN=${INSTALL_URL_ADMIN:-jdbc:oracle:thin:@module-dookug-oracle:1521/xepdb1}
   INSTALL_URL_PROJECT=${INSTALL_URL_PROJECT:-jdbc:oracle:thin:@module-dookug-oracle:1521/xepdb1}
+elif [[ "$AUTO_INSTALL" == "edb" ]]; then
+  INSTALL_USERNAME_PROJECT=${INSTALL_USERNAME_PROJECT:-${S2_SCHEMA_NAME}}
+  INSTALL_PASSWORD_PROJECT=${INSTALL_PASSWORD_PROJECT:-dookug_pwd}
+  INSTALL_URL_PROJECT=${INSTALL_URL_PROJECT:-jdbc:postgresql://localhost:5445/dookug_db}  
 fi
 export INSTALL_USERNAME_ADMIN
 export INSTALL_USERNAME_PROJECT
@@ -83,105 +87,142 @@ export INSTALL_CONTEXT
 #              In this case, we do not want to run the following part.
 if [[ "$INSTALL_CONTEXT" == "docker_run" ]]; then
 
-  # The following parameter is used to set the order of the install steps.
-  # The default order is 1,2,3,4.
-  # If you want to alter the order, or you just need specific step(s), you can set the INSTALL_STEPS environment variable outside from DevOps.
-  # The variable cannot be empty! If all steps are required, then set it to "1,2,3,4, etc.".
-  STEPS=${INSTALL_STEPS:-"1,2,3,4"}
-  echo "INSTALL_STEPS=$STEPS"
-  echo "---------------------------"
-  IFS=',' read -ra STEPS <<< "$STEPS"
-  #sanity check:
-  #creating an ordered copy.
-  SORTED_STEPS=$(printf '%s\n' "${STEPS[@]}" | sort -n | paste -sd "," -)
-  #if the steps are not in order.
-  if [[ "$STEPS" != "$SORTED_STEPS" ]]; then
-    # order it by ascending order.
+  if [[ "$AUTO_INSTALL" == "postgresql" ]] || [[ "$AUTO_INSTALL" == "edb" ]]; then
+
+    # The following parameter is used to set the order of the install steps.
+    # The default order is 1,2,3,4.
+    # If you want to alter the order, or you just need specific step(s), you can set the INSTALL_STEPS environment variable outside from DevOps.
+    # The variable cannot be empty! If all steps are required, then set it to "1,2,3,4, etc.".
+    STEPS=${INSTALL_STEPS:-"1,2,3,4"}
+    echo "INSTALL_STEPS=$STEPS"
+    echo "---------------------------"
+    IFS=',' read -ra STEPS <<< "$STEPS"
+    #sanity check:
+    #creating an ordered copy.
     SORTED_STEPS=$(printf '%s\n' "${STEPS[@]}" | sort -n | paste -sd "," -)
-    # overwrite the STEPS variable with the ordered one.
-    IFS=',' read -ra STEPS <<< "$SORTED_STEPS"
-  fi  
-  # ----------Postgres install------------------
-  if [[ "$AUTO_INSTALL" == "postgresql" ]]; then
+    #if the steps are not in order.
+    if [[ "$STEPS" != "$SORTED_STEPS" ]]; then
+      # order it by ascending order.
+      SORTED_STEPS=$(printf '%s\n' "${STEPS[@]}" | sort -n | paste -sd "," -)
+      # overwrite the STEPS variable with the ordered one.
+      IFS=',' read -ra STEPS <<< "$SORTED_STEPS"
+    fi  
+    # ----------EDB install------------------
+    if [[ "$AUTO_INSTALL" == "edb" ]]; then
 
-    PG_TOOLS_INSTALLED=false    
+      liqui_url="${INSTALL_URL_PROJECT}"
+      liqui_user="${INSTALL_USERNAME_PROJECT}"
+      liqui_passw="${INSTALL_PASSWORD_PROJECT}"
+      echo "INSTALL_USERNAME_PROJECT=$INSTALL_USERNAME_PROJECT"
+      echo "INSTALL_URL_PROJECT=$INSTALL_URL_PROJECT"
+      echo "---------------------------"
 
-    for step in "${STEPS[@]}"; do
-
-      defaults_file="./postgresql/defaults-step-0${step}.properties"
-
-      case $step in
-        1)
-          echo "Running step-0${step} - DB initialization..."
-          echo "  INSTALL_USERNAME_ADMIN=$INSTALL_USERNAME_ADMIN"
-          echo "  INSTALL_URL_ADMIN=$INSTALL_URL_ADMIN"
-          liqui_url="${INSTALL_URL_ADMIN}"
-          liqui_user="${INSTALL_USERNAME_ADMIN}"
-          liqui_passw="${INSTALL_PASSWORD_ADMIN}"
-          ;;
-        2)
-          echo "Running step-0${step}:"
-          echo "  INSTALL_USERNAME_PROJECT=$INSTALL_USERNAME_PROJECT"
-          echo "  INSTALL_URL_PROJECT=$INSTALL_URL_PROJECT"
-          liqui_url="${INSTALL_URL_PROJECT}"
-          liqui_user="${INSTALL_USERNAME_PROJECT}"
-          liqui_passw="${INSTALL_PASSWORD_PROJECT}"
-          #The pg_tools is in an external image, needs to be handled separately.
-          if [[ "$PG_TOOLS_INSTALLED" == false &&  "$INSTALL_PGTOOLS" == true ]]; then
-            echo "  step-0${step} - Install PG_TOOLS partition manager into ${S2_SCHEMA_NAME} DB..."
-            changelog_file="./partman/liquibase/changelog/liquibase-install-step-0${step}.xml"
-            # --default-schema-name=public: The PG_TOOLS is an external image, so we need to provide where to find the databasechangelog table.
+      for step in "${STEPS[@]}"; do
+        defaults_file="./postgresql/defaults-step-0${step}.properties"
+        case $step in
+            # step1 is not needed in EDB installation, b/c it is a manual step.
+            2)
+              echo "Running step-0${step}- Objects creation into ${S2_SCHEMA_NAME} schema..."
+              ;;
+            # step3 is not possible in EDB installation, b/c super user is needed, and we cannot have it in AKP.  
+            4)
+              echo "Running step-0${step} - install default DEV templates into ${S2_SCHEMA_NAME} schema..."
+              ;;
+        esac
+        changelog_file="liquibase-install-step-0${step}.xml"
             liquibase \
               --searchPath=../${DOCKER_REPOSITORY}/liquibase/changelog \
+              --liquibaseSchemaName=public \
               --defaults-file="${defaults_file}" \
               --changeLogFile="${changelog_file}" \
               --url="${liqui_url}" \
-              --default-schema-name=public \
               --username="${liqui_user}" \
               --password="${liqui_passw}" \
               update
-            PG_TOOLS_INSTALLED=true
-          fi
-          ;;
-        3)
-          echo "Running step-0${step} - Add the service user to the CRON scheduler..."
-          echo "  INSTALL_USERNAME_ADMIN=$INSTALL_USERNAME_ADMIN"
-          echo "  INSTALL_URL_ADMIN=$INSTALL_URL_ADMIN"
-          liqui_url="${INSTALL_URL_ADMIN}"
-          liqui_user="${INSTALL_USERNAME_ADMIN}"
-          liqui_passw="${INSTALL_PASSWORD_ADMIN}"
-          ;;
-        4)
-          echo "Running step-0${step} - install DEV templates into ${S2_SCHEMA_NAME} schema..."
-          echo "  INSTALL_USERNAME_PROJECT=$INSTALL_USERNAME_PROJECT"
-          echo "  INSTALL_URL_PROJECT=$INSTALL_URL_PROJECT"
-          liqui_url="${INSTALL_URL_PROJECT}"
-          liqui_user="${INSTALL_USERNAME_PROJECT}"
-          liqui_passw="${INSTALL_PASSWORD_PROJECT}"
-          ;;
-      esac
+      done
+      exit 0 
 
-      #only for step2 without pg_tools installation
-      if [[ ("$PG_TOOLS_INSTALLED" == true && ${step} == 2) || ("$INSTALL_PGTOOLS" == false && ${step} == 2) ]]; then
-        echo "  step-0${step} - Objects creation into ${S2_SCHEMA_NAME} schema..."
-      fi
+    # ----------Postgres install------------------
+    elif [[ "$AUTO_INSTALL" == "postgresql" ]]; then
 
-      #only for step2 without pg_tools installation, OR for the other steps.
-      if [[ ( "$PG_TOOLS_INSTALLED" == true && ${step} == 2 ) || ("$INSTALL_PGTOOLS" == false) || ${step} != 2 ]]; then
-        changelog_file="liquibase-install-step-0${step}.xml"
-        liquibase \
-          --searchPath=../${DOCKER_REPOSITORY}/liquibase/changelog \
-          --liquibaseSchemaName=public \
-          --defaults-file="${defaults_file}" \
-          --changeLogFile="${changelog_file}" \
-          --url="${liqui_url}" \
-          --username="${liqui_user}" \
-          --password="${liqui_passw}" \
-          update
-      fi
+      PG_TOOLS_INSTALLED=false    
 
-    done
-    exit 0
+      for step in "${STEPS[@]}"; do
+
+        defaults_file="./postgresql/defaults-step-0${step}.properties"
+
+        case $step in
+          1)
+            echo "Running step-0${step} - DB initialization..."
+            echo "  INSTALL_USERNAME_ADMIN=$INSTALL_USERNAME_ADMIN"
+            echo "  INSTALL_URL_ADMIN=$INSTALL_URL_ADMIN"
+            liqui_url="${INSTALL_URL_ADMIN}"
+            liqui_user="${INSTALL_USERNAME_ADMIN}"
+            liqui_passw="${INSTALL_PASSWORD_ADMIN}"
+            ;;
+          2)
+            echo "Running step-0${step}:"
+            echo "  INSTALL_USERNAME_PROJECT=$INSTALL_USERNAME_PROJECT"
+            echo "  INSTALL_URL_PROJECT=$INSTALL_URL_PROJECT"
+            liqui_url="${INSTALL_URL_PROJECT}"
+            liqui_user="${INSTALL_USERNAME_PROJECT}"
+            liqui_passw="${INSTALL_PASSWORD_PROJECT}"
+            #The pg_tools is in an external image, needs to be handled separately.
+            if [[ "$PG_TOOLS_INSTALLED" == false &&  "$INSTALL_PGTOOLS" == true ]]; then
+              echo "  step-0${step} - Install PG_TOOLS partition manager into ${S2_SCHEMA_NAME} DB..."
+              changelog_file="./partman/liquibase/changelog/liquibase-install-step-0${step}.xml"
+              # --default-schema-name=public: The PG_TOOLS is an external image, so we need to provide where to find the databasechangelog table.
+              liquibase \
+                --searchPath=../${DOCKER_REPOSITORY}/liquibase/changelog \
+                --defaults-file="${defaults_file}" \
+                --changeLogFile="${changelog_file}" \
+                --url="${liqui_url}" \
+                --default-schema-name=public \
+                --username="${liqui_user}" \
+                --password="${liqui_passw}" \
+                update
+              PG_TOOLS_INSTALLED=true
+            fi
+            ;;
+          3)
+            echo "Running step-0${step} - Add the service user to the CRON scheduler..."
+            echo "  INSTALL_USERNAME_ADMIN=$INSTALL_USERNAME_ADMIN"
+            echo "  INSTALL_URL_ADMIN=$INSTALL_URL_ADMIN"
+            liqui_url="${INSTALL_URL_ADMIN}"
+            liqui_user="${INSTALL_USERNAME_ADMIN}"
+            liqui_passw="${INSTALL_PASSWORD_ADMIN}"
+            ;;
+          4)
+            echo "Running step-0${step} - install DEV templates into ${S2_SCHEMA_NAME} schema..."
+            echo "  INSTALL_USERNAME_PROJECT=$INSTALL_USERNAME_PROJECT"
+            echo "  INSTALL_URL_PROJECT=$INSTALL_URL_PROJECT"
+            liqui_url="${INSTALL_URL_PROJECT}"
+            liqui_user="${INSTALL_USERNAME_PROJECT}"
+            liqui_passw="${INSTALL_PASSWORD_PROJECT}"
+            ;;
+        esac
+
+        #only for step2 without pg_tools installation
+        if [[ ("$PG_TOOLS_INSTALLED" == true && ${step} == 2) || ("$INSTALL_PGTOOLS" == false && ${step} == 2) ]]; then
+          echo "  step-0${step} - Objects creation into ${S2_SCHEMA_NAME} schema..."
+        fi
+
+        #only for step2 without pg_tools installation, OR for the other steps.
+        if [[ ( "$PG_TOOLS_INSTALLED" == true && ${step} == 2 ) || ("$INSTALL_PGTOOLS" == false) || ${step} != 2 ]]; then
+          changelog_file="liquibase-install-step-0${step}.xml"
+          liquibase \
+            --searchPath=../${DOCKER_REPOSITORY}/liquibase/changelog \
+            --liquibaseSchemaName=public \
+            --defaults-file="${defaults_file}" \
+            --changeLogFile="${changelog_file}" \
+            --url="${liqui_url}" \
+            --username="${liqui_user}" \
+            --password="${liqui_passw}" \
+            update
+        fi
+      done
+      exit 0
+    fi
   # ------------Oracle install----------------  
   elif [[ "$AUTO_INSTALL" == "oracle" ]]; then
     for step in "${STEPS[@]}"; do

@@ -1,5 +1,5 @@
 <!--
-Copyright (c) 2025 i-Cell Mobilsoft Zrt.
+Copyright (c) 2026 i-Cell Mobilsoft Zrt.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you
 may not use this file except in compliance with the License. You may
@@ -22,21 +22,21 @@ SPDX-License-Identifier: Apache-2.0
 
 <!ENTITY propertyDateTime "
     <property name='datetime' value='timestamp(6)'  dbms='oracle' />
-    <property name='datetime' value='timestamp(6)'  dbms='postgresql' />
+    <property name='datetime' value='timestamp(6)'  dbms='postgresql,edb' />
     <property name='datetime' value='timestamp(6)'  dbms='mysql' />
 "
 >
 
 <!ENTITY propertySysdate "
     <property name='sysdate' value='sysdate'            dbms='oracle' />
-    <property name='sysdate' value='current_timestamp'  dbms='postgresql' />
+    <property name='sysdate' value='current_timestamp'  dbms='postgresql,edb' />
     <property name='sysdate' value='now()'              dbms='mysql' />
 "
 >
 
 <!ENTITY propertyVersion "
     <property name='versionDataType' value='number'     dbms='oracle' />
-    <property name='versionDataType' value='int'        dbms='postgresql' />
+    <property name='versionDataType' value='int'        dbms='postgresql,edb' />
     <property name='versionDataType' value='smallint'   dbms='mysql' />
 "
 >
@@ -44,14 +44,14 @@ SPDX-License-Identifier: Apache-2.0
 <!ENTITY propertyLob "
     <property name='clob' value='clob'  dbms='oracle' />
     <property name='blob' value='blob'  dbms='oracle' />
-    <property name='blob' value='bytea' dbms='postgresql' />
-    <property name='clob' value='text'  dbms='postgresql' />
+    <property name='blob' value='bytea' dbms='postgresql,edb' />
+    <property name='clob' value='text'  dbms='postgresql,edb' />
 "
 >
 
 <!ENTITY propertyPosgreSQL "
-    <property name='schema_name'        value='dookug'          dbms='postgresql,oracle'/>
-    <property name='service_user_name'  value='dookug_service'  dbms='postgresql,oracle'/>
+    <property name='schema_name'        value='dookug'          dbms='postgresql,edb,oracle'/>
+    <property name='service_user_name'  value='dookug_service'  dbms='postgresql,edb,oracle'/>
 "
 >
 

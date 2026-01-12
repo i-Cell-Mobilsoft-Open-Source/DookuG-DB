@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-Copyright (c) 2025 i-Cell Mobilsoft Zrt.
+Copyright (c) 2026 i-Cell Mobilsoft Zrt.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you
 may not use this file except in compliance with the License. You may
@@ -35,8 +35,6 @@ SPDX-License-Identifier: Apache-2.0
             <column name="x__id"               value="DEV_TEMPLATE_HANDLEBARS_MAIN"/>  
             <column name="key"                 value="DEV_TEMPLATE_HANDLEBARS_MAIN"/>  
             <column name="description"         value="Sample template for developments - main page"/>  
-            <column name="template_engine"     value="HANDLEBARS"/>  
-            <column name="generator_engine"    value="PDF_BOX"/>  
             <column name="template_part_type"  value="MAIN" />  
         </insert>
 
@@ -45,8 +43,6 @@ SPDX-License-Identifier: Apache-2.0
             <column name="x__id"               value="DEV_TEMPLATE_HANDLEBARS_HEADER"/>  
             <column name="key"                 value="DEV_TEMPLATE_HANDLEBARS_HEADER"/>  
             <column name="description"         value="Sample template for developments - header"/>  
-            <column name="template_engine"     value="HANDLEBARS"/>  
-            <column name="generator_engine"    value="PDF_BOX"/>  
             <column name="template_part_type"  value="MAIN" />  
         </insert>
 
@@ -55,8 +51,6 @@ SPDX-License-Identifier: Apache-2.0
             <column name="x__id"               value="DEV_TEMPLATE_HANDLEBARS_ROW"/>  
             <column name="key"                 value="DEV_TEMPLATE_HANDLEBARS_ROW"/>  
             <column name="description"         value="Sample template for developments - table row"/>  
-            <column name="template_engine"     value="HANDLEBARS"/>  
-            <column name="generator_engine"    value="PDF_BOX"/>  
             <column name="template_part_type"  value="OTHER" />  
         </insert>
 
@@ -65,8 +59,6 @@ SPDX-License-Identifier: Apache-2.0
             <column name="x__id"               value="DEV_TEMPLATE_HANDLEBARS_FOOTER"/>  
             <column name="key"                 value="DEV_TEMPLATE_HANDLEBARS_FOOTER"/>  
             <column name="description"         value="Sample template for developments - footer"/>  
-            <column name="template_engine"     value="HANDLEBARS"/>  
-            <column name="generator_engine"    value="PDF_BOX"/>  
             <column name="template_part_type"  value="FOOTER" />  
         </insert>
 
@@ -75,8 +67,6 @@ SPDX-License-Identifier: Apache-2.0
             <column name="x__id"               value="DEV_TEMPLATE_ERROR_MAIN"/>  
             <column name="key"                 value="DEV_TEMPLATE_ERROR_MAIN"/>  
             <column name="description"         value="Failed Sample template for developments - footer"/>  
-            <column name="template_engine"     value="HANDLEBARS"/>  
-            <column name="generator_engine"    value="PDF_BOX"/>  
             <column name="template_part_type"  value="MAIN" />  
         </insert>
         
@@ -85,8 +75,6 @@ SPDX-License-Identifier: Apache-2.0
             <column name="x__id"               value="TEMPLATEPARTXID1"/>  
             <column name="key"                 value="TEST_TEMPLATE_SUBJECT_MAIN"/>  
             <column name="description"         value="Sample template for developments - email subject"/>  
-            <column name="template_engine"     value="HANDLEBARS"/>  
-            <column name="generator_engine"    value="NONE"/>  
             <column name="template_part_type"  value="MAIN" />  
         </insert>
         
@@ -95,8 +83,6 @@ SPDX-License-Identifier: Apache-2.0
             <column name="x__id"               value="TEMPLATEPARTXID2"/>  
             <column name="key"                 value="TEST_TEMPLATE_BODY_WELCOME"/>  
             <column name="description"         value="Sample template for developments - email welcome subtemplate"/>  
-            <column name="template_engine"     value="HANDLEBARS"/>  
-            <column name="generator_engine"    value="NONE"/>  
             <column name="template_part_type"  value="HEADER" />  
         </insert>
 
@@ -105,8 +91,6 @@ SPDX-License-Identifier: Apache-2.0
             <column name="x__id"               value="TEMPLATEPARTXID3"/>  
             <column name="key"                 value="TEST_TEMPLATE_BODY_MAIN"/>  
             <column name="description"         value="Sample template for developments - email body main note"/>  
-            <column name="template_engine"     value="HANDLEBARS"/>  
-            <column name="generator_engine"    value="NONE"/>  
             <column name="template_part_type"  value="MAIN" />  
         </insert>
 
@@ -115,8 +99,6 @@ SPDX-License-Identifier: Apache-2.0
             <column name="x__id"               value="TEMPLATEPARTXID4"/>  
             <column name="key"                 value="TEST_TEMPLATE_BODY_CLOSING"/>  
             <column name="description"         value="Sample template for developments - email closing subtemplate"/>  
-            <column name="template_engine"     value="HANDLEBARS"/>  
-            <column name="generator_engine"    value="NONE"/>  
             <column name="template_part_type"  value="FOOTER" />  
         </insert>
         
@@ -125,8 +107,6 @@ SPDX-License-Identifier: Apache-2.0
             <column name="x__id"               value="TEMPLATEPARTXID5"/>  
             <column name="key"                 value="TEST_TEMPLATE_SUBJECT_WITHOUT_PARAMS"/>  
             <column name="description"         value="Sample template for developments - email subject without parameter"/>  
-            <column name="template_engine"     value="HANDLEBARS"/>  
-            <column name="generator_engine"    value="NONE"/>  
             <column name="template_part_type"  value="MAIN" />  
         </insert>
 
@@ -135,8 +115,6 @@ SPDX-License-Identifier: Apache-2.0
             <column name="x__id"               value="TEMPLATEPARTXID6"/>  
             <column name="key"                 value="TEST_TEMPLATE_BODY_WITHOUT_PARAMS"/>  
             <column name="description"         value="Sample template for developments - email body without parameter"/>  
-            <column name="template_engine"     value="HANDLEBARS"/>  
-            <column name="generator_engine"    value="NONE"/>  
             <column name="template_part_type"  value="MAIN" />  
         </insert>
 
@@ -145,8 +123,6 @@ SPDX-License-Identifier: Apache-2.0
             <column name="x__id"               value="TEMPLATEPARTXID7"/>  
             <column name="key"                 value="TEST_TEMPLATE_ENG_TITLE"/>  
             <column name="description"         value="Sample English title template"/>  
-            <column name="template_engine"     value="HANDLEBARS"/>  
-            <column name="generator_engine"    value="NONE"/>  
             <column name="template_part_type"  value="MAIN" />  
         </insert>
         
@@ -155,8 +131,6 @@ SPDX-License-Identifier: Apache-2.0
             <column name="x__id"               value="TEMPLATEPARTXID8"/>  
             <column name="key"                 value="TEST_TEMPLATE_ENG_BODY"/>  
             <column name="description"         value="Sample English body template"/>  
-            <column name="template_engine"     value="HANDLEBARS"/>  
-            <column name="generator_engine"    value="NONE"/>  
             <column name="template_part_type"  value="MAIN" />  
         </insert>
 
@@ -165,8 +139,6 @@ SPDX-License-Identifier: Apache-2.0
             <column name="x__id"               value="TEMPLATEPARTXID9"/>  
             <column name="key"                 value="TEST_TEMPLATE_GER_TITLE"/>  
             <column name="description"         value="Sample German title template"/>  
-            <column name="template_engine"     value="HANDLEBARS"/>  
-            <column name="generator_engine"    value="NONE"/>  
             <column name="template_part_type"  value="MAIN" />  
         </insert>
 
@@ -175,8 +147,6 @@ SPDX-License-Identifier: Apache-2.0
             <column name="x__id"               value="TEMPLATEPARTXID10"/>  
             <column name="key"                 value="TEST_TEMPLATE_FRA_BODY"/>  
             <column name="description"         value="Sample French body template"/>  
-            <column name="template_engine"     value="HANDLEBARS"/>  
-            <column name="generator_engine"    value="NONE"/>  
             <column name="template_part_type"  value="MAIN" />  
         </insert>
 
@@ -185,8 +155,6 @@ SPDX-License-Identifier: Apache-2.0
             <column name="x__id"               value="TEMPLATEPARTXID11"/>  
             <column name="key"                 value="CUSTOM_MESSAGE_TEMPLATE"/>  
             <column name="description"         value="Sample template for rendering unique message."/>  
-            <column name="template_engine"     value="HANDLEBARS"/>  
-            <column name="generator_engine"    value="NONE"/>  
             <column name="template_part_type"  value="MAIN" />  
         </insert>
 
@@ -195,8 +163,6 @@ SPDX-License-Identifier: Apache-2.0
             <column name="x__id" value="48SJ6QJDLKG3CM01"/>
             <column name="key" value="PROJECT_INVOICE_TEMPLATE_FULL"/>
             <column name="description" value="PROJECT invoice sablon A4"/>
-            <column name="template_engine" value="NONE"/>
-            <column name="generator_engine" value="SAXON"/>
             <column name="template_part_type" value="MAIN"/>
       </insert>
                   

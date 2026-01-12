@@ -1,6 +1,6 @@
 --liquibase formatted sql
 
--- Copyright (c) 2025 i-Cell Mobilsoft Zrt.
+-- Copyright (c) 2026 i-Cell Mobilsoft Zrt.
 --
 -- Licensed under the Apache License, Version 2.0 (the "License"); you
 -- may not use this file except in compliance with the License. You
@@ -16,7 +16,7 @@
 --
 -- SPDX-License-Identifier: Apache-2.0
 
---changeset bertalan.pasztor:${schema_name}-CREATE_SCHEMA dbms:postgresql endDelimiter:/
+--changeset bertalan.pasztor:${schema_name}-CREATE_SCHEMA dbms:postgresql runOnChange:true endDelimiter:/
 --comment Creating schema...
 
 SET search_path = public;
@@ -31,10 +31,6 @@ BEGIN
   GRANT USAGE ON SCHEMA ${schema_name} TO ${schema_name}_exec;  
   GRANT USAGE ON SCHEMA ${schema_name} TO ${service_name};
   --
--- Setting the host db service user
-  IF '${S2_SCHEMA_NAME}' != '${schema_name}' THEN
-    GRANT ${schema_name}_exec TO ${service_name};
-  END IF;
 END
 $$;
 COMMIT;

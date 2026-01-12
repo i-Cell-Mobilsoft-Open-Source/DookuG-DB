@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Copyright (c) 2025 i-Cell Mobilsoft Zrt.
+# Copyright (c) 2026 i-Cell Mobilsoft Zrt.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you
 # may not use this file except in compliance with the License. You may
