@@ -16,7 +16,7 @@
 --
 -- SPDX-License-Identifier: Apache-2.0
 
---changeset bertalan.pasztor:${schema_name}-POSTGRES_ROLE dbms:postgresql runOnChange:true
+--changeset bertalan.pasztor:${schema_name}-POSTGRES_ROLE context:postgresql runOnChange:true
 --comment Removing REPLICATION role from postgres user...
 
 ALTER USER postgres WITH NOREPLICATION;

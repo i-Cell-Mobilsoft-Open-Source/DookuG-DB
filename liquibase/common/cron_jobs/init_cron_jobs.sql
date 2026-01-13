@@ -16,7 +16,7 @@
 --
 -- SPDX-License-Identifier: Apache-2.0
 
---changeset jozsef.holczer:${schema_name}-SCHEDULE_CRONJOB_PART_MAINTENANCE-ICMV2-204-01 dbms:postgresql runOnChange:true endDelimiter:/
+--changeset jozsef.holczer:${schema_name}-SCHEDULE_CRONJOB_PART_MAINTENANCE-ICMV2-204-01 context:postgresql runOnChange:true endDelimiter:/
 --comment Init pg_cron job...
 
 -- The CRON extension can only be installed in default Postgres DB (blackbox)

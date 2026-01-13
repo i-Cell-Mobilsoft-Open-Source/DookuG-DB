@@ -16,7 +16,7 @@
 --
 -- SPDX-License-Identifier: Apache-2.0
 
---changeset endre.balazs:${schema_name}-READ_USER dbms:postgresql runOnChange:true endDelimiter:/
+--changeset endre.balazs:${schema_name}-READ_USER context:postgresql runOnChange:true endDelimiter:/
 --comment Creating Read user with limited rights...
 
 DO $$

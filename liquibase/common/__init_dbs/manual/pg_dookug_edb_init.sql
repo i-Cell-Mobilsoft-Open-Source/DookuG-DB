@@ -30,7 +30,7 @@
 \set role_exec        :schema_name '_exec'
 
 -- =============================================================================
--- 2. USER AND DATABASE (RUNS IN POSTGRES DB)
+-- 2. USER CREATION
 -- =============================================================================
 
 -- Recreate owner
@@ -40,17 +40,19 @@ CREATE ROLE :db_owner WITH LOGIN PASSWORD :'db_owner_pwd' CREATEDB CREATEROLE NO
 -- This way postgres will be able to act on its behalf (SET ROLE)
 GRANT :db_owner TO CURRENT_USER;
 
+
 -- Create database (If it already exists, it will throw an error, but the script continues to \c)
 -- CREATE DATABASE :db_name OWNER :db_owner;
 
 -- =============================================================================
--- 3. CONNECT TO AKP_BE DB AND OBJECTS
+-- 3. CONNECT TO AKP_BE DB AND ROLES CREATION
 -- =============================================================================
 \c :db_name
 
--- Create schema
-CREATE SCHEMA IF NOT EXISTS :schema_name;
-ALTER SCHEMA :schema_name OWNER TO :db_owner;
+-- to have rights on creating schemas in the database
+GRANT CREATE, CONNECT, TEMPORARY ON DATABASE :db_name TO :db_owner;
+
+--the db_owner will create the schema in the liquibase step
 
 -- Service user
 DROP USER IF EXISTS :service_user;
@@ -72,17 +74,15 @@ GRANT :role_write TO :role_exec;
 GRANT :role_exec TO :db_owner;
 GRANT :role_exec TO :service_user;
 
-
 -- =============================================================================
 -- 4. SYSTEM PERMISSIONS
 -- =============================================================================
 -- Public schema configuration
-ALTER SCHEMA public OWNER TO :db_owner;
 GRANT USAGE, CREATE ON SCHEMA public TO :db_owner;
 
 -- Default privileges for future tables
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO :db_owner;
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO :db_owner;
+ALTER DEFAULT PRIVILEGES FOR ROLE :db_owner IN SCHEMA public GRANT ALL ON TABLES TO :db_owner;
+ALTER DEFAULT PRIVILEGES FOR ROLE :db_owner IN SCHEMA public GRANT ALL ON SEQUENCES TO :db_owner;
 
 GRANT CONNECT ON DATABASE :db_name TO :db_owner;
 GRANT USAGE ON LANGUAGE plpgsql TO :db_owner;
