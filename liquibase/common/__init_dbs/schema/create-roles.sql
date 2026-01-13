@@ -16,7 +16,7 @@
 --
 -- SPDX-License-Identifier: Apache-2.0
 
---changeset jozsef.holczer:${schema_name}-PG_SCHEMA_ROLES dbms:postgresql runOnChange:true endDelimiter:/
+--changeset jozsef.holczer:${schema_name}-PG_SCHEMA_ROLES context:postgresql runOnChange:true endDelimiter:/
 --comment Creating Postgresql Schema Roles...
 
 DO $$ 

@@ -120,17 +120,23 @@ if [[ "$INSTALL_CONTEXT" == "docker_run" ]]; then
       for step in "${STEPS[@]}"; do
         defaults_file="./postgresql/defaults-step-0${step}.properties"
         case $step in
-            # step1 is not needed in EDB installation, b/c it is a manual step.
             2)
               echo "Running step-0${step}- Objects creation into ${S2_SCHEMA_NAME} schema..."
+              changelog_file="liquibase-install-step-0${step}.xml"
               ;;
-            # step3 is not possible in EDB installation, b/c super user is needed, and we cannot have it in AKP.  
             4)
               echo "Running step-0${step} - install default DEV templates into ${S2_SCHEMA_NAME} schema..."
+              changelog_file="liquibase-install-step-0${step}.xml"
               ;;
+            # step1 is not needed in EDB installation, b/c it is a manual step.
+            # step3 is not possible in EDB installation, b/c super user is needed, and we cannot have it in AKP.  
+            *)
+              continue
+              ;;  
         esac
-        changelog_file="liquibase-install-step-0${step}.xml"
+        if [[ -n "$changelog_file" ]]; then
             liquibase \
+              --contexts=${AUTO_INSTALL} \
               --searchPath=../${DOCKER_REPOSITORY}/liquibase/changelog \
               --liquibaseSchemaName=public \
               --defaults-file="${defaults_file}" \
@@ -139,6 +145,7 @@ if [[ "$INSTALL_CONTEXT" == "docker_run" ]]; then
               --username="${liqui_user}" \
               --password="${liqui_passw}" \
               update
+        fi      
       done
       exit 0 
 
@@ -211,6 +218,7 @@ if [[ "$INSTALL_CONTEXT" == "docker_run" ]]; then
         if [[ ( "$PG_TOOLS_INSTALLED" == true && ${step} == 2 ) || ("$INSTALL_PGTOOLS" == false) || ${step} != 2 ]]; then
           changelog_file="liquibase-install-step-0${step}.xml"
           liquibase \
+            --contexts=${AUTO_INSTALL} \
             --searchPath=../${DOCKER_REPOSITORY}/liquibase/changelog \
             --liquibaseSchemaName=public \
             --defaults-file="${defaults_file}" \
@@ -263,6 +271,7 @@ if [[ "$INSTALL_CONTEXT" == "docker_run" ]]; then
       if [[ ${step} != 3 ]]; then
         changelog_file="liquibase-install-step-0${step}.xml"
         liquibase \
+          --contexts=${AUTO_INSTALL} \
           --searchPath=../${DOCKER_REPOSITORY}/liquibase/changelog \
           --defaults-file="${defaults_file}" \
           --changeLogFile="${changelog_file}" \

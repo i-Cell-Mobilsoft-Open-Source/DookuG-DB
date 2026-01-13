@@ -16,7 +16,7 @@
 --
 -- SPDX-License-Identifier: Apache-2.0
 
---changeset jozsef.holczer:${pg_schema_user}_USER dbms:postgresql runOnChange:true endDelimiter:/
+--changeset jozsef.holczer:${pg_schema_user}_USER context:postgresql runOnChange:true endDelimiter:/
 --comment Creating user of the DB project schema...
 
 DO $$
