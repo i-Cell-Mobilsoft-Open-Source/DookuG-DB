@@ -69,22 +69,6 @@ jobs:
 ###############
 ## release
 ###############
-      - id: getVersion
-        name: Get version from .env
-        run: |
-          VERSION=$(grep '^VERSION=' etc/release/.env | cut -d'=' -f2 | tr -d '"' | tr -d "'")
-          echo "PROJECT_VERSION=${VERSION}" >> $GITHUB_OUTPUT
-
-      - id: tag
-        name: Compute image tag
-        run: |
-          SHORT_SHA=$(echo "$GITHUB_SHA" | cut -c1-7)
-          if [[ "${{ steps.getVersion.outputs.PROJECT_VERSION }}" == *"SNAPSHOT"* ]]; then
-            echo "IMAGE_TAG=${{ steps.getVersion.outputs.PROJECT_VERSION }}-${SHORT_SHA}" >> $GITHUB_OUTPUT
-          else
-            echo "IMAGE_TAG=${{ steps.getVersion.outputs.PROJECT_VERSION }}" >> $GITHUB_OUTPUT
-          fi
-
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
@@ -103,6 +87,22 @@ jobs:
               fi
             done < .env
           fi      
+
+      - id: getVersion
+        name: Get version from .env
+        run: |
+          VERSION=$(grep '^VERSION=' etc/release/.env | cut -d'=' -f2 | tr -d '"' | tr -d "'")
+          echo "PROJECT_VERSION=${VERSION}" >> $GITHUB_OUTPUT
+
+      - id: tag
+        name: Compute image tag
+        run: |
+          SHORT_SHA=$(echo "$GITHUB_SHA" | cut -c1-7)
+          if [[ "${{ steps.getVersion.outputs.PROJECT_VERSION }}" == *"SNAPSHOT"* ]]; then
+            echo "IMAGE_TAG=${{ steps.getVersion.outputs.PROJECT_VERSION }}-${SHORT_SHA}" >> $GITHUB_OUTPUT
+          else
+            echo "IMAGE_TAG=${{ steps.getVersion.outputs.PROJECT_VERSION }}" >> $GITHUB_OUTPUT
+          fi
 
       - name: docker buildx bake "#1"
         uses: docker/bake-action@v5
