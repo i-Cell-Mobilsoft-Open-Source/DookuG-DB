@@ -91,17 +91,21 @@ jobs:
       - id: getVersion
         name: Get version from .env
         run: |
-          VERSION=$(grep '^VERSION=' .env | cut -d'=' -f2 | tr -d '"' | tr -d "'")
-          echo "PROJECT_VERSION=${VERSION}" >> $GITHUB_OUTPUT
+          RAW_VER=$(grep '^VERSION=' .env | cut -d'=' -f2 | tr -d '"' | tr -d "'")
+          echo "PROJECT_VERSION=${RAW_VER}" >> $GITHUB_OUTPUT
+          echo "Debug: Extracted version is ${RAW_VER}"
 
       - id: tag
         name: Compute image tag
         run: |
           SHORT_SHA=$(echo "$GITHUB_SHA" | cut -c1-7)
-          if [[ "${{ steps.getVersion.outputs.PROJECT_VERSION }}" == *"SNAPSHOT"* ]]; then
-            echo "IMAGE_TAG=${{ steps.getVersion.outputs.PROJECT_VERSION }}-${SHORT_SHA}" >> $GITHUB_OUTPUT
+          # Most már az outputból vesszük a RAW_VER-t
+          PROJ_VER="${{ steps.getVersion.outputs.PROJECT_VERSION }}"
+          
+          if [[ "$PROJ_VER" == *"SNAPSHOT"* ]]; then
+            echo "IMAGE_TAG=${PROJ_VER}-${SHORT_SHA}" >> $GITHUB_OUTPUT
           else
-            echo "IMAGE_TAG=${{ steps.getVersion.outputs.PROJECT_VERSION }}" >> $GITHUB_OUTPUT
+            echo "IMAGE_TAG=${PROJ_VER}" >> $GITHUB_OUTPUT
           fi
 
       - name: docker buildx bake "#1"
