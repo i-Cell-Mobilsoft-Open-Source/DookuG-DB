@@ -91,7 +91,7 @@ jobs:
       - id: getVersion
         name: Get version from .env
         run: |
-          VERSION=$(grep '^VERSION=' etc/release/.env | cut -d'=' -f2 | tr -d '"' | tr -d "'")
+          VERSION=$(grep '^VERSION=' .env | cut -d'=' -f2 | tr -d '"' | tr -d "'")
           echo "PROJECT_VERSION=${VERSION}" >> $GITHUB_OUTPUT
 
       - id: tag
