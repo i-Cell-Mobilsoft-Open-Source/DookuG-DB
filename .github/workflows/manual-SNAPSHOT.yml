@@ -88,24 +88,16 @@ jobs:
             done < .env
           fi      
 
-      - id: getVersion
-        name: Get version from .env
-        run: |
-          RAW_VER=$(grep '^VERSION=' .env | cut -d'=' -f2 | tr -d '"' | tr -d "'")
-          echo "PROJECT_VERSION=${RAW_VER}" >> $GITHUB_OUTPUT
-          echo "Debug: Extracted version is ${RAW_VER}"
-
-      - id: tag
-        name: Compute image tag
+      - name: Update VERSION with hash
         run: |
           SHORT_SHA=$(echo "$GITHUB_SHA" | cut -c1-7)
-          # Most már az outputból vesszük a RAW_VER-t
-          PROJ_VER="${{ steps.getVersion.outputs.PROJECT_VERSION }}"
-          
-          if [[ "$PROJ_VER" == *"SNAPSHOT"* ]]; then
-            echo "IMAGE_TAG=${PROJ_VER}-${SHORT_SHA}" >> $GITHUB_OUTPUT
+          # Itt a már GITHUB_ENV-be betöltött $VERSION-t használjuk
+          if [[ "$VERSION" == *"SNAPSHOT"* ]]; then
+            NEW_VERSION="${VERSION}-${SHORT_SHA}"
+            echo "VERSION=${NEW_VERSION}" >> $GITHUB_ENV
+            echo "Computed new version: ${NEW_VERSION}"
           else
-            echo "IMAGE_TAG=${PROJ_VER}" >> $GITHUB_OUTPUT
+            echo "Release version, keeping original: ${VERSION}"
           fi
 
       - name: docker buildx bake "#1"
@@ -113,7 +105,7 @@ jobs:
         with:
           workdir: etc/release
           set: |
-            *.args.VERSION=${{ steps.tag.outputs.IMAGE_TAG }}
+            *.args.VERSION=${{ env.VERSION }}
             *.platform=${{ env.DOCKER_BAKE_PLATFORM }}
             *.args.DOCKER_REPOSITORY=${{ env.DOCKER_REPOSITORY }}
             *.args.DOCKER_LIQUIBASE_DOOKUG=${{ env.DOCKER_LIQUIBASE_DOOKUG }}
