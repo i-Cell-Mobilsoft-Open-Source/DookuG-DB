@@ -113,3 +113,16 @@ jobs:
           files: |
             docker-compose.yml
           targets: liquibase-release
+
+      - name: Update DEV manifest in deploy repo
+        if: success()
+        uses: peter-evans/repository-dispatch@v4
+        with:
+          token: ${{ secrets.DEPLOY_REPO_TOKEN }}
+          repository: i-Cell-Mobilsoft-Open-Source/module-deploy
+          event-type: update-dev-image
+          client-payload: |
+            {
+              "image": "${{ env.VERSION }}",
+              "moduleType": "dookug-document-service-liquibase"
+            }
