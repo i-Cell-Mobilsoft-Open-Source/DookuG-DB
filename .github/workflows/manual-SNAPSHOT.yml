@@ -74,8 +74,10 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}   
+
       - name: Checkout main
         uses: actions/checkout@v4
+
       - name: Load .env file
         run: |
           if [ -f .env ]; then
@@ -85,11 +87,25 @@ jobs:
               fi
             done < .env
           fi      
+
+      - name: Update VERSION with hash
+        run: |
+          SHORT_SHA=$(echo "$GITHUB_SHA" | cut -c1-7)
+          # Itt a már GITHUB_ENV-be betöltött $VERSION-t használjuk
+          if [[ "$VERSION" == *"SNAPSHOT"* ]]; then
+            NEW_VERSION="${VERSION}-${SHORT_SHA}"
+            echo "VERSION=${NEW_VERSION}" >> $GITHUB_ENV
+            echo "Computed new version: ${NEW_VERSION}"
+          else
+            echo "Release version, keeping original: ${VERSION}"
+          fi
+
       - name: docker buildx bake "#1"
         uses: docker/bake-action@v5
         with:
           workdir: etc/release
           set: |
+            *.args.VERSION=${{ env.VERSION }}
             *.platform=${{ env.DOCKER_BAKE_PLATFORM }}
             *.args.DOCKER_REPOSITORY=${{ env.DOCKER_REPOSITORY }}
             *.args.DOCKER_LIQUIBASE_DOOKUG=${{ env.DOCKER_LIQUIBASE_DOOKUG }}
@@ -98,3 +114,15 @@ jobs:
             docker-compose.yml
           targets: liquibase-release
 
+      - name: Update DEV manifest in deploy repo
+        if: success()
+        uses: peter-evans/repository-dispatch@v4
+        with:
+          token: ${{ secrets.DEPLOY_REPO_TOKEN }}
+          repository: i-Cell-Mobilsoft-Open-Source/module-deploy
+          event-type: update-dev-image
+          client-payload: |
+            {
+              "image": "${{ env.VERSION }}",
+              "moduleType": "dookug-document-service-liquibase"
+            }
