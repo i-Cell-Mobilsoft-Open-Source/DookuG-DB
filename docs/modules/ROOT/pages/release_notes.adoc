@@ -46,3 +46,4 @@
 - Drop template_engine, generator_engine columns from template_part.
 - remove these columns from default templates part.
 - Added EDB install specific changes.
+- Service user grant fix.
