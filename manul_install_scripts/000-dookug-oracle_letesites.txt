@@ -1,0 +1,10 @@
+DOOKUG Oracle database description:
+
+TABLESPACE:
+    - ts_dookug
+
+SCHEMA / USER:
+    - dookug
+
+SERVICE USER:
+    - dookug_service

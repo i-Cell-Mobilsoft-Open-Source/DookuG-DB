@@ -1,0 +1,61 @@
+== Setting environment variables ==
+
+When starting the local development environment, `start.sh` (and `start.ps1`) loads the basic configuration from the `.env` files. The environment supports both **Postgres** and **Oracle** database management systems. The following are the most important variables:
+
+=== Basic and Docker variables ===
+
+Liquibase base image used to run Liquibase (root `.env` file):
+`DOCKER_RUNTIME_LIQUIBASE=liquibase/liquibase:4.33`
+
+Project name (used to generate the container and database names for Postgres):
+`PROJECT_NAME=dookug`
+
+=== Postgres-specific configuration ===
+
+Container name for the Postgres instance:
+`CONTAINER_NAME=module-dookug-postgredb`
+
+Postgres image used by the container:
+`POSTGRES_IMAGE=postgres:17-alpine3.22`
+
+Port exposed by the Postgres container on the host:
+`LOCAL_PORT=5432`
+
+Postgres (superuser) password for the running Postgres instance:
+`PGPASSWORD=postgres`
+
+Name, owner, and password of the local database to be created:
+`DB_NAME=${PROJECT_NAME}_db`
+`DB_OWNER=${PROJECT_NAME}_owner`
+`DB_OWNER_PASSW=secret`
+
+Database locale and encoding settings:
+Set the locale to use here (the default is `hu_HU.UTF-8`, but it can also be changed to `en_US.UTF-8`). The `LC_COLLATE`, `LC_CTYPE`, and `LANG` variables will use this value.
+`DB_LOCALE=hu_HU.UTF-8`
+`ENCODING=UTF-8`
+
+=== Oracle-specific configuration ===
+
+Container name for the Oracle instance:
+`ORACLE_CONTAINER_NAME=module-dookug-oracle`
+
+Oracle XE image used by the container:
+`ORACLE_IMAGE=container-registry.oracle.com/database/express:21.3.0-xe`
+
+Port exposed by the Oracle container on the host:
+`ORACLE_PORT=1521`
+
+Administrator (SYS/SYSTEM) password for the running Oracle instance:
+`ORACLE_PASSWORD=developer`
+
+=== Schema and service user passwords ===
+
+Password for the `dookug` schema (user) to be created:
+`dookug_PASSWORD=dookug_pwd`
+
+Password for the technical user used by the `dookug` microservice (application) to be created:
+`dookug_SERVICE_PASSWORD=dookug_pwd`
+
+=== Logolás ===
+
+Repeated ASCII banner messages from Liquibase are automatically hidden after the first run, keeping the terminal output clean and easy to read.

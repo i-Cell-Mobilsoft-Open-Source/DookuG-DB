@@ -1,0 +1,9 @@
+DOOKUG Postgres database description:
+The database owner user:
+     - dookug_owner
+Database to create:
+     - DOOKUG_DB (owner: dookug_owner)
+Parameters:
+     - ENCODING = 'UTF8'
+     - LC_COLLATE = 'hu_HU.utf8'
+     - LC_CTYPE = 'hu_HU.utf8'

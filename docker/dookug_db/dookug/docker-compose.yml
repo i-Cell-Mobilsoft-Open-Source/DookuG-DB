@@ -1,0 +1,13 @@
+# build
+# docker compose --env-file ${PROJECT_PATH}/../../../.env -f ${PROJECT_PATH}/docker/dookug_db/dookug/docker-compose.yml build --no-cache
+services:
+
+  docker-runtime-liquibase-dookug:
+    build:
+      context: ./../../
+      dockerfile: ./dookug_db/dookug/dockerfile/Dockerfile
+      args:
+        DOCKER_RUNTIME_LIQUIBASE: ${DOCKER_RUNTIME_LIQUIBASE}
+        LIQUIBASE_INSTALL_DIR: '/dookug_db/dookug/liquibase'
+        LIQUIBASE_INSTALL_COMMON_DIR: '/common'
+    image: ${DOCKER_DOOKUG_LIQUIBASE}

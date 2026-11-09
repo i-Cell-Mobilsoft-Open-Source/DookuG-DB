@@ -16,152 +16,35 @@
 
 = Installation, Release, Deployment
 
-.Local install (_click here_)
-[%collapsible]
-==========
+== Build the Liquibase images
+
+From the project root, build both images:
+
 [source,console]
-#=====================
-#***Full install***
-#INSTALL_STEPS: This is NOT required, the default value: "1,2,3,4".
-#               The full is 1,2,3,4, or as many as you have, or you can give that step(s) you want!
-#INSTALL_PGTOOLS: ONLY in postgresql install!
-#                 This is NOT required, the default value: true.
-#                 In case of locale Postgresql development, this installer automatically installs the PG_TOOLS as well in step2!
-#                 If you turn this parameter on, the 2nd installation step is mandatory in the INSTALL_STEPS env. variable! 
-#                 You can turn it off with the value=false
-#AUTO_INSTALL: This is REQUIRED!    
-#              at the moment you can use postgresql or oracle 
-#INSTALL_SCHEMA: ONLY in oracle install! 
-#                This is NOT required, the default value: "dookug".
-#=====================
-#postgresql default local install:
-#this runs all the 4 steps by default
-#-------------------------
-docker run -it --rm \
-  --network=dookug-local-network \
-  -e AUTO_INSTALL=postgresql \
-  -e INSTALL_USERNAME_PROJECT=dookug \
-  icellmobilsoft/dookug_db:2.2.0-SNAPSHOT
-#-------------------------  
-#If you need only a specific step(s):
-#-------------------------
-docker run -it --rm \
-  --network=dookug-local-network \
-  -e AUTO_INSTALL=postgresql \
-  -e INSTALL_USERNAME_PROJECT=dookug \
-  -e INSTALL_PASSWORD_PROJECT=dookug_pwd \
-  -e INSTALL_STEPS=2,3,4 \
-  icellmobilsoft/dookug_db:2.2.0-SNAPSHOT
-#-------------------------  
-#oracle local install:
-#this runs all the 4 steps by default
-#-------------------------
-docker run -it --rm \
-  --network=dookug-local-network \
-  -e AUTO_INSTALL=oracle \
-  -e INSTALL_SCHEMA=schema_name \
-  -e INSTALL_PASSWORD_PROJECT=dookug_pwd \
-  icellmobilsoft/dookug_db:2.2.0-SNAPSHOT
-#-------------------------  
-#If you need only a specific step(s):
-#-------------------------  
-docker run -it --rm \
-  --network=dookug-local-network \
-  -e AUTO_INSTALL=oracle \
-  -e INSTALL_SCHEMA=schema_name \
-  -e INSTALL_STEPS=2,4 \
-  icellmobilsoft/dookug_db:2.2.0-SNAPSHOT
-==========
-
-** How "embed" Dookug DB into other "host" DB (_install Dookug-db dookug schema into other DB_):    
-
-.Embed DookuG in to other DB (_click here_)
-[%collapsible]
-==========
-[source,bash]
-#---------------------  
-#Postgres and Linux:
-#INSTALL_STEPS: This is NOT required, the default value: "1,2,3,4".
-#               The full is 1,2,3,4, or as many as you have, or you can give that step(s) you want!
-#INSTALL_PGTOOLS: ONLY in postgresql install!
-#                 This is NOT required, the default value: true.
-#                 In case of locale Postgresql development, this installer automatically installs the PG_TOOLS as well in step2!
-#                 If you turn this parameter on, the 2nd installation step is mandatory in the INSTALL_STEPS env. variable! 
-#                 You can turn it off with the value=false
-#AUTO_INSTALL: This is REQUIRED!    
-#              at the moment you can use postgresql or oracle 
-#INSTALL_USERNAME_PROJECT: ONLY in postgresql install!
-#                          In case of oracle you have to use the INSTALL_SCHEMA, b/c in oracle, the schema is the user as well.
-#INSTALL_SCHEMA: ONLY in oracle install! 
-#                This is NOT required, the default value: "dookug".
-#CREATE_DATABASE: When embedding this DookuG installer into another (host) DB, set this to false to avoid creating an empty database.
-#in case of server install, you must use the DEFAULT and PROJECT parameters.
-#   INSTALL_URL_ADMIN
-#   INSTALL_URL_PROJECT
-#   INSTALL_USERNAME_ADMIN
-#   INSTALL_USERNAME_PROJECT
-#   INSTALL_PASSWORD_ADMIN
-#   INSTALL_PASSWORD_PROJECT
-#---------------------  
-#postgresql:
-#-----------
-docker run -it --rm \
-  --network=host-local-network \
-  -e AUTO_INSTALL=postgresql \
-  -e INSTALL_URL_ADMIN=jdbc:postgresql://host_db-postgredb:port_num/postgres \
-  -e INSTALL_URL_PROJECT=jdbc:postgresql://host_db-postgredb:port_num/host_db \
-  -e INSTALL_USERNAME_ADMIN=postgres \
-  -e INSTALL_PASSWORD_ADMIN=passw_from_secret \
-  -e INSTALL_USERNAME_PROJECT=project_user_name \
-  -e INSTALL_PASSWORD_PROJECT=passw_from_secret \
-  -e CREATE_DATABASE=false \
-  -e INSTALL_STEPS=1,2,3,4 \
-  -e INSTALL_SCHEMA=dookug_schema_name \
-  -e INSTALL_PGTOOLS=false \
-  icellmobilsoft/dookug_db:2.2.0-SNAPSHOT
-#-----------
-#oracle:
-#-----------
-docker run -it --rm \
-  --network=host-local-network \
-  -e AUTO_INSTALL=oracle \
-  -e INSTALL_URL_ADMIN=jdbc:oracle:thin:@host_db-oracle:1521/xepdb1 \
-  -e INSTALL_URL_PROJECT=jdbc:oracle:thin:@host_db-oracle:1521/xepdb1 \
-  -e INSTALL_USERNAME_ADMIN=system \
-  -e INSTALL_PASSWORD_ADMIN=passw_from_secret \
-  -e INSTALL_PASSWORD_PROJECT=passw_from_secret \
-  -e CREATE_DATABASE=false \
-  -e INSTALL_STEPS=1,2,3,4 \
-  -e INSTALL_SCHEMA=dookug_schema_name \
-  icellmobilsoft/dookug_db:2.2.0-SNAPSHOT  
-
-. AKP - EDB:
-* EDB init script must be run first as superuser on postgres db:
-** This creates project db owner, service user, project db and grants.
-[source,console]
-sudo -u app_deployer PGPASSWORD='pass' psql \
-    -p 5445 -h <SERVER_IP_OR_HOSTNAME> \
-    -d postgres \
-    -f ./liquibase/common/__init_dbs/manual/pg_dookug_edb_init.sql
-
-* Then run the liquibase installer with only project credentials:    
-** This installs all project schema related objects.
-[source,console]
-docker run -it --rm \
-  --network=host \
-  -e AUTO_INSTALL=edb \
-  -e INSTALL_URL_PROJECT=jdbc:postgresql://<SERVER_IP_OR_HOSTNAME>:5445/dookug_db \
-  -e INSTALL_USERNAME_PROJECT=dookug \
-  -e INSTALL_PASSWORD_PROJECT=dookug_pwd \
-  -e INSTALL_STEPS=2,4 \
-  icellmobilsoft/dookug_db:2.2.0-SNAPSHOT 
-
-==========     
-
-#on windows: the "\" needs to be changed to "`"!
-
-** optional environment variable, only needed during password change:
-[source,bash]
 ----
-  -e DB_SERVICE_USER_PASSWORD=<service user passw>
+./build.sh
 ----
+
+The build produces separate images for creating the project schema and users, and for applying the DookuG schema changelog. Their names and tags are configured in the project root `.env` file.
+
+== Install or update a database
+
+The deployment uses two Liquibase runs, in order:
+
+. Configure `JDBC_URL` and credentials in `docker/dookug_db/dookug_creschema/.env` for the target PostgreSQL or Oracle database. This run creates the project schema, service user, and related permissions. Run `./run.sh` from that directory.
+. Configure `JDBC_URL`, `DOOKUG_SCHEMA`, and `DOOKUG_SCHEMA_PASSW` in `docker/dookug_db/dookug/.env`. Run `./run.sh` from that directory to apply the DookuG changelog.
+
+The checked-in installer `.env` files contain sample settings. Replace sample credentials and connection details before use. For an existing host database, point both files at that database; schema creation and schema migration remain separate runs.
+
+== Local development database
+
+The development scripts start a local database, create the PostgreSQL project database when needed, and run both Liquibase changelogs. They support PostgreSQL and Oracle XE; EDB is not an option in these scripts.
+
+On Linux or macOS, run from the `dev` directory:
+
+[source,console]
+----
+./start.sh
+----
+
+On Windows, run `start.ps1` from the `dev` directory. The script prompts for `postgres` or `oracle` and defaults to PostgreSQL. Database images, ports, and local credentials are configured in `dev/.env`.

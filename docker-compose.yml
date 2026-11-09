@@ -1,0 +1,11 @@
+services:
+
+  dookug-creschema-liquibase:
+    extends:
+      file: docker/dookug_db/dookug_creschema/docker-compose.yml
+      service: docker-runtime-liquibase-dookug_creschema
+
+  dookug-liquibase:
+    extends:
+      file: docker/dookug_db/dookug/docker-compose.yml
+      service: docker-runtime-liquibase-dookug

@@ -47,3 +47,5 @@
 - remove these columns from default templates part.
 - Added EDB install specific changes.
 - Service user grant fix.
+* 2.3.0 Changes:
+- Full repository refactoring

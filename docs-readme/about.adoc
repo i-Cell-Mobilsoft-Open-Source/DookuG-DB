@@ -14,10 +14,11 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-= Module: Template
+= DookuG Database
 
 == About the project
 
-[%hardbreaks]
+DookuG Database is the Liquibase-managed relational database project for the DookuG service.
+It contains the schema bootstrap changelog, versioned schema and data changelogs, and shared database changes.
 
-include::../docs/modules/ROOT/pages/summary.adoc[]
+Local development runs from the `DookuG-new/dev` directory. The launcher starts a local PostgreSQL or Oracle XE database and applies the current changelogs directly from the working tree.

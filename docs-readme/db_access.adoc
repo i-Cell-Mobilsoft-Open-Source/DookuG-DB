@@ -14,29 +14,28 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-= Access to databases
+= Local database access
 
-.Local Oracle DB (clock here)
-[%collapsible]
-======
-. Since we use XEPDB1 in the local Oracle XE database and not the XE itself, we need to connect to it as follows:
-. Pl. Oracle SQL Developer:
-    - Connection Type: Custom JDBC
-    - Custom JDBC URL: dbc:oracle:thin:@localhost:1521/xepdb1
+Start the database from `DookuG-new/dev` before connecting. The local Compose file binds database ports to `127.0.0.1`; use the values configured in `dev/.env` if you changed the defaults.
 
-ifndef::imagesdir[:imagesdir: ./docs/images]
-:oracle_sql_developer_connect_to_xepdb1: oracle_sql_developer_connect_to_xepdb1.png
+== PostgreSQL
 
-image::{oracle_sql_developer_connect_to_xepdb1}[Local ORA DB connection in SQL Developer,link="{imagesdir}/{oracle_sql_developer_connect_to_xepdb1}",window=_blank]
+* Host: `localhost`
+* Port: `LOCAL_PORT` (default: `5432`)
+* Database: `DB_NAME` (default: `dookug_db`)
+* Schema/user: `DB_OWNER` (default: `dookug_owner`)
+* Password: `DB_OWNER_PASSW` from `dev/.env`
+* JDBC URL: `jdbc:postgresql://localhost:5432/dookug_db` (adjust for overrides)
 
-. Other type (pl. Oracle Developer Tools extension a VSCode-ban):
-    - Connection Type: Basic
-    - Hostname: localhost
-    - Post Number: 1521
-    - Service Name: xepdb1  
+The `dookug` application schema is also created by the migration. Its password is configured by `dookug_PASSWORD` in `dev/.env`.
 
-ifndef::imagesdir[:imagesdir: ./docs/images]
-:vscode_oracle_developer_tools_connect_to_xepdb1: vscode_oracle_developer_tools_connect_to_xepdb1.png
+== Oracle XE
 
-image::{vscode_oracle_developer_tools_connect_to_xepdb1}[Local ORA DB connection in VS CODE SQL Developer extension,link="{imagesdir}/{vscode_oracle_developer_tools_connect_to_xepdb1}",window=_blank]
-======       
+Connect to the pluggable database service `XEPDB1`, not the XE container database.
+
+* Host: `localhost`
+* Port: `ORACLE_PORT` (default: `1521`)
+* Service name: `XEPDB1`
+* JDBC URL: `jdbc:oracle:thin:@//localhost:1521/XEPDB1` (adjust for overrides)
+
+Use the configured administrator credentials for administrative access. The migration creates the `dookug` schema and service user; their passwords are configured by `dookug_PASSWORD` and `dookug_SERVICE_PASSWORD` in `dev/.env`.

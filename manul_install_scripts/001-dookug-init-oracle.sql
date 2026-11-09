@@ -1,0 +1,35 @@
+-- Creates the dookug Oracle schema, users, and roles
+-- Must be run with the Oracle DB administrator user
+
+DECLARE
+   l_datafile_dir VARCHAR2(300);
+BEGIN
+	EXECUTE IMMEDIATE 'CREATE ROLE dookug_read';
+	EXECUTE IMMEDIATE 'CREATE ROLE dookug_write';
+	EXECUTE IMMEDIATE 'CREATE ROLE dookug_exec';
+
+	EXECUTE IMMEDIATE 'GRANT dookug_read TO dookug_write';
+	EXECUTE IMMEDIATE 'GRANT dookug_write TO dookug_exec';
+END;
+/
+
+BEGIN
+	EXECUTE IMMEDIATE 'CREATE USER dookug IDENTIFIED BY "<dookug_password>"';
+	EXECUTE IMMEDIATE 'ALTER USER dookug DEFAULT TABLESPACE <tablespace_name> TEMPORARY TABLESPACE TEMP QUOTA UNLIMITED ON <tablespace_name>';
+
+	EXECUTE IMMEDIATE 'GRANT CONNECT TO dookug';
+	EXECUTE IMMEDIATE 'GRANT RESOURCE TO dookug';
+	EXECUTE IMMEDIATE 'ALTER USER dookug DEFAULT ROLE ALL';
+	EXECUTE IMMEDIATE 'GRANT CREATE VIEW TO dookug';
+END;
+/
+
+BEGIN
+	EXECUTE IMMEDIATE 'CREATE USER dookug_service IDENTIFIED BY "<dookug_service_password>"';
+	EXECUTE IMMEDIATE 'ALTER USER dookug_service DEFAULT TABLESPACE <tablespace_name> TEMPORARY TABLESPACE TEMP QUOTA UNLIMITED ON <tablespace_name>';
+
+	EXECUTE IMMEDIATE 'GRANT CREATE SESSION TO dookug_service';
+	EXECUTE IMMEDIATE 'GRANT dookug_exec TO dookug_service';
+	EXECUTE IMMEDIATE 'ALTER USER dookug_service DEFAULT ROLE ALL';
+END;
+/

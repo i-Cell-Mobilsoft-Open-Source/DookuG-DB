@@ -1,0 +1,12 @@
+# build
+# docker compose --env-file ${PROJECT_PATH}/../../../.env -f ${PROJECT_PATH}/docker/dookug_db/dookug_creschema/docker-compose.yml build --no-cache
+services:
+
+  docker-runtime-liquibase-dookug_creschema:
+    build:
+      context: .
+      dockerfile: ./dockerfile/Dockerfile
+      args:
+        DOCKER_RUNTIME_LIQUIBASE: ${DOCKER_RUNTIME_LIQUIBASE}
+        LIQUIBASE_INSTALL_DIR: '/liquibase'
+    image: ${DOCKER_DOOKUG_CRESCHEMA_LIQUIBASE}

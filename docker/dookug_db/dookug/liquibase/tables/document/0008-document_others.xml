@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Copyright (c) 2026 i-Cell Mobilsoft Zrt.
+
+Licensed under the Apache License, Version 2.0 (the "License"); you
+may not use this file except in compliance with the License. You may
+obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+implied. See the License for the specific language governing
+permissions and limitations under the License.
+
+SPDX-License-Identifier: Apache-2.0
+-->
+
+<!DOCTYPE defaultProperties SYSTEM "common/params.dtd">
+    <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <!-- include the default properties -->
+    &propertiesAll;
+
+    <changeSet id="0008" author="jozsef.holczer" labels="0.1.0">
+        <comment>DKG-94 document table, creation of comments and other table objects.</comment>
+    
+        <setTableRemarks remarks = "document data." tableName = "document"/>
+    
+        <setColumnRemarks columnName = "x__id" remarks = "Primary key" tableName = "document"/>
+        <setColumnRemarks columnName = "template_id" remarks = "TEMPLATE identifier." tableName = "document"/>
+        <setColumnRemarks columnName = "status" remarks = "Document status" tableName = "document"/>
+        <setColumnRemarks columnName = "format" remarks = "Document format" tableName = "document"/>
+        <setColumnRemarks columnName = "filename" remarks = "Document file name" tableName = "document"/>
+        <setColumnRemarks columnName = "error_message" remarks = "Error message occurring during the process" tableName = "document"/>
+        <setColumnRemarks columnName = "storage_type" remarks = "Storage type" tableName = "document"/>
+        <setColumnRemarks columnName = "storage_id" remarks = "Storage identifier" tableName = "document"/>
+        <setColumnRemarks columnName = "parameters" remarks = "Parameter key-value pairs json" tableName = "document"/>
+        <setColumnRemarks columnName = "parameter_data" remarks = "Parameter data structure json" tableName = "document"/>
+        <setColumnRemarks columnName = "config" remarks = "Configuration" tableName = "document"/>
+        <setColumnRemarks columnName = "x__insdate" remarks = "Date of record creation" tableName = "document"/>
+        <setColumnRemarks columnName = "x__insuser" remarks = "User creating the record" tableName = "document"/>
+        <setColumnRemarks columnName = "x__moddate" remarks = "Date of record modification" tableName = "document"/>
+        <setColumnRemarks columnName = "x__moduser" remarks = "User modifying the record" tableName = "document"/>
+        <setColumnRemarks columnName = "x__version" remarks = "Number of record modifications" tableName = "document"/>
+
+        <sql> alter table document add constraint pk_document PRIMARY KEY ( x__id );</sql>
+            
+    </changeSet>
+</databaseChangeLog>

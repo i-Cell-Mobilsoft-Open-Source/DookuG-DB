@@ -1,0 +1,15 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.33.xsd">
+
+    <include file="../common/changelog-common-source-codes.xml" relativeToChangelogFile="true"/>
+
+    <include file="changelog-dookug-00.01.00.xml" relativeToChangelogFile="true"/>
+    <include file="changelog-dookug-01.00.00.xml" relativeToChangelogFile="true"/>
+    <include file="changelog-dookug-01.01.00.xml" relativeToChangelogFile="true"/>
+    <!--include file="changelog-dookug-02.02.00.xml" relativeToChangelogFile="true"/-->
+
+    <include file="../common/grant_object_privileges.sql" relativeToChangelogFile="true"/>
+    
+</databaseChangeLog>

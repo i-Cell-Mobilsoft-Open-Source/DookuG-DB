@@ -16,8 +16,12 @@
 
 * Technologies:
 
-  ** Components and their versions:
-  - Included local Postgres: 14.8-bullseye
-  - Included local Oracle: 21.3.0-xe
-  - Liquibase: 4.21
-  - The latest final PGTools version: 0.10.0
+  ** Components and their versions (from the project defaults):
+  - Local development PostgreSQL: 17-alpine3.22
+  - Local development Oracle XE: 21.3.0-xe
+  - Liquibase runtime image: 4.33
+  - PGTools version setting: 1.0.0
+
+  ** Installation model:
+  - The project builds separate Liquibase images for DookuG schema creation and DookuG schema migrations.
+  - Local development scripts initialize PostgreSQL or Oracle XE and apply both changelogs.
