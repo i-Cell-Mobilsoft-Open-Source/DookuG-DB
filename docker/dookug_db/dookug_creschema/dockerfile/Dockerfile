@@ -19,4 +19,15 @@ COPY --chown=${APP_USER}:${APP_USER_GROUP} $LIQUIBASE_INSTALL_DIR $LIQUIBASE_HOM
 # Finalize the image
 ################################################################################
 
-CMD ["--changelog-file=changelog/dookug_creschema-master.xml", "update"]
+CMD exec liquibase \
+	--url="${JDBC_URL}" \
+	--username="${CRESCHEMA_USER}" \
+	--password="${CRESCHEMA_PASSW}" \
+	--changeLogFile="changelog/dookug_creschema-master.xml" \
+	--database-changelog-lock-table-name="${DOOKUG_SCHEMA}_dbchloglock" \
+	--database-changelog-table-name="${DOOKUG_SCHEMA}_dbchlog" \
+	update \
+	-Ddookug_schema="${DOOKUG_SCHEMA}" \
+	-Ddookug_password="${DOOKUG_SCHEMA_PASSW}" \
+	-Ddookug_service_password="${DOOKUG_SERVICE_PASSW}" \
+	-Ddookug_tablespace="${DOOKUG_TABLESPACE}"

@@ -23,4 +23,9 @@ COPY --chown=${APP_USER}:${APP_USER_GROUP} $LIQUIBASE_INSTALL_COMMON_DIR $LIQUIB
 # Finalize the image
 ################################################################################
 
-CMD ["--changelog-file=changelog/dookug-master.xml", "update"]
+CMD exec liquibase \
+	--url="${JDBC_URL}" \
+	--username="${DOOKUG_SCHEMA}" \
+	--password="${DOOKUG_SCHEMA_PASSW}" \
+	--changeLogFile="changelog/dookug-master.xml" \
+	update
